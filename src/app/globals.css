@@ -1,0 +1,239 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ *
+ *  AVR Developers — design tokens
+ *  Palette: navy ink #17233B · accent red #D92429 · soft rose #E28C84
+ *  Single locked LIGHT theme (brand palette, no OS-dark inversion).
+ * ------------------------------------------------------------------ */
+
+@theme {
+  /* surfaces */
+  --color-canvas: #f4f1ea;        /* warm paper page background */
+  --color-surface: #fbfaf6;       /* raised surfaces, cards */
+  --color-ink: #17233b;           /* primary text / navy */
+  --color-ink-90: #26314a;        /* dark section background */
+
+  /* accent family (one hue, locked) */
+  --color-accent: #d92429;        /* brand red */
+  --color-accent-dark: #b31d21;   /* pressed / hover red */
+  --color-rose: #e28c84;          /* soft rose, tonal support only */
+
+  /* fonts */
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-spectral), ui-serif, Georgia, serif;
+
+  /* radius scale — soft-square system, one scale everywhere */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+
+  /* motion easing */
+  --ease-luxe: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* semantic helpers derived from ink at partial opacity */
+@theme {
+  --color-ink-70: color-mix(in oklab, var(--color-ink) 70%, transparent);
+  --color-ink-55: color-mix(in oklab, var(--color-ink) 55%, transparent);
+  --color-ink-40: color-mix(in oklab, var(--color-ink) 40%, transparent);
+  --color-line: color-mix(in oklab, var(--color-ink) 12%, transparent);
+  --color-line-strong: color-mix(in oklab, var(--color-ink) 22%, transparent);
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  /* No CSS smooth-scroll: it fights GSAP ScrollTrigger and makes the
+     parallax glitch. Smooth scroll-to-top is driven in JS instead. */
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+/* editorial caps used across nav + eyebrows */
+.caps {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-feature-settings: "liga" 1, "calt" 1;
+}
+
+/* JS-free staggered entrance for above-the-fold content (hero).
+   Honors reduced-motion. Stagger via --i on each element. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1.4rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+.rise {
+  animation: rise 0.8s var(--ease-luxe) both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+@keyframes imgIn {
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 12% 0);
+    transform: scale(1.04);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: scale(1);
+  }
+}
+.img-in {
+  animation: imgIn 1.1s var(--ease-luxe) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rise,
+  .img-in {
+    animation: none;
+  }
+}
+
+/* slow cinematic drift on the fullscreen hero background */
+@keyframes kenburns {
+  from {
+    transform: scale(1.02);
+  }
+  to {
+    transform: scale(1.12);
+  }
+}
+.kenburns {
+  animation: kenburns 20s ease-out both;
+  will-change: transform;
+  transform: translateZ(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .kenburns {
+    animation: none;
+  }
+}
+
+/* self-drawing line icons (amenities): the stroke draws on once when the row
+   scrolls into view and holds, so nothing flickers or disappears. The `.run`
+   class is toggled in JS on viewport entry; stagger via --draw-delay. */
+.icon-draw :is(path, line, polyline, circle, rect, ellipse, polygon) {
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+}
+.icon-draw.run :is(path, line, polyline, circle, rect, ellipse, polygon) {
+  animation: iconDraw 1.5s var(--ease-luxe) both;
+  animation-delay: var(--draw-delay, 0s);
+}
+@keyframes iconDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .icon-draw :is(path, line, polyline, circle, rect, ellipse, polygon) {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+}
+
+/* ---- react-phone-input-2, themed to match the enquiry form ---- */
+.invisible-phone-input {
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: transparent !important;
+  border: none !important;
+}
+.invisible-phone-input .form-control {
+  display: none !important;
+}
+.invisible-phone-input .flag-dropdown,
+.invisible-phone-input .flag-dropdown.open {
+  position: static !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: transparent !important;
+  border: none !important;
+}
+.invisible-phone-input .selected-flag {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 0 !important; /* completely hide native flag and arrow */
+  z-index: 10 !important;
+}
+.invisible-phone-input .country-list {
+  margin: 6px 0 0;
+  max-height: 264px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 24px 60px -24px rgba(23, 35, 59, 0.35);
+}
+.react-tel-input .country-list .search {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-line);
+}
+.react-tel-input .country-list .search-emoji {
+  display: none;
+}
+.react-tel-input .country-list .search-box {
+  width: 100%;
+  margin: 0;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: var(--color-ink);
+  background: var(--color-canvas);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-xs);
+}
+.react-tel-input .country-list .search-box:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+.react-tel-input .country-list .country {
+  padding: 9px 12px;
+}
+.react-tel-input .country-list .country .dial-code {
+  color: var(--color-ink-55);
+}
+.react-tel-input .country-list .country:hover,
+.react-tel-input .country-list .country.highlight {
+  background: var(--color-canvas);
+}
+
+/* thin luxe underline that grows on hover for text links */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.4s var(--ease-luxe);
+}
+@media (min-width: 1024px) {
+  .link-underline:hover {
+    background-size: 100% 1px;
+  }
+}
