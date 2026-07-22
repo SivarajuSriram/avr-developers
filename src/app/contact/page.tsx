@@ -42,9 +42,9 @@ export default function ContactPage() {
               </Detail>
               <Detail icon={<MapPin size={20} weight="regular" />} label="Site office">
                 <p className="text-ink">
-                  Evania, Kokapet
+                  {site.address.line1}
                   <br />
-                  Hyderabad, Telangana
+                  {site.address.locality}, {site.address.region} {site.address.postalCode}
                 </p>
               </Detail>
             </dl>

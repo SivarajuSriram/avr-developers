@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { PageHeader } from "@/components/page-header";
 import { ParallaxImage } from "@/components/ui/parallax-image";
 import { Reveal } from "@/components/ui/reveal";
@@ -44,9 +45,9 @@ export default function AboutPage() {
       <section className="border-y border-line bg-surface">
         <div className="mx-auto grid max-w-[1400px] grid-cols-2 gap-y-12 px-5 py-20 lg:grid-cols-4 lg:px-10 lg:py-24">
           {[
-            { n: "25+", l: "Years around real estate" },
-            { n: "1.2M", l: "Sq. ft. under development" },
-            { n: "500+", l: "Families we're building for" },
+            { n: "25+", l: "Years around Hyderabad real estate" },
+            { n: "34", l: "Floors at Evania, our flagship address" },
+            { n: "102", l: "Residences across Evania" },
             { n: "100%", l: "RERA-registered projects" },
           ].map((stat, i) => (
             <Reveal key={stat.l} index={i}>
@@ -66,8 +67,8 @@ export default function AboutPage() {
       {/* image band */}
       <section className="px-5 pt-20 lg:px-10 lg:pt-28">
         <ParallaxImage
-          src="https://picsum.photos/seed/avr-about-band/2000/1100"
-          alt="An AVR Developers residential community"
+          src="/evania/clubhouse-gym.webp"
+          alt="Inside Club Evania, AVR Developers' resident clubhouse"
           sizes="100vw"
           className="mx-auto aspect-[16/9] max-w-[1400px] rounded-sm"
         />
@@ -131,21 +132,33 @@ export default function AboutPage() {
       <section className="border-t border-line bg-surface">
         <div className="mx-auto max-w-[1400px] px-5 py-24 lg:px-10 lg:py-32">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-            <Reveal className="lg:col-span-7">
-              <p className="font-serif text-2xl font-light leading-[1.4] text-ink sm:text-[1.7rem]">
-                &ldquo;We build the kind of home we&rsquo;d want our own children
-                to grow up in. That single test decides everything else.&rdquo;
+            <Reveal className="lg:col-span-4">
+              <div className="relative aspect-[4/5] w-full max-w-[320px] overflow-hidden rounded-sm">
+                <Image
+                  src="/about/arya-reddy.jpg"
+                  alt="Arya Reddy, AVR Developers"
+                  fill
+                  sizes="(min-width: 1024px) 320px, 60vw"
+                  className="object-cover"
+                />
+              </div>
+              <p className="mt-6 text-[14px] font-medium text-ink">
+                Arya Reddy
               </p>
-              <p className="mt-8 text-[14px] font-medium text-ink">
-                The AVR family
-              </p>
-              <p className="text-[13px] text-ink-55">Founders, AVR Developers</p>
+              <p className="text-[13px] text-ink-55">AVR Developers</p>
             </Reveal>
-            <Reveal index={1} className="lg:col-span-5 lg:pt-2">
-              <p className="text-[15px] leading-relaxed text-ink-70">
-                A closely held, family-run practice, we keep our portfolio small
-                on purpose. Fewer projects mean every decision, from the master
-                plan to the door handles, still passes across our own desk.
+            <Reveal index={1} className="lg:col-span-8 lg:pt-2">
+              <p className="font-serif text-2xl font-light leading-[1.4] text-ink sm:text-[1.7rem]">
+                Building on a family legacy of 25+ years in Hyderabad real
+                estate.
+              </p>
+              <p className="mt-6 max-w-[60ch] text-[15px] leading-relaxed text-ink-70">
+                Arya holds a degree in Civil and Environmental Engineering
+                from Pennsylvania State University. He began his career with
+                Soletanche Bachy, working on defense infrastructure, before
+                returning to lead AVR&rsquo;s construction ventures &mdash;
+                building on his family&rsquo;s quarter-century in Hyderabad
+                real estate.
               </p>
             </Reveal>
           </div>

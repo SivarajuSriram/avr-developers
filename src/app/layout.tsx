@@ -69,8 +69,10 @@ const orgJsonLd = {
   areaServed: "Hyderabad",
   address: {
     "@type": "PostalAddress",
+    streetAddress: site.address.line1,
     addressLocality: site.address.locality,
     addressRegion: site.address.region,
+    postalCode: site.address.postalCode,
     addressCountry: site.address.country,
   },
   sameAs: Object.values(site.socials),

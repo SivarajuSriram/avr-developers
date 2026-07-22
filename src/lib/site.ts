@@ -14,8 +14,10 @@ export const site = {
   email: "info@avrdevelopers.com",
   phones: ["+91 80000 82399", "+91 8889 666678"],
   address: {
+    line1: "Evania by AVR, SY NO 3, Pipe Line Road",
     locality: "Kokapet",
     region: "Hyderabad",
+    postalCode: "500075",
     country: "IN",
   },
   socials: {
@@ -37,6 +39,11 @@ export type Project = {
   highlights: string[];
   /* placeholder art — swap with real Evania renders */
   image: string;
+  /* real photography, when available — falls back to `image` picsum seed when absent */
+  heroImage?: string;
+  sitePlanImage?: string;
+  gallery?: { view: string; src: string }[];
+  connectivity?: { place: string; time: string }[];
 };
 
 export const projects: Project[] = [
@@ -48,15 +55,33 @@ export const projects: Project[] = [
     location: "Kokapet, Hyderabad",
     rera: "TG RERA P02400009394",
     blurb:
-      "A gated address of light-filled residences, green courtyards and a resident-only club, minutes from the Financial District.",
+      "Smartly designed 3.5 & 4 BHK residences crafted for the modern duo, with sleek architecture, rooftop lounges and wellness zones — 34 floors, 102 residences, minutes from the Financial District.",
     highlights: [
-      "Resident-only Club Evania",
-      "Landscaped central courtyard",
-      "Infinity-edge pool deck",
-      "3.5 & 4 BHK corner residences",
-      "Minutes from the Financial District",
+      "18,000 sq. ft. Club Evania",
+      "34 floors, 102 residences",
+      "3,315–3,575 sq. ft. homes",
+      "6-level dedicated parking",
+      "Rooftop terrace & cigar lounge",
     ],
     image: "https://picsum.photos/seed/avr-evania-tower/1200/1500",
+    heroImage: "/evania/rooftop.webp",
+    sitePlanImage: "/evania/site-plan.webp",
+    gallery: [
+      { view: "facade", src: "/evania/facade.webp" },
+      { view: "courtyard", src: "/evania/amenity-space.webp" },
+      { view: "pool", src: "/evania/clubhouse-exterior.webp" },
+      { view: "living", src: "/evania/clubhouse-yoga.webp" },
+      { view: "club", src: "/evania/clubhouse-interior.webp" },
+    ],
+    connectivity: [
+      { place: "Nehru Outer Ring Road", time: "1 min" },
+      { place: "Neopolis", time: "2 min" },
+      { place: "Financial District", time: "5 min" },
+      { place: "Gachibowli", time: "5 min" },
+      { place: "HITEC City", time: "15 min" },
+      { place: "Lingampally Railway Station", time: "20 min" },
+      { place: "RGI Airport", time: "35 min" },
+    ],
   },
   {
     slug: "aurelia",
@@ -120,6 +145,7 @@ export const nav: { left: NavItem[]; right: NavItem[] } = {
   ],
   right: [
     { label: "About Us", href: "/about" },
+    { label: "Blog", href: "/blog" },
     { label: "Careers", href: "/careers" },
     { label: "Contact", href: "/contact" },
   ],

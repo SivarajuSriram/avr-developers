@@ -11,24 +11,24 @@ export const metadata: Metadata = {
 
 const values = [
   {
-    title: "Considered by design",
-    body: "Every plan starts with how a day actually unfolds. Light, flow and privacy come before square footage.",
+    title: "Work Ethics",
+    body: "Our work ethics are non-negotiable and our on-time deliverables are sacrosanct. If we have made a promise, we will deliver.",
   },
   {
-    title: "Green as standard",
-    body: "Open courtyards, planted decks and shaded walks are built in, never sold back to you as an upgrade.",
+    title: "Uncompromising Integrity",
+    body: "We are about uncompromising integrity and transparency. There is no fine print in our documentation and nothing to be read between the lines.",
   },
   {
-    title: "Built to outlast trends",
-    body: "Materials and detailing are chosen for how they age, so a home still feels right twenty years on.",
+    title: "Professionalism",
+    body: "We hold professionalism and efficiency in high esteem. Every domain of creating the perfect address is handled by masters in their craft, spanning engineers, designers, architects, landscape artists, leisure management companies and more.",
   },
   {
-    title: "Straight dealing",
-    body: "Clear timelines, honest answers on approvals, and no surprises between the brochure and the handover.",
+    title: "Undeniable Edge",
+    body: "Our ability to listen, respond and take action just the way our clientele wants us to gives us an undeniable edge.",
   },
   {
-    title: "Location we understand",
-    body: "We build where we know the ground, the roads and where the city is genuinely heading next.",
+    title: "Attention to Detail",
+    body: "Attention to detail is our thing. Nothing escapes our eye when it comes to space planning, aesthetics, the direction of sunlight and breeze, or the classic placement of sit-outs.",
   },
 ];
 

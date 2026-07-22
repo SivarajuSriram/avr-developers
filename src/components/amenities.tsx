@@ -10,9 +10,15 @@ import {
   ShieldCheck,
   Zap,
   Leaf,
+  Clapperboard,
+  PartyPopper,
+  PawPrint,
+  Trophy,
+  Landmark,
+  Sparkles,
 } from "lucide-react";
 
-const AMENITIES = [
+const DEFAULT_AMENITIES = [
   { Icon: Armchair, label: "Resident-only Clubhouse" },
   { Icon: Waves, label: "Infinity-edge Pool" },
   { Icon: Dumbbell, label: "Fitness Studio" },
@@ -23,8 +29,32 @@ const AMENITIES = [
   { Icon: Leaf, label: "Yoga & Wellness Deck" },
 ] as const;
 
-export function Amenities({ name }: { name: string }) {
+/* Evania's real amenity set, from avrdevelopers.com/about-project — 18,000 sq ft Club Evania. */
+export const EVANIA_AMENITIES = [
+  { Icon: Armchair, label: "18,000 Sq. Ft. Club Evania" },
+  { Icon: Waves, label: "Adult & Kids Pool, Jacuzzi" },
+  { Icon: Dumbbell, label: "Fitness Station & Gym" },
+  { Icon: Leaf, label: "Yoga & Wellness Room" },
+  { Icon: Clapperboard, label: "Mini Theatre" },
+  { Icon: Sparkles, label: "Rooftop Designer Terrace" },
+  { Icon: PartyPopper, label: "Party & Celebration Lawn" },
+  { Icon: Puzzle, label: "Kids' Play Area" },
+  { Icon: TreePine, label: "Senior Citizen & Reflexology Garden" },
+  { Icon: Trophy, label: "Badminton, Pickleball & Basketball Courts" },
+  { Icon: Landmark, label: "Temple" },
+  { Icon: PawPrint, label: "Pet Park" },
+  { Icon: ShieldCheck, label: "24×7 Gated Security, 6-Level Parking" },
+] as const;
+
+export function Amenities({
+  name,
+  variant = "default",
+}: {
+  name: string;
+  variant?: "default" | "evania";
+}) {
   const reduce = useReducedMotion();
+  const items = variant === "evania" ? EVANIA_AMENITIES : DEFAULT_AMENITIES;
 
   return (
     <section
@@ -39,7 +69,7 @@ export function Amenities({ name }: { name: string }) {
       </div>
 
       <ul className="mt-16 grid grid-cols-2 gap-x-6 gap-y-14 sm:grid-cols-3 lg:grid-cols-4">
-        {AMENITIES.map(({ Icon, label }, i) => (
+        {items.map(({ Icon, label }, i) => (
           <motion.li
             key={label}
             initial={reduce ? false : { opacity: 0, y: 22 }}

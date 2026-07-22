@@ -7,7 +7,7 @@ import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 
 type Gsap = typeof import("gsap")["gsap"];
 
-/* Placeholder views — swap picsum seeds for real renders before launch. */
+/* Fallback views for projects without real photography yet (e.g. Aurelia). */
 const VIEWS = ["facade", "courtyard", "pool", "living", "club"] as const;
 
 /**
@@ -21,7 +21,16 @@ const VIEWS = ["facade", "courtyard", "pool", "living", "club"] as const;
  * never re-renders during the wipe — that was the source of the mid-animation
  * hitch. Only the first frame is eager; the rest lazy-load.
  */
-export function ProjectGallery({ slug, name }: { slug: string; name: string }) {
+export function ProjectGallery({
+  slug,
+  name,
+  gallery,
+}: {
+  slug: string;
+  name: string;
+  gallery?: { view: string; src: string }[];
+}) {
+  const views = gallery?.length ? gallery.map((g) => g.view) : VIEWS;
   const [index, setIndex] = useState(0);
   const gsapRef = useRef<Gsap | null>(null);
   const animating = useRef(false);
@@ -61,7 +70,7 @@ export function ProjectGallery({ slug, name }: { slug: string; name: string }) {
 
   const go = (dir: 1 | -1) => {
     if (animating.current) return;
-    const next = (index + dir + VIEWS.length) % VIEWS.length;
+    const next = (index + dir + views.length) % views.length;
     const gsap = gsapRef.current;
     const frame = frames.current[next];
     const inner = inners.current[next];
@@ -104,7 +113,7 @@ export function ProjectGallery({ slug, name }: { slug: string; name: string }) {
         style={{ y: reduce ? 0 : y }}
         className="absolute inset-[-5%] will-change-transform"
       >
-        {VIEWS.map((view, i) => (
+        {views.map((view, i) => (
           <div
             key={view}
             ref={(el) => {
@@ -119,7 +128,7 @@ export function ProjectGallery({ slug, name }: { slug: string; name: string }) {
               className="absolute inset-0"
             >
               <Image
-                src={`https://picsum.photos/seed/avr-${slug}-${view}/1760/1200`}
+                src={gallery?.[i]?.src ?? `https://picsum.photos/seed/avr-${slug}-${view}/1760/1200`}
                 alt={`${name} — view ${i + 1}`}
                 fill
                 priority={i === 0}

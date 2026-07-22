@@ -35,7 +35,7 @@ export function ProjectPage({ project }: { project: Project }) {
         className="relative flex min-h-[86dvh] flex-col justify-end overflow-hidden text-white"
       >
         <Image
-          src={project.image.replace("/1200/1500", "/2400/1500")}
+          src={project.heroImage ?? project.image.replace("/1200/1500", "/2400/1500")}
           alt={`${project.name} by AVR Developers`}
           fill
           priority
@@ -109,7 +109,7 @@ export function ProjectPage({ project }: { project: Project }) {
       {/* site plan (parallax band) */}
       <section id="site-plan" className="scroll-mt-32 px-5 lg:px-10">
         <ParallaxImage
-          src={project.image.replace("/1200/1500", "/2000/1100")}
+          src={project.sitePlanImage ?? project.image.replace("/1200/1500", "/2000/1100")}
           alt={`${project.name} master site plan`}
           sizes="100vw"
           className="mx-auto aspect-[16/9] max-w-[1400px] rounded-sm"
@@ -117,11 +117,11 @@ export function ProjectPage({ project }: { project: Project }) {
       </section>
 
       {/* amenities (animated icons) */}
-      <Amenities name={project.name} />
+      <Amenities name={project.name} variant={project.slug === "evania" ? "evania" : "default"} />
 
       {/* gallery (full-bleed carousel) */}
       <div id="gallery" className="scroll-mt-32 border-t border-line">
-        <ProjectGallery slug={project.slug} name={project.name} />
+        <ProjectGallery slug={project.slug} name={project.name} gallery={project.gallery} />
       </div>
 
       {/* club */}
@@ -157,13 +157,15 @@ export function ProjectPage({ project }: { project: Project }) {
             </Reveal>
             <Reveal index={1} className="lg:col-span-6">
               <ul className="border-t border-line">
-                {[
-                  { place: "Financial District", time: "10 min" },
-                  { place: "Outer Ring Road", time: "5 min" },
-                  { place: "Gachibowli", time: "15 min" },
-                  { place: "International Airport", time: "35 min" },
-                  { place: "Leading schools & hospitals", time: "Nearby" },
-                ].map((row) => (
+                {(
+                  project.connectivity ?? [
+                    { place: "Financial District", time: "10 min" },
+                    { place: "Outer Ring Road", time: "5 min" },
+                    { place: "Gachibowli", time: "15 min" },
+                    { place: "International Airport", time: "35 min" },
+                    { place: "Leading schools & hospitals", time: "Nearby" },
+                  ]
+                ).map((row) => (
                   <li
                     key={row.place}
                     className="flex items-baseline justify-between gap-6 border-b border-line py-5"

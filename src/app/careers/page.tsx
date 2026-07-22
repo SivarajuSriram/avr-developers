@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { PageHeader } from "@/components/page-header";
 import { Reveal } from "@/components/ui/reveal";
 import { site } from "@/lib/site";
@@ -8,65 +7,40 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Careers",
   description:
-    "Join AVR Developers. We're a small team building future-ready homes in Hyderabad and always meeting people who care about the craft.",
+    "Join AVR Developers. Discover a professional environment where every day brings new opportunities and collaboration thrives.",
   alternates: { canonical: "/careers" },
 };
-
-const roles = [
-  { title: "Site Engineer", type: "Full-time", place: "Kokapet, Hyderabad" },
-  { title: "Sales Associate", type: "Full-time", place: "Hyderabad" },
-  { title: "Architectural Intern", type: "Internship", place: "Hyderabad" },
-];
 
 export default function CareersPage() {
   return (
     <>
       <PageHeader
         eyebrow="Careers"
-        title="Build things that outlast you."
-        intro="We're a small team that cares about the details most people never notice. If that sounds like you, we'd like to talk."
+        title="Join our team."
+        intro="Discover a professional environment where every day brings new opportunities and collaboration thrives. Be part of a team that values progress and drives innovation. Build the future with AVR Developers."
       />
 
-      {/* open roles */}
+      {/* apply */}
       <section className="mx-auto max-w-[1400px] px-5 py-16 lg:px-10 lg:py-24">
-        <h2 className="font-serif text-2xl font-normal text-ink-70">
-          Open roles
-        </h2>
-        <ul className="mt-8 border-t border-line">
-          {roles.map((role, i) => (
-            <Reveal key={role.title} index={i} as="li">
-              <Link
-                href={`/contact?role=${encodeURIComponent(role.title)}`}
-                className="group flex flex-col gap-2 border-b border-line py-7 transition-colors lg:hover:bg-surface sm:flex-row sm:items-center sm:justify-between"
-              >
-                <span className="font-serif text-xl text-ink lg:group-hover:text-accent lg:text-2xl">
-                  {role.title}
-                </span>
-                <span className="flex items-center gap-4 text-[13px] text-ink-55">
-                  {role.type}
-                  <span className="text-line-strong">/</span>
-                  {role.place}
-                  <ArrowUpRight
-                    size={16}
-                    weight="bold"
-                    className="text-ink-40 transition-colors lg:group-hover:text-accent"
-                  />
-                </span>
-              </Link>
-            </Reveal>
-          ))}
-        </ul>
-
-        <Reveal index={roles.length}>
-          <p className="mt-12 max-w-[52ch] text-[15px] leading-relaxed text-ink-70">
-            Don&rsquo;t see your role?{" "}
+        <Reveal>
+          <p className="max-w-[52ch] text-[15px] leading-relaxed text-ink-70">
+            We don&rsquo;t publish a fixed list of openings &mdash; write to
+            us with a short note about yourself and we&rsquo;ll get back to
+            you.{" "}
+            <Link
+              href="/contact"
+              className="link-underline font-medium text-ink"
+            >
+              Fill out the form
+            </Link>{" "}
+            or{" "}
             <a
               href={`mailto:${site.email}`}
               className="link-underline font-medium text-ink"
             >
-              Write to us
+              write to us
             </a>{" "}
-            anyway. We keep good people in mind for what&rsquo;s next.
+            directly.
           </p>
         </Reveal>
       </section>
