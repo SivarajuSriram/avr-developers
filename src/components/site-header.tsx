@@ -184,15 +184,27 @@ export function SiteHeader() {
     return () => io.disconnect();
   }, [pathname]);
 
-  // Lock body scroll while the mobile menu is open.
+  // Lock body scroll while the mobile menu is open. Compensate with
+  // padding-right for the width of the now-hidden scrollbar, otherwise the
+  // page content reflows wider the instant the scrollbar disappears — a
+  // visible jump/glitch on every scrollable page.
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    if (open) {
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.overflow = "hidden";
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    } else {
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
+    }
     return () => {
       document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
     };
   }, [open]);
 
   return (
+    <>
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
         solid
@@ -230,10 +242,14 @@ export function SiteHeader() {
         {/* spacer to balance the grid on mobile */}
         <div className="justify-self-end lg:hidden" aria-hidden />
       </div>
-
-      {/* mobile overlay menu */}
-      <MobileMenu open={open} onClose={() => setOpen(false)} />
     </header>
+
+    {/* mobile overlay menu — rendered outside <header> so its position:fixed
+        isn't trapped inside the header's containing block when backdrop-blur
+        is active (backdrop-filter creates a new containing block for fixed
+        descendants, which clipped this to the header's own height). */}
+    <MobileMenu open={open} onClose={() => setOpen(false)} />
+    </>
   );
 }
 
@@ -247,14 +263,28 @@ function MobileMenu({
   const items: NavItem[] = [...nav.left, ...nav.right];
   return (
     <div
-      className={`fixed inset-0 z-50 bg-canvas text-ink transition-[opacity,visibility] duration-[400ms] lg:hidden ${
-        open ? "visible opacity-100" : "invisible opacity-0"
+      className={`fixed inset-0 z-50 overflow-y-auto bg-canvas text-ink transition-[transform,visibility] duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] lg:hidden ${
+        open ? "visible translate-x-0" : "invisible translate-x-full"
       }`}
     >
       <div className="flex h-[72px] items-center justify-between px-5">
-        <span className="font-serif text-[22px] font-medium tracking-[0.18em]">
-          AVR
-        </span>
+        <Link
+          href="/"
+          onClick={() => {
+            scrollToTop();
+            onClose();
+          }}
+          aria-label="AVR Developers — home"
+          className="relative block h-9 w-[126px]"
+        >
+          <Image
+            src="/logo-cropped.png"
+            alt="AVR Developers"
+            fill
+            sizes="126px"
+            className="object-contain"
+          />
+        </Link>
         <button onClick={onClose} aria-label="Close menu" className="-m-2.5 p-2.5">
           <X size={24} />
         </button>
@@ -318,9 +348,9 @@ function MobileNavItem({
           expanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
         }`}
       >
-        <ul className="overflow-hidden pb-4 pl-4">
+        <ul className="overflow-hidden pl-4">
           {item.children.map((child) => (
-            <li key={child.label}>
+            <li key={child.label} className="last:pb-4">
               <Link
                 href={child.href}
                 onClick={onClose}
