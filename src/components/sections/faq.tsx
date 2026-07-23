@@ -9,7 +9,7 @@ const faqs = [
   },
   {
     q: "What configurations are on offer?",
-    a: "Evania offers light-filled 3.5 and 4 BHK corner residences. Our sister project Aurelia adds sky villas and penthouses in Narsingi.",
+    a: "Evania offers light-filled 3.5 and 4 BHK corner residences. Our sister project Avira adds sky villas and penthouses in Narsingi.",
   },
   {
     q: "Are your projects RERA-registered?",

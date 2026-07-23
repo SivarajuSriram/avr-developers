@@ -15,7 +15,7 @@ const quotes: Quote[] = [
   {
     body: "The team actually answered the hard questions on approvals and timelines. That honesty is why we booked.",
     name: "Aditya Verma",
-    role: "Bought at Aurelia",
+    role: "Bought at Avira",
   },
   {
     body: "Six months in and the courtyard is where my kids spend every evening. It changed how we live.",
@@ -30,7 +30,7 @@ const quotes: Quote[] = [
   {
     body: "The finish quality held up to what the sample flat promised. That alone put them above the others we shortlisted.",
     name: "Priya Nair",
-    role: "Bought at Aurelia",
+    role: "Bought at Avira",
   },
   {
     body: "We wanted a home our parents could visit and feel comfortable in too. The layout just works for three generations.",

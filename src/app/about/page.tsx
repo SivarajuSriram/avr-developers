@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { PageHeader } from "@/components/page-header";
-import { ParallaxImage } from "@/components/ui/parallax-image";
-import { Reveal } from "@/components/ui/reveal";
+import { AboutStory } from "@/components/sections/about-story";
+import { AboutTrackRecord } from "@/components/sections/about-track-record";
+import { AboutImageBand } from "@/components/sections/about-image-band";
+import { AboutHowWeBuild } from "@/components/sections/about-how-we-build";
+import { AboutLeadership } from "@/components/sections/about-leadership";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -19,151 +21,11 @@ export default function AboutPage() {
         title="Built on a long relationship with place."
         intro="Before AVR Developers, the AVR family spent decades stewarding prime real estate across Hyderabad. That patience shapes how we build today."
       />
-
-      {/* story */}
-      <section className="mx-auto max-w-[1400px] px-5 py-20 lg:px-10 lg:py-28">
-        <div className="grid gap-12 lg:grid-cols-12">
-          <Reveal className="lg:col-span-7">
-            <p className="font-serif text-2xl font-light leading-[1.4] text-ink sm:text-[1.7rem]">
-              We didn&rsquo;t start by buying land. We started by looking after
-              it, and learning what makes a place worth living in for the long
-              run.
-            </p>
-          </Reveal>
-          <Reveal index={1} className="lg:col-span-5 lg:pt-2">
-            <p className="text-[15px] leading-relaxed text-ink-70">
-              That background means we think in decades, not launches. We choose
-              locations we understand, design homes around daylight and open
-              green, and specify materials for how they age. Every AVR project
-              is a place we would be happy to hand to our own family.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* track record */}
-      <section className="border-y border-line bg-surface">
-        <div className="mx-auto grid max-w-[1400px] grid-cols-2 gap-y-12 px-5 py-20 lg:grid-cols-4 lg:px-10 lg:py-24">
-          {[
-            { n: "25+", l: "Years around Hyderabad real estate" },
-            { n: "34", l: "Floors at Evania, our flagship address" },
-            { n: "102", l: "Residences across Evania" },
-            { n: "100%", l: "RERA-registered projects" },
-          ].map((stat, i) => (
-            <Reveal key={stat.l} index={i}>
-              <div className="lg:px-4">
-                <p className="font-serif text-5xl font-light text-ink lg:text-6xl">
-                  {stat.n}
-                </p>
-                <p className="mt-3 max-w-[18ch] text-[13px] leading-relaxed text-ink-55">
-                  {stat.l}
-                </p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* image band */}
-      <section className="px-5 pt-20 lg:px-10 lg:pt-28">
-        <ParallaxImage
-          src="/evania/clubhouse-gym.webp"
-          alt="Inside Club Evania, AVR Developers' resident clubhouse"
-          sizes="100vw"
-          className="mx-auto aspect-[16/9] max-w-[1400px] rounded-sm"
-        />
-      </section>
-
-      {/* how we build */}
-      <section className="mx-auto max-w-[1400px] px-5 py-24 lg:px-10 lg:py-32">
-        <Reveal>
-          <p className="caps mb-4 text-[12px] font-medium text-accent">
-            How we build
-          </p>
-          <h2 className="max-w-[20ch] font-serif text-4xl font-light leading-[1.08] lg:text-5xl">
-            A slower, more deliberate way of working.
-          </h2>
-        </Reveal>
-        <div className="mt-16 grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-          {[
-            {
-              t: "Choose the ground carefully",
-              b: "We only build where we know the roads, the water table and where the city is genuinely heading next.",
-            },
-            {
-              t: "Design around the day",
-              b: "Plans begin with light, air and how a family actually moves through a home, long before square footage.",
-            },
-            {
-              t: "Specify for the long run",
-              b: "Materials and detailing are picked for how they age, so a home still feels right two decades on.",
-            },
-            {
-              t: "Build in the green",
-              b: "Courtyards, planted decks and shaded walks are part of the structure, never sold back as an upgrade.",
-            },
-            {
-              t: "Stay honest on timelines",
-              b: "Clear dates, straight answers on approvals, and no surprises between the brochure and the handover.",
-            },
-            {
-              t: "Stand behind the handover",
-              b: "The relationship doesn't end at possession. We're around long after the last family moves in.",
-            },
-          ].map((step, i) => (
-            <Reveal key={step.t} index={i % 3}>
-              <div className="border-t border-line pt-6">
-                <span className="font-serif text-2xl font-light text-accent">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <h3 className="mt-4 font-serif text-xl text-ink lg:text-2xl">
-                  {step.t}
-                </h3>
-                <p className="mt-3 text-[15px] leading-relaxed text-ink-70">
-                  {step.b}
-                </p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* leadership note */}
-      <section className="border-t border-line bg-surface">
-        <div className="mx-auto max-w-[1400px] px-5 py-24 lg:px-10 lg:py-32">
-          <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-            <Reveal className="lg:col-span-4">
-              <div className="relative aspect-[4/5] w-full max-w-[320px] overflow-hidden rounded-sm">
-                <Image
-                  src="/about/arya-reddy.jpg"
-                  alt="Arya Reddy, AVR Developers"
-                  fill
-                  sizes="(min-width: 1024px) 320px, 60vw"
-                  className="object-cover"
-                />
-              </div>
-              <p className="mt-6 text-[14px] font-medium text-ink">
-                Arya Reddy
-              </p>
-              <p className="text-[13px] text-ink-55">AVR Developers</p>
-            </Reveal>
-            <Reveal index={1} className="lg:col-span-8 lg:pt-2">
-              <p className="font-serif text-2xl font-light leading-[1.4] text-ink sm:text-[1.7rem]">
-                Building on a family legacy of 25+ years in Hyderabad real
-                estate.
-              </p>
-              <p className="mt-6 max-w-[60ch] text-[15px] leading-relaxed text-ink-70">
-                Arya holds a degree in Civil and Environmental Engineering
-                from Pennsylvania State University. He began his career with
-                Soletanche Bachy, working on defense infrastructure, before
-                returning to lead AVR&rsquo;s construction ventures &mdash;
-                building on his family&rsquo;s quarter-century in Hyderabad
-                real estate.
-              </p>
-            </Reveal>
-          </div>
-        </div>
-      </section>
+      <AboutStory />
+      <AboutTrackRecord />
+      <AboutImageBand />
+      <AboutHowWeBuild />
+      <AboutLeadership />
     </>
   );
 }

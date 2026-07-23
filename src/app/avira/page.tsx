@@ -3,13 +3,13 @@ import { notFound } from "next/navigation";
 import { ProjectPage } from "@/components/project-page";
 import { projects } from "@/lib/site";
 
-const project = projects.find((p) => p.slug === "aurelia");
+const project = projects.find((p) => p.slug === "avira");
 
 export const metadata: Metadata = {
-  title: "Aurelia — Sky Villas & Penthouses in Narsingi",
+  title: "Avira — Sky Villas & Penthouses in Narsingi",
   description:
-    "Aurelia by AVR Developers: double-height sky villas and penthouses in Narsingi, Hyderabad, with private decks and skyline views.",
-  alternates: { canonical: "/aurelia" },
+    "Avira by AVR Developers: double-height sky villas and penthouses in Narsingi, Hyderabad, with private decks and skyline views.",
+  alternates: { canonical: "/avira" },
 };
 
 export default function Page() {

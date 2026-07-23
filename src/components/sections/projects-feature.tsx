@@ -52,7 +52,7 @@ export function ProjectsFeature() {
                       <ul className="mt-6 flex flex-col gap-3 border-t border-line pt-6">
                         {project.highlights.slice(0, 4).map((item) => (
                           <li
-                            key={item}
+                            key={item.label}
                             className="flex items-center gap-3 text-[14px]"
                           >
                             <Check
@@ -60,7 +60,7 @@ export function ProjectsFeature() {
                               weight="bold"
                               className="shrink-0 text-accent"
                             />
-                            {item}
+                            {item.value ? `${item.value} ${item.label}` : item.label}
                           </li>
                         ))}
                       </ul>

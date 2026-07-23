@@ -28,6 +28,18 @@ export const site = {
   },
 } as const;
 
+export type Highlight = {
+  /* the real figure, when the highlight has one (e.g. "18,000 sq. ft.") */
+  value?: string;
+  /* caption under the value, or the whole highlight when there's no figure */
+  label: string;
+};
+
+export type ClubhouseSpace = {
+  label: string;
+  image: string;
+};
+
 export type Project = {
   slug: string;
   name: string;
@@ -36,14 +48,27 @@ export type Project = {
   location: string;
   rera?: string;
   blurb: string;
-  highlights: string[];
+  highlights: Highlight[];
   /* placeholder art — swap with real Evania renders */
   image: string;
   /* real photography, when available — falls back to `image` picsum seed when absent */
   heroImage?: string;
   sitePlanImage?: string;
   gallery?: { view: string; src: string }[];
-  connectivity?: { place: string; time: string }[];
+  /* project's own pin — enables the interactive map in the location section */
+  coordinates?: { lat: number; lng: number };
+  connectivity?: {
+    place: string;
+    time: string;
+    lat?: number;
+    lng?: number;
+    category?: "Commercial" | "Healthcare" | "Connectivity" | "Education" | "Recreation & Lifestyle";
+    /* preview photo for the map tooltip + mobile carousel card — placeholder art until real photography exists per landmark */
+    image?: string;
+  }[];
+  /* 2-level clubhouse room list, when a project has one worth calling out */
+  clubhouseSpaces?: ClubhouseSpace[];
+  floorPlans?: { config: string; image?: string }[];
 };
 
 export const projects: Project[] = [
@@ -55,50 +80,92 @@ export const projects: Project[] = [
     location: "Kokapet, Hyderabad",
     rera: "TG RERA P02400009394",
     blurb:
-      "Smartly designed 3.5 & 4 BHK residences crafted for the modern duo, with sleek architecture, rooftop lounges and wellness zones — 34 floors, 102 residences, minutes from the Financial District.",
+      "Smartly designed 3.5 & 4 BHK residences crafted for the modern duo, with sleek architecture, rooftop lounges and wellness zones — 102 residences, minutes from the Financial District.",
     highlights: [
-      "18,000 sq. ft. Club Evania",
-      "34 floors, 102 residences",
-      "3,315–3,575 sq. ft. homes",
-      "6-level dedicated parking",
-      "Rooftop terrace & cigar lounge",
+      { label: "Club Evania" },
+      { value: "102", label: "Residences" },
+      { label: "Dedicated parking" },
     ],
     image: "https://picsum.photos/seed/avr-evania-tower/1200/1500",
     heroImage: "/evania/rooftop.webp",
     sitePlanImage: "/evania/site-plan.webp",
     gallery: [
-      { view: "facade", src: "/evania/facade.webp" },
-      { view: "courtyard", src: "/evania/amenity-space.webp" },
-      { view: "pool", src: "/evania/clubhouse-exterior.webp" },
-      { view: "living", src: "/evania/clubhouse-yoga.webp" },
-      { view: "club", src: "/evania/clubhouse-interior.webp" },
+      { view: "balcony views", src: "/evania/facade.webp" },
+      { view: "rooftop terrace", src: "/evania/rooftop.webp" },
+      { view: "club evania lobby", src: "/evania/clubhouse-interior.webp" },
+      { view: "mini theatre", src: "/evania/mini-theatre.webp" },
+      { view: "rooftop lounge", src: "/evania/amenity-space.webp" },
+      { view: "pool deck", src: "/evania/clubhouse-exterior.webp" },
     ],
+    /* approximate landmark-level coordinates — good enough for a map pin, not survey-precise */
+    coordinates: { lat: 17.4058, lng: 78.3389 },
+    /* real connectivity figures, from the Evania landing page (avrdevelopers.in) */
     connectivity: [
-      { place: "Nehru Outer Ring Road", time: "1 min" },
-      { place: "Neopolis", time: "2 min" },
-      { place: "Financial District", time: "5 min" },
-      { place: "Gachibowli", time: "5 min" },
-      { place: "HITEC City", time: "15 min" },
-      { place: "Lingampally Railway Station", time: "20 min" },
-      { place: "RGI Airport", time: "35 min" },
+      { place: "Nehru Outer Ring Road", time: "1 min", lat: 17.4104, lng: 78.3272, category: "Connectivity", image: "https://picsum.photos/seed/avr-evania-orr/400/300" },
+      { place: "Neopolis", time: "2 min", lat: 17.4149, lng: 78.3324, category: "Commercial", image: "https://picsum.photos/seed/avr-evania-neopolis/400/300" },
+      { place: "Financial District", time: "5 min", lat: 17.4137, lng: 78.3466, category: "Commercial", image: "https://picsum.photos/seed/avr-evania-findistrict/400/300" },
+      { place: "Wipro Circle", time: "5 min", lat: 17.4419, lng: 78.3813, category: "Connectivity", image: "https://picsum.photos/seed/avr-evania-wipro/400/300" },
+      { place: "Leading hospitals", time: "8 min", lat: 17.4159, lng: 78.3475, category: "Healthcare", image: "https://picsum.photos/seed/avr-evania-hospitals/400/300" },
+      { place: "Leading schools", time: "10 min", lat: 17.4204, lng: 78.354, category: "Education", image: "https://picsum.photos/seed/avr-evania-schools/400/300" },
+      { place: "HITEC City", time: "15 min", lat: 17.4483, lng: 78.3915, category: "Commercial", image: "https://picsum.photos/seed/avr-evania-hitec/400/300" },
+      { place: "Rajiv Gandhi International Airport", time: "30 min", lat: 17.2403, lng: 78.4294, category: "Connectivity", image: "https://picsum.photos/seed/avr-evania-airport/400/300" },
+    ],
+    clubhouseSpaces: [
+      { label: "Reception Lobby", image: "/evania/clubhouse-interior.webp" },
+      { label: "Banquet Hall", image: "/evania/amenity-space.webp" },
+      { label: "Indoor Games", image: "/evania/clubhouse-exterior.webp" },
+      { label: "Mini Theatre", image: "/evania/mini-theatre.webp" },
+      { label: "Gym", image: "/evania/clubhouse-gym.webp" },
+      { label: "Yoga Room", image: "/evania/clubhouse-yoga.webp" },
+      { label: "Guest Rooms", image: "/evania/guest-room_compressed.webp" },
+    ],
+    floorPlans: [
+      {
+        config: "3.5 BHK Residence",
+        image: "/evania/floor-plan-gated.png",
+      },
+      {
+        config: "4 BHK Residence",
+        image: "/evania/floor-plan-gated.png",
+      },
     ],
   },
   {
-    slug: "aurelia",
-    name: "Aurelia",
+    slug: "avira",
+    name: "Avira",
     status: "Ongoing",
     configuration: "Sky Villas & Penthouses",
     location: "Narsingi, Hyderabad",
     blurb:
       "Double-height sky villas with private decks, framing uninterrupted views across the Outer Ring Road skyline.",
     highlights: [
-      "Private sky decks",
-      "Double-height living rooms",
-      "Rooftop infinity lounge",
-      "Panoramic ORR skyline views",
-      "Gated low-density enclave",
+      { label: "Private sky decks" },
+      { label: "Double-height living rooms" },
+      { label: "Rooftop infinity lounge" },
+      { label: "Panoramic ORR skyline views" },
+      { label: "Gated low-density enclave" },
     ],
-    image: "https://picsum.photos/seed/avr-aurelia-villa/1200/1500",
+    image: "https://picsum.photos/seed/avr-avira-villa/1200/1500",
+    /* same map location as Evania */
+    coordinates: { lat: 17.4058, lng: 78.3389 },
+    connectivity: [
+      { place: "Nehru Outer Ring Road", time: "1 min", lat: 17.4104, lng: 78.3272, category: "Connectivity", image: "https://picsum.photos/seed/avr-evania-orr/400/300" },
+      { place: "Neopolis", time: "2 min", lat: 17.4149, lng: 78.3324, category: "Commercial", image: "https://picsum.photos/seed/avr-evania-neopolis/400/300" },
+      { place: "Financial District", time: "5 min", lat: 17.4137, lng: 78.3466, category: "Commercial", image: "https://picsum.photos/seed/avr-evania-findistrict/400/300" },
+      { place: "Wipro Circle", time: "5 min", lat: 17.4419, lng: 78.3813, category: "Connectivity", image: "https://picsum.photos/seed/avr-evania-wipro/400/300" },
+      { place: "Leading hospitals", time: "8 min", lat: 17.4159, lng: 78.3475, category: "Healthcare", image: "https://picsum.photos/seed/avr-evania-hospitals/400/300" },
+      { place: "Leading schools", time: "10 min", lat: 17.4204, lng: 78.354, category: "Education", image: "https://picsum.photos/seed/avr-evania-schools/400/300" },
+      { place: "HITEC City", time: "15 min", lat: 17.4483, lng: 78.3915, category: "Commercial", image: "https://picsum.photos/seed/avr-evania-hitec/400/300" },
+      { place: "Rajiv Gandhi International Airport", time: "30 min", lat: 17.2403, lng: 78.4294, category: "Connectivity", image: "https://picsum.photos/seed/avr-evania-airport/400/300" },
+    ],
+    clubhouseSpaces: [
+      { label: "Reception Lobby", image: "https://picsum.photos/seed/avr-avira-lobby/1000/1250" },
+      { label: "Sky Lounge", image: "https://picsum.photos/seed/avr-avira-lounge/1000/1250" },
+      { label: "Infinity Pool Deck", image: "https://picsum.photos/seed/avr-avira-pool/1000/1250" },
+      { label: "Mini Theatre", image: "https://picsum.photos/seed/avr-avira-theatre/1000/1250" },
+      { label: "Gym", image: "https://picsum.photos/seed/avr-avira-gym/1000/1250" },
+      { label: "Guest Rooms", image: "https://picsum.photos/seed/avr-avira-guest/1000/1250" },
+    ],
   },
 ];
 
