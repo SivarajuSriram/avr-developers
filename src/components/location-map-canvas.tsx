@@ -53,11 +53,13 @@ function createPinIcon(isProject: boolean, iconUrl?: string) {
  */
 export function LocationMapCanvas({
   projectName,
+  projectImage,
   center,
   points,
   activeIndex,
 }: {
   projectName: string;
+  projectImage?: string;
   center: { lat: number; lng: number };
   points: MapPoint[];
   activeIndex: number | null;
@@ -100,6 +102,13 @@ export function LocationMapCanvas({
       zIndexOffset: 1000,
     }).addTo(map);
     projectMarkerRef.current = projectMarker;
+
+    if (projectImage) {
+      projectMarker.bindTooltip(
+        `<div class="tooltip-inner-custom"><img src="${projectImage}" class="tooltip-img" alt="${projectName}"></div>`,
+        { className: "custom-tooltip", direction: "auto", offset: [0, -50] },
+      );
+    }
 
     projectMarker.on("mouseover", () => {
       projectMarker.getElement()?.classList.add("iris-hovered");
@@ -188,15 +197,70 @@ export function LocationMapCanvas({
     return () => observer.disconnect();
   }, [points, center]);
 
+  /* mouse drag-to-scroll for the mobile carousel — touch already scrolls
+     natively via overflow-x + scroll-snap, this just adds the same feel
+     for a trackpad/mouse click-drag. A moved-flag suppresses the click
+     that would otherwise fire scrollIntoView after a drag. */
+  useEffect(() => {
+    const el = carouselRef.current;
+    if (!el) return;
+
+    let dragging = false;
+    let moved = false;
+    let startX = 0;
+    let startScroll = 0;
+
+    const onPointerDown = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse") return;
+      dragging = true;
+      moved = false;
+      startX = e.clientX;
+      startScroll = el.scrollLeft;
+      el.setPointerCapture(e.pointerId);
+      el.classList.add("is-dragging");
+    };
+    const onPointerMove = (e: PointerEvent) => {
+      if (!dragging) return;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 4) moved = true;
+      el.scrollLeft = startScroll - dx;
+    };
+    const endDrag = () => {
+      dragging = false;
+      el.classList.remove("is-dragging");
+    };
+    const onClickCapture = (e: MouseEvent) => {
+      if (moved) {
+        e.stopPropagation();
+        e.preventDefault();
+        moved = false;
+      }
+    };
+
+    el.addEventListener("pointerdown", onPointerDown);
+    el.addEventListener("pointermove", onPointerMove);
+    el.addEventListener("pointerup", endDrag);
+    el.addEventListener("pointercancel", endDrag);
+    el.addEventListener("click", onClickCapture, true);
+    return () => {
+      el.removeEventListener("pointerdown", onPointerDown);
+      el.removeEventListener("pointermove", onPointerMove);
+      el.removeEventListener("pointerup", endDrag);
+      el.removeEventListener("pointercancel", endDrag);
+      el.removeEventListener("click", onClickCapture, true);
+    };
+  }, []);
+
   return (
     <div className="relative h-full w-full">
-      <div ref={containerRef} className="h-full w-full" />
+      <div ref={containerRef} className="map-leaflet-container h-full w-full" />
       <div ref={carouselRef} className="mobile-image-carousel">
         <div
           className="carousel-item-card"
           data-id="project"
           onClick={(e) => e.currentTarget.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" })}
         >
+          {projectImage && <img src={projectImage} alt={projectName} loading="lazy" />}
           <div className="carousel-item-title">{projectName}</div>
         </div>
         {points.map((p, i) => (

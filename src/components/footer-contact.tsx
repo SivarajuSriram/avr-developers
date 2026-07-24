@@ -15,7 +15,7 @@ export function FooterContact() {
   return (
     <div
       id="contact"
-      className="grid grid-cols-1 scroll-mt-24 gap-12 border-b border-white/10 pb-16 lg:grid-cols-2 lg:gap-20"
+      className="grid grid-cols-1 scroll-mt-24 gap-10 border-b border-white/10 pt-12 pb-10 lg:grid-cols-2 lg:gap-20 lg:pt-16 lg:pb-12"
     >
       <div>
         <h2 className="max-w-[16ch] font-serif text-4xl font-light leading-[1.05] text-white lg:text-5xl">

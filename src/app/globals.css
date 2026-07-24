@@ -287,6 +287,17 @@ body {
   border-radius: 10px;
 }
 
+/* Leaflet's internal panes/tooltips/controls use z-index up to 700 (see
+   below) so pins and tooltips can pop out past the map's own edges. Without
+   `isolation`, those z-indices are compared in the page's root stacking
+   context instead of being scoped to the map — so they paint over the fixed
+   header and mobile nav overlay (both z-50) whenever the map section is
+   visible at the same time. Isolating the container keeps everything inside
+   it contained to its own stack. */
+.leaflet-container {
+  isolation: isolate;
+}
+
 /* map pins */
 .leaflet-pane,
 .leaflet-top,
@@ -449,7 +460,9 @@ body {
   background: rgba(251, 250, 246, 0.8) !important;
 }
 
-/* mobile image carousel — replaces the list on small screens */
+/* mobile image carousel — replaces the list on small screens, sits below
+   the map (not overlaid on top of it, which used to hide pins/zoom
+   controls) */
 .mobile-image-carousel {
   display: none;
 }
@@ -460,19 +473,35 @@ body {
   #map {
     height: 420px !important;
   }
+  /* only the leaflet map (which renders the mobile carousel) grows to fit
+     the map + carousel stacked vertically — the plain iframe fallback (no
+     coordinates on the project) keeps the fixed height above */
+  #map:has(.mobile-image-carousel) {
+    height: auto !important;
+    overflow: visible !important;
+    display: block;
+  }
+  .map-leaflet-container {
+    height: 380px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
   .mobile-image-carousel {
     display: flex;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     gap: 15px;
-    padding: 15px 10px;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 500;
+    margin-top: 32px;
+    padding: 2px 2px 6px;
+    position: static;
+    cursor: grab;
+    touch-action: pan-x;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+  }
+  .mobile-image-carousel.is-dragging {
+    cursor: grabbing;
+    scroll-snap-type: none;
   }
   .mobile-image-carousel::-webkit-scrollbar {
     display: none;
@@ -492,6 +521,7 @@ body {
     height: 140px;
     object-fit: cover;
     display: block;
+    pointer-events: none;
   }
   .carousel-item-title {
     position: absolute;

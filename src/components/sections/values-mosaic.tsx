@@ -9,7 +9,6 @@ type Tile =
       Icon: LucideIcon;
       title: string;
       body: string;
-      dropcap?: boolean;
     }
   | { type: "photo"; span: string; title: string; image: string }
   | { type: "quote"; span: string; title: string; body: string };
@@ -20,7 +19,6 @@ const tiles: Tile[] = [
     span: "lg:col-span-5",
     Icon: Clock,
     title: "Work Ethics",
-    dropcap: true,
     body: "Our work ethics are non-negotiable and our on-time deliverables are sacrosanct. If we have made a promise, we will deliver.",
   },
   {
@@ -56,7 +54,7 @@ export function ValuesMosaic() {
   return (
     <section className="border-b border-line bg-surface">
       <div className="mx-auto max-w-[1400px] px-5 py-20 lg:px-10 lg:py-28">
-        <div className="grid grid-cols-1 gap-6 lg:grid-flow-dense lg:auto-rows-[220px] lg:grid-cols-12 lg:gap-7">
+        <div className="grid grid-cols-1 gap-6 lg:grid-flow-dense lg:auto-rows-[minmax(220px,auto)] lg:grid-cols-12 lg:gap-7">
           {tiles.map((tile, i) => {
             if (tile.type === "photo") {
               return (
@@ -108,13 +106,7 @@ export function ValuesMosaic() {
                 <h3 className="mt-4 font-serif text-2xl font-light text-ink">
                   {tile.title}
                 </h3>
-                <p
-                  className={`mt-4 text-[15px] leading-relaxed text-ink-70 ${
-                    tile.dropcap
-                      ? "first-letter:float-left first-letter:pr-2 first-letter:font-serif first-letter:text-5xl first-letter:leading-[0.8] first-letter:text-accent"
-                      : ""
-                  }`}
-                >
+                <p className="mt-4 text-[15px] leading-relaxed text-ink-70">
                   {tile.body}
                 </p>
               </Reveal>

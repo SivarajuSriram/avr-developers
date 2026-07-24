@@ -28,7 +28,7 @@ export function Clubhouse({
     <section id="clubhouse" className="scroll-mt-32 border-t border-line">
       <div className="mx-auto max-w-[1400px] px-5 py-24 lg:px-10 lg:py-32">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-          <Reveal className="relative aspect-[4/5] overflow-hidden rounded-sm lg:aspect-[5/6] lg:col-span-6">
+          <Reveal className="relative order-2 aspect-[4/5] overflow-hidden rounded-sm lg:order-none lg:aspect-[5/6] lg:col-span-6">
             <AnimatePresence>
               <motion.div
                 key={spaces[active].image}
@@ -47,7 +47,7 @@ export function Clubhouse({
               </motion.div>
             </AnimatePresence>
           </Reveal>
-          <Reveal index={1} className="lg:col-span-6">
+          <Reveal index={1} className="order-1 lg:order-none lg:col-span-6">
             <p className="caps mb-4 text-[12px] font-medium text-accent">
               2-Level Clubhouse
             </p>

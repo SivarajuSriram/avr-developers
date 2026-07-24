@@ -125,8 +125,23 @@ export function ContactForm() {
             {projects.map((p) => (
               <option key={p.slug}>{p.name}</option>
             ))}
+            <option>Blog writing</option>
             <option>General enquiry</option>
           </select>
+        </Field>
+        <Field
+          label="Message"
+          htmlFor="message"
+          hint="Optional"
+          className="sm:col-span-2"
+        >
+          <textarea
+            id="message"
+            name="message"
+            rows={4}
+            className={`${inputCls} resize-none`}
+            placeholder="Tell us a bit more..."
+          />
         </Field>
       </div>
 
@@ -163,16 +178,18 @@ function Field({
   htmlFor,
   hint,
   error,
+  className,
   children,
 }: {
   label: string;
   htmlFor: string;
   hint?: string;
   error?: string;
+  className?: string;
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className={`flex flex-col gap-2 ${className ?? ""}`}>
       <label htmlFor={htmlFor} className="flex items-center justify-between text-[12px] font-medium text-ink-70">
         <span>{label}</span>
         {hint && <span className="text-ink-40">{hint}</span>}

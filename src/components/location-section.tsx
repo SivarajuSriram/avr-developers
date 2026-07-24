@@ -94,13 +94,18 @@ export function LocationSection({ project }: { project: Project }) {
             </div>
           </Reveal>
 
-          {/* right: interactive map (+ mobile image carousel, rendered inside the map component) */}
-          <Reveal index={2} className="lg:col-span-8">
+          {/* right: interactive map (+ mobile image carousel, rendered inside the map component).
+              min-w-0 is required: this grid column has no explicit track size on mobile (grid-cols-12
+              is lg:-only), so without it the browser auto-sizes the column to the carousel's
+              max-content width (a non-wrapping row of 70vw cards) instead of the viewport — blowing
+              the whole page out into horizontal overflow. */}
+          <Reveal index={2} className="min-w-0 lg:col-span-8">
             <div ref={mapWrapRef} id="map" className="relative h-[600px] w-full overflow-hidden rounded-md bg-canvas">
               {mapPoints ? (
                 mountMap && (
                   <LocationMapCanvas
                     projectName={project.name}
+                    projectImage={project.image}
                     center={project.coordinates!}
                     points={mapPoints}
                     activeIndex={activeIndex}

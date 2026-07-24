@@ -4,8 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { CaretDown, CaretRight, List, X } from "@phosphor-icons/react";
-import { nav } from "@/lib/site";
+import { CaretDown, CaretRight, List, Phone, X } from "@phosphor-icons/react";
+import { nav, site } from "@/lib/site";
 
 /** Smooth-scroll to the top of the page (used by the logo + Home link). */
 function scrollToTop() {
@@ -239,8 +239,14 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        {/* spacer to balance the grid on mobile */}
-        <div className="justify-self-end lg:hidden" aria-hidden />
+        {/* mobile call button (right on small screens) */}
+        <a
+          href={`tel:${site.phones[0].replace(/\s/g, "")}`}
+          aria-label={`Call ${site.phones[0]}`}
+          className="-m-2.5 justify-self-end p-2.5 lg:hidden"
+        >
+          <Phone size={22} />
+        </a>
       </div>
     </header>
 
@@ -354,7 +360,7 @@ function MobileNavItem({
               <Link
                 href={child.href}
                 onClick={onClose}
-                className="block py-2 font-sans text-[15px] text-ink-70"
+                className="block py-2 font-serif text-xl text-ink-70"
               >
                 {child.label}
               </Link>

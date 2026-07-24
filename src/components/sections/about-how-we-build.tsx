@@ -34,7 +34,7 @@ export function AboutHowWeBuild() {
         <p className="caps mb-4 text-[12px] font-medium text-accent">
           How we build
         </p>
-        <h2 className="max-w-[20ch] font-serif text-4xl font-light leading-[1.08] lg:text-5xl">
+        <h2 className="max-w-[20ch] font-serif text-4xl font-light leading-[1.08] lg:max-w-none lg:whitespace-nowrap lg:text-5xl">
           A slower, more deliberate way of working.
         </h2>
       </Reveal>

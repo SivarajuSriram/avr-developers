@@ -7,12 +7,12 @@ import { nav, projects, site } from "@/lib/site";
 export function SiteFooter() {
   return (
     <footer className="bg-ink-90 text-white/80">
-      <div className="mx-auto max-w-[1400px] px-5 py-20 lg:px-10 lg:py-28">
+      <div className="mx-auto max-w-[1400px] px-5 pb-12 lg:px-10 lg:pb-16">
         {/* contact (hidden on /contact — form already lives there) */}
         <FooterContact />
 
         {/* columns */}
-        <div className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-12 py-12 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <FooterLogo />
             <p className="mt-5 max-w-[30ch] text-[14px] leading-relaxed text-white/60">
