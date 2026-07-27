@@ -20,7 +20,7 @@ export function Hero() {
       <div className="absolute inset-0">
         <div className="kenburns absolute inset-0">
           <Image
-            src="https://picsum.photos/seed/avr-evania-hero/2400/1500"
+            src="/evania/facade.webp"
             alt="Evania by AVR Developers, luxury residences in Kokapet, Hyderabad"
             fill
             priority

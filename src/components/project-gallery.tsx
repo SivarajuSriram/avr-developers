@@ -77,8 +77,8 @@ export function ProjectGallery({
     }
 
     animating.current = true;
-    gsap.set(frame, { xPercent: 100, zIndex: 2 });
-    gsap.set(inner, { xPercent: -100 });
+    gsap.set(frame, { xPercent: dir * 100, zIndex: 2 });
+    gsap.set(inner, { xPercent: dir * -100 });
 
     const tl = gsap.timeline({
       onComplete: () => {

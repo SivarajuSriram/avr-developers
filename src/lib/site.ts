@@ -86,7 +86,7 @@ export const projects: Project[] = [
       { value: "102", label: "Residences" },
       { label: "Dedicated parking" },
     ],
-    image: "https://picsum.photos/seed/avr-evania-tower/1200/1500",
+    image: "/evania/facade.webp",
     heroImage: "/evania/rooftop.webp",
     sitePlanImage: "/evania/site-plan.webp",
     gallery: [

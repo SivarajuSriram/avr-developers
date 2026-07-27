@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight, CheckCircle, CaretDown } from "@phosphor-icons/react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import { projects } from "@/lib/site";
+import { INTEREST_OPTIONS, type Interest } from "@/lib/contact-interest";
 
 type Status = "idle" | "submitting" | "success" | "error";
 type Errors = Partial<Record<"name" | "email" | "phone", string>>;
@@ -18,13 +18,56 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  * country code is locked so it can't be deleted by accident).
  * TODO: wire `submit` to a real endpoint (Next route handler / email service);
  * right now it simulates a successful send.
+ *
+ * `bare` drops the outer border/bg/padding so the form can sit inside a card
+ * the parent already provides (e.g. the contact page's overlapping hero card).
  */
-export function ContactForm() {
+export function ContactForm({ bare = false }: { bare?: boolean } = {}) {
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Errors>({});
   const [phone, setPhone] = useState("");
   const [dialCode, setDialCode] = useState("91");
   const [countryCode, setCountryCode] = useState("in");
+  const [interest, setInterest] = useState<Interest>(INTEREST_OPTIONS[0]);
+  const [interestOpen, setInterestOpen] = useState(false);
+  const interestRef = useRef<HTMLDivElement>(null);
+  const phoneFieldRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const dropdown = phoneFieldRef.current?.querySelector(".flag-dropdown");
+    if (!dropdown) return;
+    // react-phone-input-2 auto-scrolls the country list to the selected
+    // country on open. Whatever row ends up straddling the top edge at that
+    // scroll offset gets clipped incorrectly by Chrome, leaving a sliver of
+    // its flag visible above the list — resetting the scroll to the top
+    // avoids landing on that broken offset (confirmed scrollTop 0 never
+    // glitches; any other offset can).
+    const observer = new MutationObserver(() => {
+      if (!dropdown.classList.contains("open")) return;
+      requestAnimationFrame(() => {
+        const list = phoneFieldRef.current?.querySelector<HTMLUListElement>(".country-list");
+        if (list) list.scrollTop = 0;
+      });
+    });
+    observer.observe(dropdown, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!interestOpen) return;
+    function onPointerDown(e: PointerEvent) {
+      if (!interestRef.current?.contains(e.target as Node)) setInterestOpen(false);
+    }
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") setInterestOpen(false);
+    }
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [interestOpen]);
 
   async function handleSubmit(e: any) {
     e.preventDefault();
@@ -54,7 +97,9 @@ export function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="flex flex-col items-start gap-4 rounded-md border border-line bg-surface p-8 text-ink">
+      <div
+        className={`flex flex-col items-start gap-4 text-ink ${bare ? "" : "rounded-md border border-line bg-surface p-8"}`}
+      >
         <CheckCircle size={32} weight="fill" className="text-accent" />
         <h3 className="font-serif text-2xl">Thank you.</h3>
         <p className="max-w-[42ch] text-[15px] leading-relaxed text-ink-70">
@@ -69,7 +114,7 @@ export function ContactForm() {
     <form
       onSubmit={handleSubmit}
       noValidate
-      className="rounded-md border border-line bg-surface p-6 text-ink sm:p-8"
+      className={`text-ink ${bare ? "" : "rounded-md border border-line bg-surface p-6 sm:p-8"}`}
     >
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <Field label="Full name" htmlFor="name" error={errors.name}>
@@ -82,7 +127,10 @@ export function ContactForm() {
           <div
             className={`flex w-full items-center rounded-sm border bg-canvas text-ink transition-colors focus-within:border-accent focus-within:ring-2 focus-within:ring-accent/20 overflow-visible ${errors.phone ? "border-accent" : "border-line-strong"}`}
           >
-            <div className="relative flex items-center bg-canvas border-r border-line-strong overflow-visible shrink-0">
+            <div
+              ref={phoneFieldRef}
+              className="relative flex items-center bg-canvas border-r border-line-strong overflow-visible shrink-0"
+            >
               
               <div className="flex items-center gap-1.5 px-2 py-3 pointer-events-none">
                  <div className="flex items-center gap-1">
@@ -120,14 +168,45 @@ export function ContactForm() {
             />
           </div>
         </Field>
-        <Field label="Interested in" htmlFor="project">
-          <select id="project" name="project" required defaultValue={projects[0].name} className={inputCls}>
-            {projects.map((p) => (
-              <option key={p.slug}>{p.name}</option>
-            ))}
-            <option>Blog writing</option>
-            <option>General enquiry</option>
-          </select>
+        <Field label="Interested in" htmlFor="interest-trigger">
+          <div ref={interestRef} className="relative">
+            <input type="hidden" name="interest" value={interest} />
+            <button
+              id="interest-trigger"
+              type="button"
+              aria-haspopup="listbox"
+              aria-expanded={interestOpen}
+              onClick={() => setInterestOpen((o) => !o)}
+              className={`${selectCls} flex items-center justify-between text-left`}
+            >
+              <span>{interest}</span>
+              <CaretDown
+                size={14}
+                className={`text-ink-55 shrink-0 transition-transform ${interestOpen ? "rotate-180" : ""}`}
+              />
+            </button>
+            {interestOpen && (
+              <ul
+                role="listbox"
+                className="absolute z-20 mt-1.5 w-full overflow-hidden rounded-sm border border-line-strong bg-canvas shadow-lg"
+              >
+                {INTEREST_OPTIONS.map((opt) => (
+                  <li key={opt} role="option" aria-selected={opt === interest}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setInterest(opt);
+                        setInterestOpen(false);
+                      }}
+                      className={`block w-full px-3 py-2 text-left text-[13px] transition-colors hover:bg-line/50 sm:px-4 sm:py-2.5 sm:text-[15px] ${opt === interest ? "text-accent" : "text-ink"}`}
+                    >
+                      {opt}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </Field>
         <Field
           label="Message"
@@ -172,6 +251,9 @@ export function ContactForm() {
 
 const inputCls =
   "w-full rounded-sm border border-line-strong bg-canvas px-4 py-3 text-[15px] text-ink outline-none transition-colors placeholder:text-ink-40 focus:border-accent focus:ring-2 focus:ring-accent/20";
+
+const selectCls =
+  "w-full rounded-sm border border-line-strong bg-canvas px-3 py-2 text-[13px] text-ink outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20 sm:px-4 sm:py-3 sm:text-[15px]";
 
 function Field({
   label,
