@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { PageHeader } from "@/components/page-header";
 import { AboutStory } from "@/components/sections/about-story";
-import { AboutTrackRecord } from "@/components/sections/about-track-record";
+// import { AboutTrackRecord } from "@/components/sections/about-track-record";
 import { AboutImageBand } from "@/components/sections/about-image-band";
 import { AboutHowWeBuild } from "@/components/sections/about-how-we-build";
 import { AboutLeadership } from "@/components/sections/about-leadership";
@@ -48,7 +48,7 @@ export default function AboutPage() {
         }
       />
       <AboutStory />
-      <AboutTrackRecord />
+      {/* <AboutTrackRecord /> */}
       <AboutImageBand />
       <AboutHowWeBuild />
       <AboutLeadership />
