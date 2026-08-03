@@ -2,34 +2,25 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ClockCountdown, ShieldCheck, HandCoins, Wrench } from "@phosphor-icons/react/dist/ssr";
 import { Reveal } from "@/components/ui/reveal";
 
 /* Illustrative differentiators — replace with confirmed copy before launch. */
 const reasons = [
   {
-    icon: ClockCountdown,
-    stat: "On Time",
-    label: "Every handover, on schedule",
-    detail: "We commit a date at booking and build to hit it, not push past it.",
+    stat: "WORK ETHICS",
+    detail: "Our work ethics are unwavering, and our commitments are sacred. Every promise we make is backed by our dedication to timely delivery and uncompromising quality.",
   },
   {
-    icon: ShieldCheck,
-    stat: "RERA",
-    label: "Fully compliant, always",
-    detail: "Every project registered and compliant, so your investment stays protected.",
+    stat: "UNCOMPROMISING INTEGRITY",
+    detail: "We stand for uncompromising integrity and complete transparency. Every detail is clear, every commitment is honest, and there is nothing hidden between the lines.",
   },
   {
-    icon: HandCoins,
-    stat: "No Fine Print",
-    label: "Transparent pricing",
-    detail: "The cost you're quoted at booking is the cost you pay at handover.",
+    stat: "ATTENTION TO DETAIL",
+    detail: "Attention to detail defines our approach. From thoughtful space planning and refined aesthetics to the direction of sunlight, natural breezes, and the timeless placement of sit-outs, every element is carefully considered to create spaces that feel balanced, beautiful, and purposeful.",
   },
   {
-    icon: Wrench,
-    stat: "In-House",
-    label: "Quality control, in-house",
-    detail: "We oversee construction quality directly, not through layers of contractors.",
+    stat: "UNDENIABLE EDGE",
+    detail: "Our ability to listen, respond, and take decisive action in the way our clientele values most gives us a distinct and undeniable competitive edge.",
   },
 ];
 
@@ -69,16 +60,12 @@ export function WhyChooseUs() {
               Why Choose Us
             </span>
             <h2 className="mt-4 max-w-[26ch] font-serif text-4xl font-light leading-[1.08] tracking-[-0.01em] lg:max-w-[34ch] lg:text-5xl">
-              A developer that treats every home like our own.
+              Our Core Values Guide Our Path.
             </h2>
           </Reveal>
           <Reveal index={1}>
             <p className="mt-6 max-w-[60ch] text-[15px] leading-relaxed text-ink-70 lg:max-w-[70ch]">
-              Twenty-five years in real estate taught us that trust is built
-              one handover at a time, in transparent pricing, honest
-              timelines and construction we&rsquo;d be happy to live in
-              ourselves. That&rsquo;s the standard behind everything we
-              build.
+              At AVR, homes are environments that inspire growth, happiness, and meaningful connections. Built with passion, purpose, and care, our communities bring people closer to nature, spirituality, and each other. OUR VALUES:
             </p>
           </Reveal>
         </div>
@@ -92,8 +79,8 @@ export function WhyChooseUs() {
                   key={r.stat}
                   type="button"
                   onClick={() => selectItem(i)}
-                  className={`flex items-baseline gap-3 border-b border-line py-4 text-left font-serif text-xl transition-colors duration-300 first:pt-0 lg:text-2xl ${
-                    i === active ? "text-ink" : "text-ink-25 hover:text-ink-55"
+                  className={`flex items-baseline gap-3 border-b border-line py-4 text-left font-serif text-xs transition-colors duration-300 first:pt-0 lg:text-xl ${
+                    i === active ? "text-ink" : "text-ink-25 lg:hover:text-ink-55"
                   }`}
                 >
                   <span
@@ -130,14 +117,10 @@ export function WhyChooseUs() {
               <div className="relative min-h-[280px] overflow-hidden bg-surface">
                 <AnimatePresence>
                   <motion.div key={active} {...pane} className="absolute inset-0 p-8 lg:p-10">
-                    <current.icon size={22} weight="bold" className="text-accent" />
-                    <p className="mt-6 font-serif text-3xl font-light leading-none text-ink lg:text-4xl">
+                    <p className="mt-5 text-[15px] font-medium text-ink md:mt-10">
                       {current.stat}
                     </p>
-                    <p className="mt-3 text-[15px] font-medium text-ink">
-                      {current.label}
-                    </p>
-                    <p className="mt-2 max-w-[42ch] text-[13.5px] leading-relaxed text-ink-55">
+                    <p className="mt-2 max-w-[60ch] text-[13.5px] leading-relaxed text-ink-55">
                       {current.detail}
                     </p>
                   </motion.div>

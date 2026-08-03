@@ -36,7 +36,7 @@ export function BlogPosts() {
                 <ArrowRight
                   size={15}
                   weight="bold"
-                  className="transition-transform duration-300 group-hover:translate-x-1"
+                  className="transition-transform duration-300 lg:group-hover:translate-x-1"
                 />
               </span>
             </div>
@@ -72,7 +72,7 @@ export function BlogPosts() {
                   <ArrowRight
                     size={13}
                     weight="bold"
-                    className="transition-transform duration-300 group-hover:translate-x-1"
+                    className="transition-transform duration-300 lg:group-hover:translate-x-1"
                   />
                 </span>
               </Link>

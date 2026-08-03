@@ -3,16 +3,16 @@ import { ParallaxImage } from "@/components/ui/parallax-image";
 
 const values = [
   {
-    title: "Considered by design",
-    body: "Every plan starts with how a day actually unfolds. Light, flow and privacy come before square footage.",
+    title: "Future-Focused Design:",
+    body: "Creating contemporary homes that evolve with changing lifestyles and aspirations.",
   },
   {
-    title: "Green as standard",
-    body: "Open courtyards, planted decks and shaded walks are built in, not sold as an upgrade.",
+    title: "Quality & Experience:",
+    body: "Delivering thoughtfully crafted spaces with premium amenities and lasting value.",
   },
   {
-    title: "Built to outlast trends",
-    body: "Materials and detailing chosen for how they age. A home that still feels right in twenty years.",
+    title: "Trust & Innovation:",
+    body: "Combining experience with fresh thinking to create meaningful living experiences.",
   },
 ];
 
@@ -37,9 +37,8 @@ export function Philosophy() {
       {/* overlay content */}
       <div className="relative mx-auto w-full max-w-[1400px] px-5 py-10 lg:px-10 lg:py-14">
         <Reveal>
-          <p className="max-w-[34ch] font-serif text-3xl font-light leading-[1.15] tracking-[-0.01em] sm:max-w-[42ch] sm:text-4xl lg:max-w-[46ch] lg:text-[2.75rem]">
-            We build homes the way we&rsquo;d want to live in them, for
-            people who are just getting started.
+          <p className="max-w-[34ch] font-serif text-2xl font-light leading-[1.15] tracking-[-0.01em] sm:max-w-[42ch] sm:text-3xl lg:max-w-[46ch] lg:text-4xl">
+            AVR Group creates new-age living spaces that respond to evolving lifestyles through fresh design, premium amenities, and a powerful blend of innovation, experience, and trust.
           </p>
         </Reveal>
 

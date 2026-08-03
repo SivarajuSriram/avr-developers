@@ -198,7 +198,7 @@ export function ContactForm({ bare = false }: { bare?: boolean } = {}) {
                         setInterest(opt);
                         setInterestOpen(false);
                       }}
-                      className={`block w-full px-3 py-2 text-left text-[13px] transition-colors hover:bg-line/50 sm:px-4 sm:py-2.5 sm:text-[15px] ${opt === interest ? "text-accent" : "text-ink"}`}
+                      className={`block w-full px-3 py-2 text-left text-[13px] transition-colors lg:hover:bg-line/50 sm:px-4 sm:py-2.5 sm:text-[15px] ${opt === interest ? "text-accent" : "text-ink"}`}
                     >
                       {opt}
                     </button>
@@ -235,7 +235,7 @@ export function ContactForm({ bare = false }: { bare?: boolean } = {}) {
         disabled={status === "submitting"}
         className="group mt-6 inline-flex items-center gap-3 rounded-sm bg-accent px-7 py-4 text-[13px] font-medium uppercase tracking-[0.1em] text-white transition-colors lg:hover:bg-accent-dark disabled:opacity-70"
       >
-        {status === "submitting" ? "Sending…" : "Send enquiry"}
+        {status === "submitting" ? "Submitting..." : "Submit"}
         {status !== "submitting" && (
           <ArrowRight size={16} weight="bold" className="transition-transform duration-300 lg:group-hover:translate-x-1" />
         )}

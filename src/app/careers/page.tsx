@@ -18,32 +18,12 @@ export default function CareersPage() {
       <PageHeader
         eyebrow="Careers"
         title="Join our team."
-        intro="Be part of a small team that values progress, real ownership and building things that last. Discover what it's like to grow with AVR Developers."
+        intro="Join a team where progress is celebrated, ownership is encouraged, and every contribution helps build something that lasts. Grow your career with AVR Developers."
         divider={false}
-        aside={
-          <div className="rounded-md border border-line bg-surface p-8 lg:ml-auto lg:max-w-sm">
-            <p className="text-[13px] font-medium text-ink">How to apply</p>
-            <p className="mt-2 max-w-[30ch] text-[13px] leading-relaxed text-ink-55">
-              We don&rsquo;t publish a fixed list of openings. Send a short
-              note about yourself and your work, and we&rsquo;ll get back to
-              you.
-            </p>
-            <Link
-              href="/contact"
-              className="link-underline group mt-4 inline-flex items-center gap-2 text-[14px] font-medium text-ink"
-            >
-              Fill out the form
-              <ArrowRight
-                size={15}
-                weight="bold"
-                className="transition-transform duration-300 group-hover:translate-x-1"
-              />
-            </Link>
-          </div>
-        }
+        centered
       />
-      <CareersWhyAvr />
-      <CareersHowHiringWorks />
+      {/** <CareersWhyAvr />
+      <CareersHowHiringWorks />*/}
     </>
   );
 }

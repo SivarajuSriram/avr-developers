@@ -69,7 +69,7 @@ function TopItem({ item }: { item: NavItem }) {
       <Link
         href={item.href}
         onClick={item.href === "/" ? scrollToTop : undefined}
-        className="link-underline caps py-2 text-[12.5px] font-medium transition-colors hover:text-accent"
+        className="link-underline caps py-2 text-[12.5px] font-medium transition-colors lg:hover:text-accent"
       >
         {item.label}
       </Link>
@@ -127,7 +127,7 @@ function TopItem({ item }: { item: NavItem }) {
               <Link
                 href={child.href}
                 onClick={dismiss}
-                className="flex items-center justify-center gap-4 rounded-sm px-4 py-3 font-serif text-[15px] transition-colors hover:bg-canvas hover:text-accent group-focus-within/sub:bg-canvas text-center w-full"
+                className="flex items-center justify-center gap-4 rounded-sm px-4 py-3 font-serif text-[15px] transition-colors lg:hover:bg-canvas lg:hover:text-accent group-focus-within/sub:bg-canvas text-center w-full"
               >
                 {child.label}
                 {child.children && (
@@ -144,7 +144,7 @@ function TopItem({ item }: { item: NavItem }) {
                         <Link
                           href={leaf.href}
                           onClick={dismiss}
-                          className="block rounded-sm px-4 py-2.5 font-serif text-[14.5px] transition-colors hover:bg-canvas hover:text-accent"
+                          className="block rounded-sm px-4 py-2.5 font-serif text-[14.5px] transition-colors lg:hover:bg-canvas lg:hover:text-accent"
                         >
                           {leaf.label}
                         </Link>

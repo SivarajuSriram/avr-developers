@@ -20,19 +20,27 @@ import { Reveal } from "@/components/ui/reveal";
 export function PageHeader({
   eyebrow,
   title,
+  titleClassName,
+  hideTitle = false,
   intro,
   image,
   aside,
   cta,
   divider = true,
+  centered = false,
 }: {
   eyebrow?: string;
-  title: string;
+  title: ReactNode;
+  titleClassName?: string;
+  /** Keeps the h1 for a11y/SEO but hides the eyebrow, title and intro visually — for heroes that only need the aside/cta on display. */
+  hideTitle?: boolean;
   intro?: string;
   image?: { src: string; alt: string; position?: string };
   aside?: ReactNode;
   cta?: { label: string; href: string };
   divider?: boolean;
+  /** Centers the eyebrow/title/intro block instead of the default left alignment. Only meaningful when there's no aside/right column. */
+  centered?: boolean;
 }) {
   // When there's a photo backdrop and no custom aside, the CTA fills the
   // empty right column as a glass card instead of sitting below the intro.
@@ -52,7 +60,7 @@ export function PageHeader({
           <ArrowRight
             size={16}
             weight="bold"
-            className="transition-transform duration-300 group-hover:translate-x-1"
+            className="transition-transform duration-300 lg:group-hover:translate-x-1"
           />
         </Link>
       </div>
@@ -85,25 +93,34 @@ export function PageHeader({
               : undefined
           }
         >
-          <div>
-            {eyebrow && (
+          <div className={centered ? "mx-auto max-w-2xl text-center" : undefined}>
+            {eyebrow && !hideTitle && (
               <Reveal>
                 <p
-                  className={`caps mb-5 text-[12px] font-medium ${image ? "text-white/80" : "text-accent"}`}
+                  className={`caps mb-5 text-[12px] font-medium ${image ? "text-white/80" : "text-accent"} ${centered ? "mx-auto" : ""}`}
                 >
                   {eyebrow}
                 </p>
               </Reveal>
             )}
-            <Reveal index={eyebrow ? 1 : 0}>
-              <h1 className="max-w-[18ch] font-serif text-5xl font-light leading-[1.02] tracking-[-0.01em] lg:text-7xl">
-                {title}
-              </h1>
-            </Reveal>
-            {intro && (
+            {hideTitle ? (
+              <h1 className="sr-only">{title}</h1>
+            ) : (
+              <Reveal index={eyebrow ? 1 : 0}>
+                <h1
+                  className={`${
+                    titleClassName ??
+                    "max-w-[18ch] font-serif text-5xl font-light leading-[1.02] tracking-[-0.01em] lg:text-7xl"
+                  } ${centered ? "mx-auto" : ""}`}
+                >
+                  {title}
+                </h1>
+              </Reveal>
+            )}
+            {intro && !hideTitle && (
               <Reveal index={eyebrow ? 2 : 1}>
                 <p
-                  className={`mt-8 max-w-[54ch] text-[15px] leading-relaxed lg:text-base ${image ? "text-white/75" : "text-ink-70"}`}
+                  className={`mt-8 max-w-[54ch] text-[15px] leading-relaxed lg:text-base ${image ? "text-white/75" : "text-ink-70"} ${centered ? "mx-auto" : ""}`}
                 >
                   {intro}
                 </p>
@@ -119,7 +136,7 @@ export function PageHeader({
                   <ArrowRight
                     size={16}
                     weight="bold"
-                    className="transition-transform duration-300 group-hover:translate-x-1"
+                    className="transition-transform duration-300 lg:group-hover:translate-x-1"
                   />
                 </Link>
               </Reveal>

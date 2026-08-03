@@ -1,70 +1,119 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight, Minus, Plus } from "lucide-react";
 import { Reveal } from "@/components/ui/reveal";
 
-const faqs = [
+export type FaqItem = { q: string; a: string };
+
+const defaultFaqs: FaqItem[] = [
   {
-    q: "Where is Evania located?",
-    a: "Evania sits in Kokapet, at the heart of Hyderabad's western corridor, minutes from the Financial District and the Outer Ring Road.",
+    q: "Where are your projects located?",
+    a: "AVR Developers’ projects are strategically located in Hyderabad’s most promising residential corridors, offering excellent connectivity to key business hubs, educational institutions, and lifestyle destinations. Our current developments include Evania and Avira, designed to deliver a premium living experience in well-connected locations.",
   },
   {
-    q: "What configurations are on offer?",
-    a: "Evania offers light-filled 3.5 and 4 BHK corner residences. Our sister project Avira adds sky villas and penthouses in Narsingi.",
+    q: "What configurations do you offer?",
+    a: "Our projects offer a range of thoughtfully designed residences in 3 BHK, 3.5 BHK, and 4 BHK configurations, catering to diverse lifestyle needs while ensuring spacious layouts, contemporary design, and superior comfort.",
   },
   {
-    q: "Are your projects RERA-registered?",
-    a: "Yes. Every AVR project is RERA-registered, and we share the registration number and sanctioned plans with you upfront.",
+    q: "Are your projects RERA registered?",
+    a: "Yes. AVR Developers’ projects are registered under Telangana RERA, ensuring transparency, regulatory compliance, and confidence for our customers throughout their home-buying journey.",
+  },
+  {
+    q: "Do you help with Home Loans?",
+    a: "We work with leading banks and can connect you with the right people to make financing straightforward.",
   },
   {
     q: "How do I arrange a site visit?",
-    a: "Tell us a little about what you're looking for and we'll set up a private, unhurried walk-through at a time that suits you.",
+    a: "Scheduling a site visit is simple. You can get in touch with our sales team, and our representatives will assist you with a convenient appointment, provide project details, and arrange a guided tour of the property.",
   },
 ];
 
-export function Faq() {
-  return (
-    <section className="border-t border-line bg-surface">
-      <div className="mx-auto max-w-[1400px] px-5 py-24 lg:px-10 lg:py-36">
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-4">
-            <Reveal>
-              <p className="caps mb-4 text-[12px] font-medium text-accent">
-                Questions
-              </p>
-              <h2 className="max-w-[14ch] font-serif text-4xl font-light leading-[1.05] tracking-[-0.01em] lg:text-5xl">
-                The things people ask first.
-              </h2>
-              <Link
-                href="/contact"
-                className="link-underline group mt-8 inline-flex items-center gap-2 text-[14px] font-medium text-ink"
-              >
-                Still have a question?
-                <ArrowRight
-                  size={15}
-                  weight="bold"
-                  className="text-accent transition-transform duration-300 lg:group-hover:translate-x-1"
-                />
-              </Link>
-            </Reveal>
-          </div>
+const defaultCta = { label: "Still have a question?", href: "/contact" };
 
-          <div className="lg:col-span-8">
-            <dl className="border-t border-line">
-              {faqs.map((item, i) => (
-                <Reveal key={item.q} index={i}>
-                  <div className="grid gap-3 border-b border-line py-8 lg:grid-cols-12 lg:gap-8">
-                    <dt className="font-serif text-xl text-ink lg:col-span-5">
-                      {item.q}
-                    </dt>
-                    <dd className="max-w-[52ch] text-[15px] leading-relaxed text-ink-70 lg:col-span-7">
+export function Faq({
+  eyebrow = "FAQs",
+  heading = "The things people ask first.",
+  faqs = defaultFaqs,
+  cta = defaultCta,
+}: {
+  eyebrow?: string;
+  heading?: string;
+  faqs?: FaqItem[];
+  /** Pass null to hide the link entirely (e.g. when this section already lives on the contact page). */
+  cta?: { label: string; href: string } | null;
+} = {}) {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  return (
+    <section className="border-t border-white/10 bg-ink-90 text-white/80">
+      <div className="w-full px-5 pb-2 pt-8 lg:px-10 lg:pb-6 lg:pt-10">
+        <Reveal>
+          <p className="caps mb-4 text-[12px] font-medium text-accent">
+            {eyebrow}
+          </p>
+          <h2 className="font-serif text-4xl font-light leading-[1.05] tracking-[-0.01em] lg:text-5xl lg:whitespace-nowrap">
+            {heading}
+          </h2>
+          {cta && (
+            <Link
+              href={cta.href}
+              className="link-underline group mt-8 inline-flex items-center gap-2 text-[14px] font-medium text-white"
+            >
+              {cta.label}
+              <ArrowRight
+                size={15}
+                strokeWidth={2.5}
+                className="text-accent transition-transform duration-300 lg:group-hover:translate-x-1"
+              />
+            </Link>
+          )}
+        </Reveal>
+
+        <dl className="mt-10 border-t border-white/10">
+          {faqs.map((item, i) => {
+            const isOpen = openIndex === i;
+            return (
+              <Reveal key={item.q} index={i}>
+                <div className="border-b border-white/10">
+                  <dt>
+                    <button
+                      type="button"
+                      onClick={() => setOpenIndex(isOpen ? null : i)}
+                      aria-expanded={isOpen}
+                      className="group flex w-full items-center justify-between gap-8 py-6 text-left"
+                    >
+                      <span className="font-serif text-xl text-white">
+                        {item.q}
+                      </span>
+                      <span
+                        className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/20 text-white transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                          isOpen ? "" : "lg:group-hover:rotate-[360deg]"
+                        }`}
+                      >
+                        {isOpen ? (
+                          <Minus size={16} strokeWidth={1.75} />
+                        ) : (
+                          <Plus size={16} strokeWidth={1.75} />
+                        )}
+                      </span>
+                    </button>
+                  </dt>
+                  <dd
+                    className={`grid overflow-hidden transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                      isOpen ? "grid-rows-[1fr] pb-8" : "grid-rows-[0fr]"
+                    }`}
+                  >
+                    <p className="max-w-[70ch] overflow-hidden text-[15px] leading-relaxed text-white/60">
                       {item.a}
-                    </dd>
-                  </div>
-                </Reveal>
-              ))}
-            </dl>
-          </div>
-        </div>
+                    </p>
+                  </dd>
+                </div>
+              </Reveal>
+            );
+          })}
+        </dl>
       </div>
     </section>
   );

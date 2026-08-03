@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { animate, useInView, useReducedMotion } from "motion/react";
 import { Reveal } from "@/components/ui/reveal";
-import type { Project } from "@/lib/site";
+import { site, type Project } from "@/lib/site";
 
 const LocationMapCanvas = dynamic(
   () => import("@/components/location-map-canvas").then((m) => m.LocationMapCanvas),
@@ -65,8 +65,8 @@ export function LocationSection({ project }: { project: Project }) {
       <div className="mx-auto max-w-[1400px] px-5 py-24 lg:px-10 lg:py-32">
         <Reveal>
           <p className="caps mb-4 text-[13px] font-medium text-accent">Proximity</p>
-          <h2 className="location-title max-w-[24ch] font-serif text-4xl font-light leading-[1.08] lg:text-5xl">
-            Where the city is heading.
+          <h2 className="location-title max-w-[34ch] font-serif text-4xl font-light leading-[1.08] lg:text-5xl">
+            {project.locationHeading ?? "A Location That Keeps You Ahead"}
           </h2>
         </Reveal>
 
@@ -113,9 +113,9 @@ export function LocationSection({ project }: { project: Project }) {
                 )
               ) : (
                 <iframe
-                  title={`Map — ${project.name}, ${project.location}`}
+                  title={`Map — ${project.name}, ${site.address.locality}`}
                   src={`https://www.google.com/maps?q=${encodeURIComponent(
-                    `${project.name}, ${project.location}`,
+                    `${project.name}, ${site.address.locality}, ${site.address.region}`,
                   )}&output=embed`}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"

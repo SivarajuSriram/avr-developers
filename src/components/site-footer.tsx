@@ -7,16 +7,19 @@ import { nav, projects, site } from "@/lib/site";
 export function SiteFooter() {
   return (
     <footer className="bg-ink-90 text-white/80">
-      <div className="mx-auto max-w-[1400px] px-5 pb-12 lg:px-10 lg:pb-16">
+      <div className="mx-auto max-w-[1400px] px-5 pb-4 lg:px-10 lg:pb-5">
         {/* contact (hidden on /contact — form already lives there) */}
         <FooterContact />
 
+        {/* homepage FAQ portals in here, right after the contact form */}
+        <div id="after-footer-form" />
+
         {/* columns */}
-        <div className="grid gap-12 py-12 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-x-8 gap-y-10 py-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_0.7fr_0.9fr_1fr] lg:gap-x-6">
           <div>
             <FooterLogo />
-            <p className="mt-5 max-w-[30ch] text-[14px] leading-relaxed text-white/60">
-              {site.tagline}. Crafting future-ready homes across Hyderabad.
+            <p className="mt-5 max-w-[38ch] text-[14px] leading-relaxed text-white/60">
+              Crafting future-ready spaces where thoughtful design, lasting value, and modern lifestyles come together.
             </p>
           </div>
 
@@ -47,10 +50,10 @@ export function SiteFooter() {
         </div>
 
         {/* legal + socials */}
-        <div className="flex flex-col gap-6 border-t border-white/10 pt-8 text-[12px] text-white/50 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-4 border-t border-white/10 pt-5 text-[12px] text-white/50 sm:flex-row sm:items-center sm:justify-between">
           <p>
             &copy; {new Date().getFullYear()} {site.legalName}. All rights
-            reserved. <span className="mx-1">·</span> {projects[0].rera}
+            reserved.
           </p>
           <SocialIcons />
         </div>

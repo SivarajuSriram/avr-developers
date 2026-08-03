@@ -16,7 +16,8 @@ export default function BlogPage() {
     <>
       <PageHeader
         eyebrow="Blog"
-        title="Stories from AVR."
+        title="Explore the AVR Journal"
+        titleClassName="max-w-[18ch] font-serif text-5xl font-light leading-[1.02] tracking-[-0.01em] lg:max-w-none lg:text-7xl lg:whitespace-nowrap"
         intro="Notes on Hyderabad real estate, the Kokapet corridor and life inside AVR homes."
         divider={false}
         aside={
@@ -33,7 +34,7 @@ export default function BlogPage() {
               <ArrowRight
                 size={15}
                 weight="bold"
-                className="transition-transform duration-300 group-hover:translate-x-1"
+                className="transition-transform duration-300 lg:group-hover:translate-x-1"
               />
             </Link>
           </div>

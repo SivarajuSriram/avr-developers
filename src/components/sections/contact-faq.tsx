@@ -1,6 +1,6 @@
-import { Reveal } from "@/components/ui/reveal";
+import { Faq, type FaqItem } from "@/components/sections/faq";
 
-const faqs = [
+const faqs: FaqItem[] = [
   {
     q: "Where are your site offices?",
     a: "Our primary experience centre is at Evania, Kokapet. We'll share exact directions and a parking note when we confirm your visit.",
@@ -25,33 +25,11 @@ const faqs = [
 
 export function ContactFaq() {
   return (
-    <section className="mx-auto max-w-[1400px] px-5 py-24 lg:px-10 lg:py-32">
-      <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-        <Reveal className="lg:col-span-4">
-          <p className="caps mb-4 text-[12px] font-medium text-accent">
-            Good to know
-          </p>
-          <h2 className="font-serif text-4xl font-light leading-[1.08] lg:text-5xl">
-            Common questions.
-          </h2>
-        </Reveal>
-        <div className="lg:col-span-8">
-          <dl className="border-t border-line">
-            {faqs.map((item, i) => (
-              <Reveal key={item.q} index={i}>
-                <div className="grid gap-3 border-b border-line py-8 lg:grid-cols-12 lg:gap-8">
-                  <dt className="font-serif text-xl text-ink lg:col-span-5">
-                    {item.q}
-                  </dt>
-                  <dd className="max-w-[52ch] text-[15px] leading-relaxed text-ink-70 lg:col-span-7">
-                    {item.a}
-                  </dd>
-                </div>
-              </Reveal>
-            ))}
-          </dl>
-        </div>
-      </div>
-    </section>
+    <Faq
+      eyebrow="Good to know"
+      heading="Common questions."
+      faqs={faqs}
+      cta={null}
+    />
   );
 }

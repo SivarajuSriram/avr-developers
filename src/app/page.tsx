@@ -5,17 +5,20 @@ import { Milestones } from "@/components/sections/milestones";
 import { Testimonials } from "@/components/sections/testimonials";
 import { WhyChooseUs } from "@/components/sections/why-choose-us";
 import { Faq } from "@/components/sections/faq";
+import { PortalMount } from "@/components/ui/portal-mount";
 
 export default function Home() {
   return (
     <>
       <Hero />
       <ProjectsFeature />
-      <Philosophy />
+      {/*<Philosophy />*/}
       {/* <Milestones /> */}
       <Testimonials />
-      <WhyChooseUs />
-      <Faq />
+      {/*<WhyChooseUs />*/}
+      <PortalMount targetId="after-footer-form">
+        <Faq />
+      </PortalMount>
     </>
   );
 }

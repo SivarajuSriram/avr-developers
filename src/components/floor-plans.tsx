@@ -5,20 +5,34 @@ import { Reveal } from "@/components/ui/reveal";
 
 type FloorPlan = { config: string; image?: string };
 
-export function FloorPlans({ name, plans }: { name: string; plans: FloorPlan[] }) {
+export function FloorPlans({
+  name,
+  heading,
+  plans,
+}: {
+  name: string;
+  heading?: string;
+  plans: FloorPlan[];
+}) {
   return (
     <section id="floor-plans" className="scroll-mt-32 border-t border-line">
       <div className="mx-auto max-w-[1400px] px-5 py-24 lg:px-10 lg:py-32">
-        <Reveal className="max-w-[46ch]">
+        <Reveal className="max-w-[70ch]">
           <p className="caps mb-4 text-[12px] font-medium text-accent">
-            Masterful Layouts
+            Layouts
           </p>
           <h2 className="font-serif text-4xl font-light leading-[1.08] lg:text-5xl">
-            Floor plans for {name}.
+            {heading ?? "A Blueprint for Inspired Living."}
           </h2>
         </Reveal>
 
-        <div className="mt-16 grid gap-6 sm:grid-cols-2">
+        <div
+          className={
+            plans.length === 1
+              ? "mx-auto mt-16 max-w-md"
+              : "mt-16 grid gap-6 sm:grid-cols-2"
+          }
+        >
           {plans.map((plan, i) => (
             <Reveal key={plan.config} index={i}>
               <FloorPlanCard plan={plan} />

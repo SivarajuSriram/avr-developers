@@ -49,12 +49,13 @@ export function Hero() {
       {/* overlay content */}
       <div className="relative z-10 mx-auto max-w-[1000px] px-5 text-center pt-24">
         <h1
-          className="rise mx-auto max-w-[18ch] font-serif text-[13vw] font-light leading-[1.02] tracking-[-0.01em] sm:text-6xl lg:text-[5.5rem]"
+          className="rise mx-auto max-w-[18ch] font-serif text-4xl font-light leading-[1.1] tracking-[-0.01em] sm:text-6xl lg:text-[5.5rem] lg:leading-[1.02]"
           style={{ "--i": 0 } as React.CSSProperties}
         >
-          The Address for the{" "}
+          Reshaping the
+          <br />
           <span className="inline-block pb-1 italic text-rose">
-            Young Spirited
+            DNA of Urban Living
           </span>
         </h1>
 
@@ -62,8 +63,7 @@ export function Hero() {
           className="rise mx-auto mt-7 max-w-[52ch] text-[15px] leading-relaxed text-white/85 lg:text-base"
           style={{ "--i": 1 } as React.CSSProperties}
         >
-          Future-ready residences in Kokapet, designed around light, greenery
-          and the way you actually want to live.
+          AVR Developers creates future-ready spaces where thoughtful design, lasting value, and modern lifestyles come together. 
         </p>
 
         <div
@@ -81,12 +81,12 @@ export function Hero() {
               className="transition-transform duration-300 lg:group-hover:translate-x-1"
             />
           </Link>
-          <Link
+          {/* <Link
             href="/contact"
             className="link-underline inline-flex items-center py-2 text-[13px] font-medium uppercase tracking-[0.1em] text-white"
           >
             Book a Visit
-          </Link>
+          </Link>*/}
         </div>
       </div>
     </section>

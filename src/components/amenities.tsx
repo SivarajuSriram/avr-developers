@@ -1,7 +1,5 @@
 "use client";
 
-import useEmblaCarousel from "embla-carousel-react";
-import AutoScroll from "embla-carousel-auto-scroll";
 import {
   Armchair,
   Waves,
@@ -17,48 +15,48 @@ import {
   Trophy,
   Landmark,
   Sparkles,
+  type LucideIcon,
 } from "lucide-react";
 import { Reveal } from "@/components/ui/reveal";
+import type { AmenityIconName, AmenityItem } from "@/lib/site";
 
-const DEFAULT_AMENITIES = [
-  { Icon: Armchair, label: "Resident-only Clubhouse" },
-  { Icon: Waves, label: "Infinity-edge Pool" },
-  { Icon: Dumbbell, label: "Fitness Studio" },
-  { Icon: TreePine, label: "Landscaped Courtyard" },
-  { Icon: Puzzle, label: "Children's Play Area" },
-  { Icon: ShieldCheck, label: "24×7 Gated Security" },
-  { Icon: Zap, label: "EV Charging Bays" },
-  { Icon: Leaf, label: "Yoga & Wellness Deck" },
-] as const;
+const ICONS: Record<AmenityIconName, LucideIcon> = {
+  armchair: Armchair,
+  waves: Waves,
+  dumbbell: Dumbbell,
+  treepine: TreePine,
+  puzzle: Puzzle,
+  shield: ShieldCheck,
+  zap: Zap,
+  leaf: Leaf,
+  clapperboard: Clapperboard,
+  party: PartyPopper,
+  pawprint: PawPrint,
+  trophy: Trophy,
+  landmark: Landmark,
+  sparkles: Sparkles,
+};
 
-/* Evania's real amenity set, from avrdevelopers.com/about-project — 18,000 sq ft Club Evania. */
-export const EVANIA_AMENITIES = [
-  { Icon: Armchair, label: "18,000 Sq. Ft. Club Evania" },
-  { Icon: Waves, label: "Adult & Kids Pool, Jacuzzi" },
-  { Icon: Dumbbell, label: "Fitness Station & Gym" },
-  { Icon: Leaf, label: "Yoga & Wellness Room" },
-  { Icon: Clapperboard, label: "Mini Theatre" },
-  { Icon: Sparkles, label: "Rooftop Designer Terrace" },
-  { Icon: PartyPopper, label: "Party & Celebration Lawn" },
-  { Icon: Puzzle, label: "Kids' Play Area" },
-  { Icon: TreePine, label: "Senior Citizen & Reflexology Garden" },
-  { Icon: Trophy, label: "Badminton, Pickleball & Basketball Courts" },
-  { Icon: Landmark, label: "Temple" },
-  { Icon: PawPrint, label: "Pet Park" },
-  { Icon: ShieldCheck, label: "24×7 Gated Security, 6-Level Parking" },
-] as const;
+/* generic placeholder set — only used when a project hasn't set its own amenityItems yet */
+const DEFAULT_AMENITIES: AmenityItem[] = [
+  { icon: "armchair", label: "Resident-only Clubhouse" },
+  { icon: "waves", label: "Infinity-edge Pool" },
+  { icon: "dumbbell", label: "Fitness Studio" },
+  { icon: "treepine", label: "Landscaped Courtyard" },
+  { icon: "puzzle", label: "Children's Play Area" },
+  { icon: "shield", label: "24×7 Gated Security" },
+  { icon: "zap", label: "EV Charging Bays" },
+  { icon: "leaf", label: "Yoga & Wellness Deck" },
+];
 
 export function Amenities({
-  name,
-  variant = "default",
+  heading,
+  items,
 }: {
-  name: string;
-  variant?: "default" | "evania";
+  heading?: string;
+  items?: AmenityItem[];
 }) {
-  const items = variant === "evania" ? EVANIA_AMENITIES : DEFAULT_AMENITIES;
-  const [emblaRef] = useEmblaCarousel({ loop: true, align: "start", dragFree: true }, [
-    AutoScroll({ speed: 0.5, startDelay: 0, stopOnMouseEnter: true, stopOnInteraction: false }),
-  ]);
+  const list = items ?? DEFAULT_AMENITIES;
 
   return (
     <section
@@ -71,26 +69,18 @@ export function Amenities({
         </Reveal>
         <Reveal index={1}>
           <h2 className="font-serif text-4xl font-light leading-[1.08] lg:whitespace-nowrap lg:text-5xl">
-            Everything a day at {name} could ask for.
+            {heading ?? "A 360° Experience"}
           </h2>
         </Reveal>
       </div>
 
-      <div
-        ref={emblaRef}
-        className="mt-16 overflow-hidden"
-        style={{
-          maskImage:
-            "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
-          WebkitMaskImage:
-            "linear-gradient(to right, transparent, black 5%, black 95%, transparent)",
-        }}
-      >
-        <ul className="flex gap-8 lg:gap-10">
-          {items.map(({ Icon, label }) => (
+      <ul className="mt-16 grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3 lg:grid-cols-4">
+        {list.map(({ icon, label }) => {
+          const Icon = ICONS[icon];
+          return (
             <li
               key={label}
-              className="group flex w-[150px] shrink-0 flex-col items-center gap-5 text-center sm:w-[170px]"
+              className="group flex flex-col items-center gap-5 text-center"
             >
               <Icon
                 size={44}
@@ -102,9 +92,9 @@ export function Amenities({
                 {label}
               </span>
             </li>
-          ))}
-        </ul>
-      </div>
+          );
+        })}
+      </ul>
     </section>
   );
 }

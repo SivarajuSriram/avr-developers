@@ -9,9 +9,15 @@ import type { ClubhouseSpace } from "@/lib/site";
 export function Clubhouse({
   spaces,
   projectName = "Evania",
+  eyebrow,
+  heading,
+  body,
 }: {
   spaces: ClubhouseSpace[];
   projectName?: string;
+  eyebrow?: string;
+  heading?: string;
+  body?: string;
 }) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -49,14 +55,14 @@ export function Clubhouse({
           </Reveal>
           <Reveal index={1} className="order-1 lg:order-none lg:col-span-6">
             <p className="caps mb-4 text-[12px] font-medium text-accent">
-              2-Level Clubhouse
+              {eyebrow ?? "2-Level Clubhouse"}
             </p>
-            <h2 className="max-w-[16ch] font-serif text-4xl font-light leading-[1.08] lg:text-5xl">
-              Life beyond the front door.
+            <h2 className="max-w-[45ch] font-serif text-4xl font-light leading-[1.08] lg:text-4xl">
+              {heading ?? "Your Private Haven of Leisure"}
             </h2>
             <p className="mt-6 max-w-[46ch] text-[15px] leading-relaxed text-ink-70">
-              A resident-only club spread across two levels, so the best part of
-              the day can happen without leaving home.
+              {body ??
+                "A thoughtfully curated clubhouse that offers spaces to relax, rejuvenate, and reconnect. Every corner is designed to complement your lifestyle and create meaningful experiences close to home."}
             </p>
             <ul
               className="mt-10 border-t border-line"

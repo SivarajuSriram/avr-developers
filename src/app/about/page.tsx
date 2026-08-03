@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { PageHeader } from "@/components/page-header";
-import { AboutStory } from "@/components/sections/about-story";
-// import { AboutTrackRecord } from "@/components/sections/about-track-record";
-import { AboutImageBand } from "@/components/sections/about-image-band";
-import { AboutHowWeBuild } from "@/components/sections/about-how-we-build";
+import { Philosophy } from "@/components/sections/philosophy";
+import { WhyChooseUs } from "@/components/sections/why-choose-us";
 import { AboutLeadership } from "@/components/sections/about-leadership";
+import { withBreaks } from "@/lib/with-breaks";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -20,8 +19,9 @@ export default function AboutPage() {
     <>
       <PageHeader
         eyebrow="About"
-        title="Built on a long relationship with place."
-        intro="Before AVR Developers, the AVR family spent decades stewarding prime real estate across Hyderabad. That patience shapes how we build today."
+        title={withBreaks("Excellence in Every|Square Foot")}
+        titleClassName="max-w-none font-serif text-4xl font-light leading-[1.15] tracking-[-0.01em] sm:text-5xl lg:text-[3.5rem] lg:leading-[1.05]"
+        intro="We believe great developments are built on strong foundations: quality, integrity, and customer trust. At AVR Developers, we deliver spaces designed to enrich lifestyles and create lasting value for generations."
         image={{
           src: "/evania/rooftop.webp",
           alt: "Aerial view of an AVR Developers project, set among mature greenery",
@@ -30,7 +30,7 @@ export default function AboutPage() {
         aside={
           <div className="rounded-md border border-white/15 bg-white/10 p-8 backdrop-blur-md lg:ml-auto lg:max-w-sm">
             <p className="font-serif text-2xl font-light leading-snug text-white">
-              A relationship with this city that predates our first
+              A relationship with Hyderabad that predates our first
               blueprint.
             </p>
             <Link
@@ -41,16 +41,18 @@ export default function AboutPage() {
               <ArrowRight
                 size={16}
                 weight="bold"
-                className="transition-transform duration-300 group-hover:translate-x-1"
+                className="transition-transform duration-300 lg:group-hover:translate-x-1"
               />
             </Link>
           </div>
         }
       />
-      <AboutStory />
+      {/*<AboutStory />*/}
       {/* <AboutTrackRecord /> */}
-      <AboutImageBand />
-      <AboutHowWeBuild />
+      {/*<AboutImageBand />*/}
+      <WhyChooseUs />
+      <Philosophy />
+      {/*<AboutHowWeBuild />*/}
       <AboutLeadership />
     </>
   );

@@ -66,7 +66,7 @@ export default async function BlogPostPage({
             <ArrowLeft
               size={14}
               weight="bold"
-              className="transition-transform duration-300 group-hover:-translate-x-1"
+              className="transition-transform duration-300 lg:group-hover:-translate-x-1"
             />
             Back to all stories
           </Link>

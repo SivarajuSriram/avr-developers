@@ -18,11 +18,11 @@ export function ProjectsFeature() {
         <div className="lg:col-span-5">
           <Reveal>
             <h2 className="font-serif text-4xl font-light leading-[1.05] tracking-[-0.01em] sm:text-5xl lg:text-[3.75rem]">
-              A world where
+              A World Where
               <br />
-              possibilities are
+              Possibilities Are
               <br />
-              <span className="italic text-accent">limitless.</span>
+              <span className="italic text-accent">Limitless.</span>
             </h2>
           </Reveal>
 
@@ -41,11 +41,6 @@ export function ProjectsFeature() {
                         hovered ? "opacity-100 delay-150" : "opacity-0"
                       }`}
                     >
-                      <p className="text-[13px] text-ink-55">
-                        {project.configuration}{" "}
-                        <span className="mx-1 text-rose">·</span>{" "}
-                        {project.location}
-                      </p>
                       <p className="mt-4 text-[15px] leading-relaxed text-ink-70">
                         {project.blurb}
                       </p>
@@ -78,7 +73,7 @@ export function ProjectsFeature() {
               <Link
                 href={`/${project.slug}`}
                 className="group relative block"
-                aria-label={`${project.name}, ${project.configuration} in ${project.location}`}
+                aria-label={`${project.name}, ${project.configuration}`}
                 onMouseEnter={() => setHovered(project.slug)}
                 onMouseLeave={() => setHovered(null)}
               >
@@ -101,10 +96,6 @@ export function ProjectsFeature() {
                     <h3 className="font-serif text-2xl font-normal tracking-[0.02em] transition-colors lg:group-hover:text-accent lg:text-[1.75rem]">
                       {project.name}
                     </h3>
-                    <p className="mt-1 text-[13px] text-ink-55">
-                      {project.configuration} <span className="mx-1 text-rose">·</span>{" "}
-                      {project.location}
-                    </p>
                   </div>
                   <span className="mt-1 grid size-11 shrink-0 place-items-center rounded-full border border-accent bg-accent text-white transition-colors duration-300 lg:border-line-strong lg:bg-transparent lg:text-ink lg:group-hover:border-accent lg:group-hover:bg-accent lg:group-hover:text-white">
                     <ArrowUpRight size={17} weight="bold" />

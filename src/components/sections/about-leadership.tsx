@@ -28,20 +28,19 @@ export function AboutLeadership() {
             Leadership
           </p>
           <p className="mt-6 font-serif text-2xl font-light leading-[1.4] text-ink sm:text-[1.7rem]">
-            &ldquo;Building on a family legacy of 25+ years in Hyderabad
-            real estate.&rdquo;
+            Building on a family legacy of <br/> 25+ years in Hyderabad real estate.
           </p>
           <p className="mt-4 text-[13px] font-medium text-ink">
             Arya Reddy{" "}
             <span className="font-normal text-ink-55">
-              &mdash; AVR Developers
+              - AVR Developers
             </span>
           </p>
           <p className="mx-auto mt-6 max-w-[52ch] text-[15px] leading-relaxed text-ink-70">
             Arya holds a degree in Civil and Environmental Engineering
             from Pennsylvania State University. He began his career with
             Soletanche Bachy, working on defense infrastructure, before
-            returning to lead AVR&rsquo;s construction ventures &mdash;
+            returning to lead AVR&rsquo;s construction ventures,
             building on his family&rsquo;s quarter-century in Hyderabad
             real estate.
           </p>
