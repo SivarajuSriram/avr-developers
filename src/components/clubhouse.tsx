@@ -26,7 +26,7 @@ export function Clubhouse({
     if (paused || spaces.length < 2) return;
     const id = setInterval(() => {
       setActive((i) => (i + 1) % spaces.length);
-    }, 3000);
+    }, 2000);
     return () => clearInterval(id);
   }, [active, paused, spaces.length]);
 

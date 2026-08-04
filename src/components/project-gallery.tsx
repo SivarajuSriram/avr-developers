@@ -90,9 +90,9 @@ export function ProjectGallery({
     });
 
     // soft curtain — gentle symmetric ease, no snap
-    tl.to(frame, { xPercent: 0, duration: 1.6, ease: "sine.inOut" }, 0).to(
+    tl.to(frame, { xPercent: 0, duration: 1.3, ease: "sine.inOut" }, 0).to(
       inner,
-      { xPercent: 0, duration: 1.6, ease: "sine.inOut" },
+      { xPercent: 0, duration: 1.3, ease: "sine.inOut" },
       0,
     );
   };

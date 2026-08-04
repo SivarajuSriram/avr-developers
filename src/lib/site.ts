@@ -249,12 +249,14 @@ export const projects: Project[] = [
     clubBody:
       "A place to connect, recharge, and celebrate. The clubhouse at AVIRA offers an inviting collection of spaces where wellness, leisure, and meaningful moments come together, making every day feel a little more rewarding.",
     clubhouseSpaces: [
-      { label: "Reception Lobby", image: "https://picsum.photos/seed/avr-avira-lobby/1000/1250" },
-      { label: "Sky Lounge", image: "https://picsum.photos/seed/avr-avira-lounge/1000/1250" },
-      { label: "Infinity Pool Deck", image: "https://picsum.photos/seed/avr-avira-pool/1000/1250" },
-      { label: "Mini Theatre", image: "https://picsum.photos/seed/avr-avira-theatre/1000/1250" },
-      { label: "Gym", image: "https://picsum.photos/seed/avr-avira-gym/1000/1250" },
-      { label: "Guest Rooms", image: "https://picsum.photos/seed/avr-avira-guest/1000/1250" },
+      { label: "Lobby with Seating", image: "https://picsum.photos/seed/avr-avira-lobby/1000/1250" },
+      { label: "Indoor Games", image: "https://picsum.photos/seed/avr-avira-lounge/1000/1250" },
+      { label: "Co-working space", image: "https://picsum.photos/seed/avr-avira-pool/1000/1250" },
+      { label: "Creche", image: "https://picsum.photos/seed/avr-avira-theatre/1000/1250" },
+      { label: "Pilates Studio", image: "https://picsum.photos/seed/avr-avira-gym/1000/1250" },
+      { label: "Gym", image: "https://picsum.photos/seed/avr-avira-guest/1000/1250" },
+      { label: "Steam room", image: "https://picsum.photos/seed/avr-avira-guest/1000/1250" },
+      { label: "Guest rooms", image: "https://picsum.photos/seed/avr-avira-guest/1000/1250" },
     ],
     /* placeholder — swap for the real 3 BHK plan image */
     floorPlansHeading:"See the Lifestyle Unfold",
