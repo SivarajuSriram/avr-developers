@@ -261,7 +261,7 @@ export const projects: Project[] = [
     /* placeholder — swap for the real 3 BHK plan image */
     floorPlansHeading:"See the Lifestyle Unfold",
     floorPlans: [{ config: "3 BHK Residence", image: "/evania/floor-plan-gated.png" }],
-    galleryHeading:"See the Lifestyle Unfold",
+    galleryHeading:"A Glimpse of the Good Life at Avira",
     locationHeading:"Connected to What Matters",
   },
 ];
