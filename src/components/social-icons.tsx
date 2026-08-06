@@ -1,11 +1,9 @@
-"use client";
-
 import {
   FacebookLogo,
   InstagramLogo,
   XLogo,
   YoutubeLogo,
-} from "@phosphor-icons/react";
+} from "@phosphor-icons/react/dist/ssr";
 import { site } from "@/lib/site";
 
 const SOCIALS = [

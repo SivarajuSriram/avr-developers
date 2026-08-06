@@ -1,15 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { useReducedMotion } from "motion/react";
 import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
+import { ResponsiveImage } from "@/components/ui/responsive-image";
 
 type Gsap = typeof import("gsap")["gsap"];
-type GalleryItem = { view: string; src: string };
-
-/* Fallback views for projects without real photography yet (e.g. Avira). */
-const VIEWS = ["facade", "courtyard", "pool", "living", "club"] as const;
+type GalleryItem = { view: string; src: string; mobileSrc?: string };
 
 const AUTO_ADVANCE_DELAY = 3000;
 
@@ -31,15 +28,13 @@ const AUTO_ADVANCE_DELAY = 3000;
  * wrong "next" frame. Only the first frame is eager; the rest lazy-load.
  */
 export function ProjectGallery({
-  slug,
   name,
   gallery,
 }: {
-  slug: string;
   name: string;
-  gallery?: GalleryItem[];
+  gallery: GalleryItem[];
 }) {
-  const views = gallery?.length ? gallery.map((g) => g.view) : VIEWS;
+  const views = gallery.map((g) => g.view);
   const indexRef = useRef(0);
   const gsapRef = useRef<Gsap | null>(null);
   const animating = useRef(false);
@@ -139,10 +134,10 @@ export function ProjectGallery({
               }}
               className="absolute inset-0"
             >
-              <Image
-                src={gallery?.[i]?.src ?? `https://picsum.photos/seed/avr-${slug}-${view}/1760/1200`}
+              <ResponsiveImage
+                src={gallery[i].src}
+                mobileSrc={gallery[i].mobileSrc}
                 alt={`${name} — ${view}`}
-                fill
                 priority={i === 0}
                 loading={i === 0 ? undefined : "lazy"}
                 sizes="100vw"
@@ -158,16 +153,16 @@ export function ProjectGallery({
       <button
         onClick={() => go(-1)}
         aria-label="Previous image"
-        className="group absolute left-5 top-1/2 z-20 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-white/95 text-ink shadow-[0_10px_30px_-8px_rgba(0,0,0,0.4)] backdrop-blur transition lg:hover:bg-white lg:left-8 lg:size-14"
+        className="group absolute left-5 top-1/2 z-20 grid size-9 -translate-y-1/2 place-items-center rounded-full bg-white/95 text-ink shadow-[0_10px_30px_-8px_rgba(0,0,0,0.4)] backdrop-blur transition lg:hover:bg-white lg:left-8 lg:size-11"
       >
-        <ArrowLeft size={20} className="transition-transform duration-300 lg:group-hover:-translate-x-0.5" />
+        <ArrowLeft size={16} className="transition-transform duration-300 lg:group-hover:-translate-x-0.5" />
       </button>
       <button
         onClick={() => go(1)}
         aria-label="Next image"
-        className="group absolute right-5 top-1/2 z-20 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-white/95 text-ink shadow-[0_10px_30px_-8px_rgba(0,0,0,0.4)] backdrop-blur transition lg:hover:bg-white lg:right-8 lg:size-14"
+        className="group absolute right-5 top-1/2 z-20 grid size-9 -translate-y-1/2 place-items-center rounded-full bg-white/95 text-ink shadow-[0_10px_30px_-8px_rgba(0,0,0,0.4)] backdrop-blur transition lg:hover:bg-white lg:right-8 lg:size-11"
       >
-        <ArrowRight size={20} className="transition-transform duration-300 lg:group-hover:translate-x-0.5" />
+        <ArrowRight size={16} className="transition-transform duration-300 lg:group-hover:translate-x-0.5" />
       </button>
     </section>
   );

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FooterContact } from "@/components/footer-contact";
+import { FooterFaq } from "@/components/footer-faq";
 import { FooterLogo } from "@/components/footer-logo";
 import { SocialIcons } from "@/components/social-icons";
 import { nav, projects, site } from "@/lib/site";
@@ -11,8 +12,8 @@ export function SiteFooter() {
         {/* contact (hidden on /contact — form already lives there) */}
         <FooterContact />
 
-        {/* homepage FAQ portals in here, right after the contact form */}
-        <div id="after-footer-form" />
+        {/* homepage FAQ, right after the contact form */}
+        <FooterFaq />
 
         {/* columns */}
         <div className="grid gap-x-8 gap-y-10 py-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_0.7fr_0.9fr_1fr] lg:gap-x-6">

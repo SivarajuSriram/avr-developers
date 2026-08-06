@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Spectral } from "next/font/google";
 import "./globals.css";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { site } from "@/lib/site";
 
@@ -83,15 +81,13 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${geist.variable} ${spectral.variable}`}>
-      <body className="flex min-h-dvh flex-col bg-canvas text-ink" suppressHydrationWarning>
+      <body className="bg-canvas text-ink" suppressHydrationWarning>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
         <ScrollToTop />
-        <SiteHeader />
-        <main className="flex-1">{children}</main>
-        <SiteFooter />
+        {children}
       </body>
     </html>
   );

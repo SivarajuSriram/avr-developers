@@ -1,5 +1,5 @@
 import { Reveal } from "@/components/ui/reveal";
-import { ParallaxImage } from "@/components/ui/parallax-image";
+import { CoverImage } from "@/components/ui/cover-image";
 
 const values = [
   {
@@ -24,8 +24,10 @@ export function Philosophy() {
     >
       {/* background */}
       <div className="absolute inset-0">
-        <ParallaxImage
-          src="/evania/clubhouse-exterior.webp"
+        <CoverImage
+          src="/about/about-section.webp"
+          /* drop the mobile-res render at this path once available */
+          mobileSrc={undefined}
           alt="Club Evania, an AVR Developers residence"
           sizes="100vw"
           className="h-full w-full"

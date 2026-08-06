@@ -6,6 +6,7 @@ import { Clubhouse } from "@/components/clubhouse";
 import { FloorPlans } from "@/components/floor-plans";
 import { LocationSection } from "@/components/location-section";
 import { Reveal } from "@/components/ui/reveal";
+import { ResponsiveImage } from "@/components/ui/responsive-image";
 import { site, type Project } from "@/lib/site";
 import { withBreaks, paragraphs } from "@/lib/with-breaks";
 
@@ -35,12 +36,12 @@ export function ProjectPage({ project }: { project: Project }) {
       {/* hero */}
       <section
         id="hero"
-        className="relative flex min-h-[86dvh] flex-col justify-end overflow-hidden text-white"
+        className="relative flex min-h-dvh flex-col justify-end overflow-hidden text-white"
       >
-        <Image
-          src={project.heroImage ?? project.image.replace("/1200/1500", "/2400/1500")}
+        <ResponsiveImage
+          src={project.heroImage ?? project.image}
+          mobileSrc={project.heroImageMobile}
           alt={`${project.name} by AVR Developers`}
-          fill
           priority
           sizes="100vw"
           quality={72}
@@ -59,7 +60,7 @@ export function ProjectPage({ project }: { project: Project }) {
 
       {/* about */}
       <section id="about" className="mx-auto max-w-[1400px] scroll-mt-32 px-5 py-24 lg:px-10 lg:py-32">
-        <div className="grid gap-12 lg:grid-cols-12">
+        <div className="grid items-start gap-12 lg:grid-cols-12">
           <Reveal className="lg:col-span-7">
             <h2 className="font-serif text-4xl font-light leading-[1.08] lg:text-5xl">
               {withBreaks(project.aboutHeading ?? "Homes For The New-age|Living Stories")}
@@ -99,12 +100,12 @@ export function ProjectPage({ project }: { project: Project }) {
       {/* site plan */}
       <section id="site-plan" className="scroll-mt-32 px-5 lg:px-10">
         <div className="relative mx-auto aspect-[250/217] max-w-[1330px]">
-          <Image
-            src={project.sitePlanImage ?? project.image.replace("/1200/1500", "/2000/1100")}
+          <ResponsiveImage
+            src={project.sitePlanImage ?? project.image}
+            mobileSrc={project.sitePlanImageMobile}
             alt={`${project.name} master site plan`}
-            fill
             sizes="100vw"
-            className="object-contain"
+            className="object-cover"
           />
         </div>
       </section>
@@ -114,7 +115,11 @@ export function ProjectPage({ project }: { project: Project }) {
 
       {/* video walkthrough */}
       {project.videoId && (
-        <ProjectVideo videoId={project.videoId} title={project.videoTitle ?? project.name} />
+        <ProjectVideo
+          videoId={project.videoId}
+          title={project.videoTitle ?? project.name}
+          playButton={project.videoPlayButton}
+        />
       )}
 
       {/* clubhouse */}
@@ -142,7 +147,7 @@ export function ProjectPage({ project }: { project: Project }) {
 
       {/* floor plans (gated) */}
       {project.floorPlans?.length ? (
-        <FloorPlans name={project.name} heading={project.floorPlansHeading} plans={project.floorPlans} />
+        <FloorPlans heading={project.floorPlansHeading} plans={project.floorPlans} />
       ) : null}
 
       {/* gallery (full-bleed carousel) */}
@@ -160,7 +165,7 @@ export function ProjectPage({ project }: { project: Project }) {
           </Reveal>
         </div>
         <div className="mt-14">
-          <ProjectGallery slug={project.slug} name={project.name} gallery={project.gallery} />
+          <ProjectGallery name={project.name} gallery={project.gallery ?? []} />
         </div>
       </div>
 

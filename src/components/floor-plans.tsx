@@ -3,14 +3,12 @@ import Image from "next/image";
 import { ArrowRight, LockSimpleOpen } from "@phosphor-icons/react/dist/ssr";
 import { Reveal } from "@/components/ui/reveal";
 
-type FloorPlan = { config: string; image?: string };
+type FloorPlan = { config: string; image: string };
 
 export function FloorPlans({
-  name,
   heading,
   plans,
 }: {
-  name: string;
   heading?: string;
   plans: FloorPlan[];
 }) {
@@ -30,7 +28,7 @@ export function FloorPlans({
           className={
             plans.length === 1
               ? "mx-auto mt-16 max-w-md"
-              : "mt-16 grid gap-6 sm:grid-cols-2"
+              : "mx-auto mt-16 grid gap-6 sm:grid-cols-2"
           }
         >
           {plans.map((plan, i) => (
@@ -50,11 +48,12 @@ function FloorPlanCard({ plan }: { plan: FloorPlan }) {
       href="/contact"
       className="group block overflow-hidden rounded-sm border border-line bg-surface transition-colors lg:hover:border-line-strong"
     >
-      <div className="relative aspect-[4/3] overflow-hidden">
+      <div className="relative aspect-[4/3] w-full overflow-hidden">
         <Image
-          src={plan.image ?? `https://picsum.photos/seed/${plan.config}/900/700`}
+          src={plan.image}
           alt=""
           fill
+          quality={20}
           sizes="(max-width: 640px) 100vw, 50vw"
           className="scale-110 object-cover blur-lg"
         />

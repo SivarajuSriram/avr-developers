@@ -46,8 +46,13 @@
 
 html {
   -webkit-text-size-adjust: 100%;
-  /* No CSS smooth-scroll: it fights GSAP ScrollTrigger and makes the
-     parallax glitch. Smooth scroll-to-top is driven in JS instead. */
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
@@ -104,26 +109,6 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .rise,
   .img-in {
-    animation: none;
-  }
-}
-
-/* slow cinematic drift on the fullscreen hero background */
-@keyframes kenburns {
-  from {
-    transform: scale(1.02);
-  }
-  to {
-    transform: scale(1.12);
-  }
-}
-.kenburns {
-  animation: kenburns 20s ease-out both;
-  will-change: transform;
-  transform: translateZ(0);
-}
-@media (prefers-reduced-motion: reduce) {
-  .kenburns {
     animation: none;
   }
 }
@@ -543,11 +528,12 @@ body {
     background: var(--color-ink);
     cursor: pointer;
   }
-  .carousel-item-card img {
+  .carousel-item-card .carousel-img-wrap {
+    position: relative;
     width: 100%;
     height: 140px;
-    object-fit: cover;
-    display: block;
+  }
+  .carousel-item-card img {
     pointer-events: none;
   }
   .carousel-item-title {
@@ -568,7 +554,7 @@ body {
 .link-underline {
   background-image: linear-gradient(currentColor, currentColor);
   background-size: 0% 1px;
-  background-position: 0 100%;
+  background-position: 0 var(--underline-offset, 100%);
   background-repeat: no-repeat;
   transition: background-size 0.4s var(--ease-luxe);
 }

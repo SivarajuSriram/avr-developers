@@ -1,15 +1,8 @@
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
+import { ResponsiveImage } from "@/components/ui/responsive-image";
 
-/**
- * Fullscreen banner hero with a video/image background and a centered text
- * overlay. next/image provides a fast-LCP base layer; the <video> plays over
- * it when present (falls back to the image if the source is missing).
- *
- * TODO: drop the real loop at /public/video/hero-loop.mp4 (muted, ~1080p,
- * under ~4MB, H.264) and a poster still. Until then the image is the banner.
- */
+/** Fullscreen banner hero with an image background and a centered text overlay. */
 export function Hero() {
   return (
     <section
@@ -18,29 +11,15 @@ export function Hero() {
     >
       {/* background */}
       <div className="absolute inset-0">
-        <div className="kenburns absolute inset-0">
-          <Image
-            src="/evania/facade.webp"
-            alt="Evania by AVR Developers, luxury residences in Kokapet, Hyderabad"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
-          {/* Temporarily disabled until video is available
-          <video
-            className="absolute inset-0 h-full w-full object-cover"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="none"
-            aria-hidden
-          >
-            <source src="/video/hero-loop.mp4" type="video/mp4" />
-          </video>
-          */}
-        </div>
+        <ResponsiveImage
+          src="/Home-page-hero.webp"
+          /* drop the mobile-res render at this path once available */
+          mobileSrc="/home-page-hero-mobile.webp"
+          alt="Evania by AVR Developers, luxury residences in Kokapet, Hyderabad"
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
         {/* legibility scrims */}
         <div className="absolute inset-0 bg-ink/45" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/15 to-ink/35" />

@@ -1,19 +1,20 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, CheckCircle, CaretDown } from "@phosphor-icons/react";
+import { useRouter } from "next/navigation";
+import { ArrowRight, CaretDown } from "@phosphor-icons/react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { INTEREST_OPTIONS, type Interest } from "@/lib/contact-interest";
 
-type Status = "idle" | "submitting" | "success" | "error";
+type Status = "idle" | "submitting" | "error";
 type Errors = Partial<Record<"name" | "email" | "phone", string>>;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
  * Reusable enquiry form. Self-contained light card (works on any background).
- * Client-side validation with full idle/submitting/success/error states.
+ * Client-side validation; redirects to /thank-you on success.
  * Phone uses react-phone-input-2 (searchable, scrollable country list; the
  * country code is locked so it can't be deleted by accident).
  * TODO: wire `submit` to a real endpoint (Next route handler / email service);
@@ -23,6 +24,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  * the parent already provides (e.g. the contact page's overlapping hero card).
  */
 export function ContactForm({ bare = false }: { bare?: boolean } = {}) {
+  const router = useRouter();
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Errors>({});
   const [phone, setPhone] = useState("");
@@ -69,7 +71,7 @@ export function ContactForm({ bare = false }: { bare?: boolean } = {}) {
     };
   }, [interestOpen]);
 
-  async function handleSubmit(e: any) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const name = String(data.get("name") ?? "").trim();
@@ -89,25 +91,10 @@ export function ContactForm({ bare = false }: { bare?: boolean } = {}) {
     try {
       // Simulated send. Replace with a real POST to your endpoint.
       await new Promise((r) => setTimeout(r, 900));
-      setStatus("success");
+      router.push("/thank-you");
     } catch {
       setStatus("error");
     }
-  }
-
-  if (status === "success") {
-    return (
-      <div
-        className={`flex flex-col items-start gap-4 text-ink ${bare ? "" : "rounded-md border border-line bg-surface p-8"}`}
-      >
-        <CheckCircle size={32} weight="fill" className="text-accent" />
-        <h3 className="font-serif text-2xl">Thank you.</h3>
-        <p className="max-w-[42ch] text-[15px] leading-relaxed text-ink-70">
-          Your enquiry is in. A member of the AVR team will be in touch within
-          one business day.
-        </p>
-      </div>
-    );
   }
 
   return (

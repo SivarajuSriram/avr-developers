@@ -17,37 +17,37 @@ const quotes: Quote[] = [
     body: "We looked at nearly a dozen projects before Evania. It was the only one where the light and the open space felt designed for us, not added on a brochure.",
     name: "Kavya Rao",
     role: "Homeowner, Evania",
-    img: "/images/testimonials/person-1.webp",
+    img: "/testimonials/person-1.webp",
   },
   {
     body: "The team actually answered the hard questions on approvals and timelines. That honesty is why we booked.",
     name: "Aditya Verma",
     role: "Bought at Avira",
-    img: "/images/testimonials/person-2.webp",
+    img: "/testimonials/person-2.webp",
   },
   {
     body: "Six months in and the courtyard is where my kids spend every evening. It changed how we live.",
     name: "Meera Krishnan",
     role: "Homeowner, Evania",
-    img: "/images/testimonials/person-3.webp",
+    img: "/testimonials/person-3.webp",
   },
   {
     body: "Site visits, floor plans, handover — every stage was on the date they gave us at booking. No surprises.",
     name: "Rohan Malhotra",
     role: "Homeowner, Evania",
-    img: "/images/testimonials/person-4.webp",
+    img: "/testimonials/person-4.webp",
   },
   {
     body: "The finish quality held up to what the sample flat promised. That alone put them above the others we shortlisted.",
     name: "Priya Nair",
     role: "Bought at Avira",
-    img: "/images/testimonials/person-5.webp",
+    img: "/testimonials/person-5.webp",
   },
   {
     body: "We wanted a home our parents could visit and feel comfortable in too. The layout just works for three generations.",
     name: "Sanjay Iyer",
     role: "Homeowner, Evania",
-    img: "/images/testimonials/person-6.webp",
+    img: "/testimonials/person-6.webp",
   },
 ];
 

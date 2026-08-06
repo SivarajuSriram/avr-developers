@@ -15,7 +15,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "ORR access, the Financial District next door and a wave of gated development: what's actually driving Kokapet's growth.",
     category: "Market Watch",
-    image: "/evania/rooftop.webp",
+    image: "/evania/evania-hero.webp",
     sections: [
       {
         heading: "A location that stopped being a bet",
@@ -37,7 +37,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "A look at how proximity to the Outer Ring Road and the Financial District has moved pricing across Kokapet.",
     category: "Market Watch",
-    image: "/evania/clubhouse-exterior.webp",
+    image: "/connectivity/office-1.jpg",
     sections: [
       {
         heading: "Distance to work, priced in",
@@ -59,7 +59,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "From the reception lobby to the gym floor, a tour of the 18,000 sq ft clubhouse every Evania resident shares.",
     category: "Life at AVR",
-    image: "/evania/clubhouse-interior.webp",
+    image: "/evania/clubhouse/clubhouse-1.webp",
     sections: [
       {
         heading: "First impressions at the lobby",
@@ -81,7 +81,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "What the rooftop dining and lounge deck looks like once the sun goes down, and why we built it in the first place.",
     category: "Life at AVR",
-    image: "/evania/amenity-space.webp",
+    image: "/about/about-evania.webp",
     sections: [
       {
         heading: "A deck built for the evening",
@@ -103,7 +103,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "Wellness spaces aren't an add-on at AVR. Here's how they factor into the plan from the first sketch.",
     category: "AVR Journal",
-    image: "/evania/clubhouse-yoga.webp",
+    image: "/evania/clubhouse/clubhouse-3.webp",
     sections: [
       {
         heading: "Wellness as a line item, not an afterthought",
@@ -125,7 +125,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "RERA registration, carpet area versus super built-up, and the questions worth asking before you sign anything.",
     category: "Buying Guide",
-    image: "/evania/mini-theatre.webp",
+    image: "/evania/clubhouse/clubhouse-5.webp",
     sections: [
       {
         heading: "Start with the RERA number",

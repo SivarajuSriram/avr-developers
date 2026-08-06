@@ -33,14 +33,8 @@ const pane = {
 
 export function WhyChooseUs() {
   const [active, setActive] = useState(0);
-  const [tick, setTick] = useState(0);
   const reduceMotion = useReducedMotion();
   const current = reasons[active];
-
-  function selectItem(i: number) {
-    setActive(i);
-    setTick((t) => t + 1);
-  }
 
   useEffect(() => {
     if (reduceMotion) return;
@@ -48,7 +42,7 @@ export function WhyChooseUs() {
       setActive((a) => (a + 1) % reasons.length);
     }, 3000);
     return () => clearInterval(id);
-  }, [reduceMotion, tick]);
+  }, [reduceMotion, active]);
 
   return (
     <section className="border-t border-line bg-canvas">
@@ -78,7 +72,7 @@ export function WhyChooseUs() {
                 <button
                   key={r.stat}
                   type="button"
-                  onClick={() => selectItem(i)}
+                  onClick={() => setActive(i)}
                   className={`flex items-baseline gap-3 border-b border-line py-4 text-left font-serif text-xs transition-colors duration-300 first:pt-0 lg:text-xl ${
                     i === active ? "text-ink" : "text-ink-25 lg:hover:text-ink-55"
                   }`}

@@ -11,7 +11,7 @@ export function ScrollToTop() {
   const pathname = usePathname();
   useEffect(() => {
     if (window.location.hash) return;
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   }, [pathname]);
   return null;
 }

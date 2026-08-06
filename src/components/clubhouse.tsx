@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { ParallaxImage } from "@/components/ui/parallax-image";
+import { CoverImage } from "@/components/ui/cover-image";
 import { Reveal } from "@/components/ui/reveal";
 import type { ClubhouseSpace } from "@/lib/site";
 
@@ -44,7 +44,7 @@ export function Clubhouse({
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="absolute inset-0"
               >
-                <ParallaxImage
+                <CoverImage
                   src={spaces[active].image}
                   alt={`${spaces[active].label} — ${projectName} Club`}
                   sizes="(max-width: 1024px) 100vw, 50vw"

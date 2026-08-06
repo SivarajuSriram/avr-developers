@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -260,7 +261,18 @@ export function LocationMapCanvas({
           data-id="project"
           onClick={(e) => e.currentTarget.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" })}
         >
-          {projectImage && <img src={projectImage} alt={projectName} loading="lazy" />}
+          {projectImage && (
+            <div className="carousel-img-wrap">
+              <Image
+                src={projectImage}
+                alt={projectName}
+                fill
+                sizes="70vw"
+                loading="lazy"
+                className="object-cover"
+              />
+            </div>
+          )}
           <div className="carousel-item-title">{projectName}</div>
         </div>
         {points.map((p, i) => (
@@ -270,7 +282,18 @@ export function LocationMapCanvas({
             data-id={i}
             onClick={(e) => e.currentTarget.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" })}
           >
-            {p.image && <img src={p.image} alt={p.place} loading="lazy" />}
+            {p.image && (
+              <div className="carousel-img-wrap">
+                <Image
+                  src={p.image}
+                  alt={p.place}
+                  fill
+                  sizes="70vw"
+                  loading="lazy"
+                  className="object-cover"
+                />
+              </div>
+            )}
             <div className="carousel-item-title">{p.place}</div>
           </div>
         ))}

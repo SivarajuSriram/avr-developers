@@ -1,6 +1,6 @@
 import { EnvelopeSimple, Phone } from "@phosphor-icons/react/dist/ssr";
 import { ContactForm } from "@/components/contact-form";
-import { ParallaxImage } from "@/components/ui/parallax-image";
+import { CoverImage } from "@/components/ui/cover-image";
 import { Reveal } from "@/components/ui/reveal";
 import { site } from "@/lib/site";
 
@@ -8,11 +8,13 @@ export function ContactTour() {
   return (
     <section className="relative overflow-hidden bg-ink-90 py-20 lg:py-32">
       <div className="absolute inset-0">
-        <ParallaxImage
+        <CoverImage
           src="/contact/hero-bg.jpg"
+          /* drop the mobile-res render at this path once available */
+          mobileSrc={undefined}
           alt="Luxury home exterior at dusk"
           className="absolute inset-0 h-full w-full"
-          strength={10}
+          priority
         />
         <div className="absolute inset-0 bg-ink-90/80" />
       </div>

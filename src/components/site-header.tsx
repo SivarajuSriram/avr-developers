@@ -5,20 +5,27 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CaretDown, CaretRight, List, Phone, X } from "@phosphor-icons/react";
-import { nav, site } from "@/lib/site";
+import { nav, projects, site } from "@/lib/site";
+import { scrollToTop } from "@/lib/scroll";
 
-/** Smooth-scroll to the top of the page (used by the logo + Home link). */
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
+/* Routes whose page renders a transparent hero (id="hero") under the header. */
+const HERO_ROUTES = new Set(["/", "/about", ...projects.map((p) => `/${p.slug}`)]);
 
 /* Real AVR logo. Two variants crossfade with the header state: the navy
    mark over the solid canvas bar, the white mark over the hero. */
-function Wordmark({ solid, className = "" }: { solid: boolean; className?: string }) {
+function Wordmark({
+  solid,
+  isHome,
+  className = "",
+}: {
+  solid: boolean;
+  isHome: boolean;
+  className?: string;
+}) {
   return (
     <Link
       href="/"
-      onClick={scrollToTop}
+      onClick={isHome ? scrollToTop : undefined}
       aria-label="AVR Developers — home"
       className={`relative block h-9 w-[126px] transition-opacity duration-300 lg:hover:opacity-80 ${className}`}
     >
@@ -26,18 +33,16 @@ function Wordmark({ solid, className = "" }: { solid: boolean; className?: strin
         src="/logo-cropped.png"
         alt="AVR Developers"
         fill
-        priority
         sizes="126px"
-        className={`object-contain transition-opacity duration-500 ${solid ? "opacity-100" : "opacity-0"}`}
+        className={`object-contain transition-opacity duration-200 ${solid ? "opacity-100" : "opacity-0"}`}
       />
       <Image
         src="/logo-light.png"
         alt=""
         aria-hidden
         fill
-        priority
         sizes="126px"
-        className={`object-contain transition-opacity duration-500 ${solid ? "opacity-0" : "opacity-100"}`}
+        className={`object-contain transition-opacity duration-200 ${solid ? "opacity-0" : "opacity-100"}`}
       />
     </Link>
   );
@@ -50,26 +55,20 @@ type NavItem = {
 };
 
 /* Desktop top-level item: renders a controlled hover/focus flyout when it has
-   children. Driven by state (not pure CSS :hover) so it can be force-closed the
-   moment the route changes — otherwise a client-side navigation leaves the
-   clicked link focused and the cursor over the panel, and the flyout never
-   dismisses. */
-function TopItem({ item }: { item: NavItem }) {
-  const pathname = usePathname();
+   children. Driven by state (not pure CSS :hover). The parent keys this
+   component on the route, so a client-side navigation remounts it with
+   `open` freshly reset — otherwise a clicked link stays focused and the
+   cursor stays over the panel, and the flyout never dismisses. */
+function TopItem({ item, isHome }: { item: NavItem; isHome: boolean }) {
   const [open, setOpen] = useState(false);
-
-  // Any route change closes the flyout (covers clicking a child link, which
-  // navigates without remounting the header).
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
 
   if (!item.children) {
     return (
       <Link
         href={item.href}
-        onClick={item.href === "/" ? scrollToTop : undefined}
-        className="link-underline caps py-2 text-[12.5px] font-medium transition-colors lg:hover:text-accent"
+        onClick={item.href === "/" && isHome ? scrollToTop : undefined}
+        style={{ "--underline-offset": "75%" } as React.CSSProperties}
+        className="link-underline caps py-2 text-[12.5px] font-medium"
       >
         {item.label}
       </Link>
@@ -162,27 +161,33 @@ function TopItem({ item }: { item: NavItem }) {
 }
 
 export function SiteHeader() {
-  const [solid, setSolid] = useState(false);
-  const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const isHome = pathname === "/";
+  const hasHero = HERO_ROUTES.has(pathname);
+  const [solid, setSolid] = useState(!hasHero);
+  const [open, setOpen] = useState(false);
 
-  // Transparent over the hero, solid once it scrolls away. No scroll listener.
-  // Re-runs on every route change because the header lives in the layout and
-  // never remounts — otherwise it keeps observing the previous page's hero.
+  // Route changed since the last render: adjust `solid` immediately (during
+  // render, not in an effect) so non-hero pages never flash transparent.
+  const [trackedPathname, setTrackedPathname] = useState(pathname);
+  if (pathname !== trackedPathname) {
+    setTrackedPathname(pathname);
+    setSolid(!hasHero);
+  }
+
+  // Hero pages: transparent over the hero, solid once it scrolls away. No
+  // scroll listener — an IntersectionObserver subscription drives `solid`.
   useEffect(() => {
+    if (!hasHero) return;
     const hero = document.getElementById("hero");
-    if (!hero) {
-      setSolid(true);
-      return;
-    }
-    setSolid(false);
+    if (!hero) return;
     const io = new IntersectionObserver(
       ([entry]) => setSolid(!entry.isIntersecting),
       { rootMargin: "-72px 0px 0px 0px", threshold: 0 },
     );
     io.observe(hero);
     return () => io.disconnect();
-  }, [pathname]);
+  }, [pathname, hasHero]);
 
   // Lock body scroll while the mobile menu is open. Compensate with
   // padding-right for the width of the now-hidden scrollbar, otherwise the
@@ -206,9 +211,9 @@ export function SiteHeader() {
   return (
     <>
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
+      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-200 ${
         solid
-          ? "border-b border-line bg-canvas/85 text-ink backdrop-blur-md"
+          ? "border-b border-line bg-canvas text-ink"
           : "border-b border-transparent bg-transparent text-white"
       }`}
     >
@@ -216,7 +221,7 @@ export function SiteHeader() {
         {/* left cluster */}
         <nav className="hidden items-center gap-8 justify-self-start lg:flex">
           {nav.left.map((item) => (
-            <TopItem key={item.label} item={item} />
+            <TopItem key={`${item.label}-${pathname}`} item={item} isHome={isHome} />
           ))}
         </nav>
 
@@ -230,12 +235,12 @@ export function SiteHeader() {
         </button>
 
         {/* centered logo */}
-        <Wordmark solid={solid} className="justify-self-center" />
+        <Wordmark solid={solid} isHome={isHome} className="justify-self-center" />
 
         {/* right cluster */}
         <nav className="hidden items-center gap-8 justify-self-end lg:flex">
           {nav.right.map((item) => (
-            <TopItem key={item.label} item={item} />
+            <TopItem key={`${item.label}-${pathname}`} item={item} isHome={isHome} />
           ))}
         </nav>
 
@@ -254,7 +259,7 @@ export function SiteHeader() {
         isn't trapped inside the header's containing block when backdrop-blur
         is active (backdrop-filter creates a new containing block for fixed
         descendants, which clipped this to the header's own height). */}
-    <MobileMenu open={open} onClose={() => setOpen(false)} />
+    <MobileMenu open={open} onClose={() => setOpen(false)} isHome={isHome} />
     </>
   );
 }
@@ -262,9 +267,11 @@ export function SiteHeader() {
 function MobileMenu({
   open,
   onClose,
+  isHome,
 }: {
   open: boolean;
   onClose: () => void;
+  isHome: boolean;
 }) {
   const items: NavItem[] = [...nav.left, ...nav.right];
   return (
@@ -277,7 +284,7 @@ function MobileMenu({
         <Link
           href="/"
           onClick={() => {
-            scrollToTop();
+            if (isHome) scrollToTop();
             onClose();
           }}
           aria-label="AVR Developers — home"
@@ -297,7 +304,7 @@ function MobileMenu({
       </div>
       <nav className="flex flex-col px-5 pt-6">
         {items.map((item) => (
-          <MobileNavItem key={item.label} item={item} onClose={onClose} />
+          <MobileNavItem key={item.label} item={item} onClose={onClose} isHome={isHome} />
         ))}
       </nav>
     </div>
@@ -310,9 +317,11 @@ function MobileMenu({
 function MobileNavItem({
   item,
   onClose,
+  isHome,
 }: {
   item: NavItem;
   onClose: () => void;
+  isHome: boolean;
 }) {
   const [expanded, setExpanded] = useState(false);
 
@@ -322,7 +331,7 @@ function MobileNavItem({
         <Link
           href={item.href}
           onClick={() => {
-            if (item.href === "/") scrollToTop();
+            if (item.href === "/" && isHome) scrollToTop();
             onClose();
           }}
           className="block py-4 font-serif text-2xl"

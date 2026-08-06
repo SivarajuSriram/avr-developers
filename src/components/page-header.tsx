@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { Reveal } from "@/components/ui/reveal";
+import { ResponsiveImage } from "@/components/ui/responsive-image";
 
 /**
  * Consistent editorial header for interior pages. Renders the page's single
@@ -35,7 +35,7 @@ export function PageHeader({
   /** Keeps the h1 for a11y/SEO but hides the eyebrow, title and intro visually — for heroes that only need the aside/cta on display. */
   hideTitle?: boolean;
   intro?: string;
-  image?: { src: string; alt: string; position?: string };
+  image?: { src: string; mobileSrc?: string; alt: string; position?: string };
   aside?: ReactNode;
   cta?: { label: string; href: string };
   divider?: boolean;
@@ -68,14 +68,15 @@ export function PageHeader({
 
   return (
     <header
-      className={`relative overflow-hidden ${divider ? "border-b border-line" : ""} ${image ? "text-white" : ""}`}
+      id={image ? "hero" : undefined}
+      className={`relative overflow-hidden ${divider ? "border-b border-line" : ""} ${image ? "flex min-h-dvh flex-col justify-end text-white" : ""}`}
     >
       {image && (
         <>
-          <Image
+          <ResponsiveImage
             src={image.src}
+            mobileSrc={image.mobileSrc}
             alt={image.alt}
-            fill
             priority
             sizes="100vw"
             className="object-cover"

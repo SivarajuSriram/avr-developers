@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
-import { ParallaxImage } from "../ui/parallax-image";
+import { CoverImage } from "../ui/cover-image";
 import { ArrowUpRight, Check } from "@phosphor-icons/react";
 import { Reveal } from "../ui/reveal";
 import { projects } from "@/lib/site";
@@ -78,7 +77,7 @@ export function ProjectsFeature() {
                 onMouseLeave={() => setHovered(null)}
               >
                 <div className="relative">
-                  <ParallaxImage
+                  <CoverImage
                     src={project.image}
                     alt={`${project.name} by AVR Developers`}
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
