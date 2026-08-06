@@ -239,12 +239,11 @@ export const projects: Project[] = [
     heroImage: "/avira/avira-hero.webp",
     heroImageMobile:"/avira/avira-hero-mobile.webp",
     gallery: [
-      { view: "tower exterior", src: "/avira/exterior.jpg" },
-      { view: "courtyard", src: "/avira/courtyard.jpg" },
-      { view: "sky lounge", src: "/avira/sky-lounge.jpg" },
-      { view: "clubhouse lobby", src: "/avira/lobby.jpg" },
-      { view: "pool deck", src: "/avira/pool.jpg" },
-      { view: "mini theatre", src: "/avira/theatre.jpg" },
+      { view: "tower exterior", src: "/avira/avira-carousel-1.webp" },
+      { view: "courtyard", src: "/avira/avira-carousel-2.webp" },
+      { view: "sky lounge", src: "/avira/avira-carousel-3.webp" },
+      { view: "clubhouse lobby", src: "/avira/avira-carousel-4.webp" },
+      { view: "pool deck", src: "/avira/avira-carousel-5.webp" },
     ],
     /* same map location as Evania */
     coordinates: { lat: 17.4058, lng: 78.3389 },
