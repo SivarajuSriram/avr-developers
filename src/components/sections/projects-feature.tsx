@@ -21,7 +21,7 @@ export function ProjectsFeature() {
               <br />
               Possibilities Are
               <br />
-              <span className="italic text-accent">Limitless.</span>
+              <span className="text-accent">Limitless.</span>
             </h2>
           </Reveal>
 

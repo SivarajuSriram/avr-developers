@@ -9,9 +9,8 @@ export function ContactTour() {
     <section className="relative overflow-hidden bg-ink-90 py-20 lg:py-32">
       <div className="absolute inset-0">
         <CoverImage
-          src="/contact/hero-bg.jpg"
-          /* drop the mobile-res render at this path once available */
-          mobileSrc={undefined}
+          src="/contact/contact-us-hero.webp"
+          mobileSrc="/contact/contact-us-hero-mobile.webp"
           alt="Luxury home exterior at dusk"
           className="absolute inset-0 h-full w-full"
           priority
@@ -21,7 +20,7 @@ export function ContactTour() {
 
       <div className="relative mx-auto flex max-w-[900px] flex-col items-center px-5 text-center lg:px-10">
         <Reveal>
-          <h2 className="font-serif text-4xl font-light leading-[1.05] text-white lg:text-5xl">
+          <h2 className="font-serif text-3xl font-light leading-[1.05] text-white md:text-5xl">
             Let&rsquo;s start a conversation.
           </h2>
         </Reveal>

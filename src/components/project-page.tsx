@@ -49,6 +49,17 @@ export function ProjectPage({ project }: { project: Project }) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/20 to-ink/40" />
         <div className="relative mx-auto w-full max-w-[1400px] px-5 pb-16 pt-28 lg:px-10 lg:pb-24">
+          {project.logo && (
+            <div className="relative mb-6 h-14 w-[190px] lg:h-16 lg:w-[220px]">
+              <Image
+                src={project.logo}
+                alt={`${project.name} logo`}
+                fill
+                sizes="220px"
+                className="object-contain object-left brightness-0 invert"
+              />
+            </div>
+          )}
           <h1 className="font-serif text-6xl font-light leading-none tracking-[-0.03em] lg:text-8xl">
             {withBreaks(project.headline ?? project.name)}
           </h1>
@@ -62,7 +73,7 @@ export function ProjectPage({ project }: { project: Project }) {
       <section id="about" className="mx-auto max-w-[1400px] scroll-mt-32 px-5 py-24 lg:px-10 lg:py-32">
         <div className="grid items-start gap-12 lg:grid-cols-12">
           <Reveal className="lg:col-span-7">
-            <h2 className="font-serif text-4xl font-light leading-[1.08] lg:text-5xl">
+            <h2 className="font-serif text-3xl font-light leading-[1.08] md:text-5xl">
               {withBreaks(project.aboutHeading ?? "Homes For The New-age|Living Stories")}
             </h2>
             <div
@@ -134,7 +145,7 @@ export function ProjectPage({ project }: { project: Project }) {
       ) : (
         <section id="club" className="mx-auto max-w-[1400px] scroll-mt-32 px-5 py-24 lg:px-10 lg:py-32">
           <Reveal>
-            <h2 className="max-w-[16ch] font-serif text-4xl font-light leading-[1.08] lg:text-5xl">
+            <h2 className="max-w-[16ch] font-serif text-3xl font-light leading-[1.08] md:text-5xl">
               {project.noClubhouseHeading ?? "Life beyond the front door."}
             </h2>
             <p className="mt-6 max-w-[52ch] text-[15px] leading-relaxed text-ink-70">
@@ -159,7 +170,7 @@ export function ProjectPage({ project }: { project: Project }) {
             </p>
           </Reveal>
           <Reveal index={1}>
-            <h2 className="font-serif text-4xl font-light leading-[1.08] lg:whitespace-nowrap lg:text-5xl">
+            <h2 className="font-serif text-3xl font-light leading-[1.08] md:whitespace-nowrap md:text-5xl">
               {project.galleryHeading ?? `The ${project.name} Experience`}
             </h2>
           </Reveal>

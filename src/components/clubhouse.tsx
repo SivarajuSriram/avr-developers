@@ -57,7 +57,7 @@ export function Clubhouse({
             <p className="caps mb-4 text-[12px] font-medium text-accent">
               {eyebrow ?? "2-Level Clubhouse"}
             </p>
-            <h2 className="max-w-[45ch] font-serif text-4xl font-light leading-[1.08] lg:text-4xl">
+            <h2 className="max-w-[45ch] font-serif text-3xl font-light leading-[1.08] md:text-5xl">
               {heading ?? "Your Private Haven of Leisure"}
             </h2>
             <p className="mt-6 max-w-[46ch] text-[15px] leading-relaxed text-ink-70">

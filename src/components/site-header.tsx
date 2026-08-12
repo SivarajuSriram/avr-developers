@@ -126,7 +126,7 @@ function TopItem({ item, isHome }: { item: NavItem; isHome: boolean }) {
               <Link
                 href={child.href}
                 onClick={dismiss}
-                className="flex items-center justify-center gap-4 rounded-sm px-4 py-3 font-serif text-[15px] transition-colors lg:hover:bg-canvas lg:hover:text-accent group-focus-within/sub:bg-canvas text-center w-full"
+                className="flex items-center justify-center gap-4 rounded-sm px-4 py-3 font-sans text-[15px] transition-colors lg:hover:bg-canvas lg:hover:text-accent group-focus-within/sub:bg-canvas text-center w-full"
               >
                 {child.label}
                 {child.children && (
@@ -334,7 +334,7 @@ function MobileNavItem({
             if (item.href === "/" && isHome) scrollToTop();
             onClose();
           }}
-          className="block py-4 font-serif text-2xl"
+          className="block py-4 font-sans text-2xl"
         >
           {item.label}
         </Link>
@@ -347,7 +347,7 @@ function MobileNavItem({
       <button
         onClick={() => setExpanded((v) => !v)}
         aria-expanded={expanded}
-        className="flex w-full items-center justify-between py-4 font-serif text-2xl"
+        className="flex w-full items-center justify-between py-4 font-sans text-2xl"
       >
         {item.label}
         <CaretDown
@@ -369,7 +369,7 @@ function MobileNavItem({
               <Link
                 href={child.href}
                 onClick={onClose}
-                className="block py-2 font-serif text-xl text-ink-70"
+                className="block py-2 font-sans text-xl text-ink-70"
               >
                 {child.label}
               </Link>

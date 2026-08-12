@@ -19,8 +19,8 @@
   --color-rose: #e28c84;          /* soft rose, tonal support only */
 
   /* fonts */
-  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-spectral), ui-serif, Georgia, serif;
+  --font-sans: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-nixie-one), ui-serif, Georgia, serif;
 
   /* radius scale — soft-square system, one scale everywhere */
   --radius-xs: 2px;
@@ -381,6 +381,10 @@ body {
   width: 24px !important;
   height: auto !important;
   object-fit: contain;
+  /* project logos (Evania/Avira) are dark-ink SVGs — force white so they
+     read against the accent-red pin. logo-light.png is already white, so
+     this is a no-op there. */
+  filter: brightness(0) invert(1);
 }
 .project-img-pin .pin-tail {
   position: absolute;

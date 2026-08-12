@@ -2,10 +2,12 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import emailjs from "@emailjs/browser";
 import { ArrowRight, CaretDown } from "@phosphor-icons/react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { INTEREST_OPTIONS, type Interest } from "@/lib/contact-interest";
+import { projects } from "@/lib/site";
 
 type Status = "idle" | "submitting" | "error";
 type Errors = Partial<Record<"name" | "email" | "phone", string>>;
@@ -17,8 +19,16 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  * Client-side validation; redirects to /thank-you on success.
  * Phone uses react-phone-input-2 (searchable, scrollable country list; the
  * country code is locked so it can't be deleted by accident).
- * TODO: wire `submit` to a real endpoint (Next route handler / email service);
- * right now it simulates a successful send.
+ *
+ * On submit the enquiry goes out two ways in parallel — EmailJS (direct
+ * email) and a Pabbly Connect webhook (for CRM/Sheet/WhatsApp automations) —
+ * via `NEXT_PUBLIC_EMAILJS_*` / `NEXT_PUBLIC_PABBLY_WEBHOOK_URL` env vars.
+ * Both are currently placeholder values (see .env.local); wire up real
+ * EmailJS + Pabbly accounts and drop the keys in when ready. Either
+ * integration failing doesn't block the other, the brochure download, or the
+ * redirect — a lead should never get stuck because one webhook is down.
+ * When "Interested in" names a specific project with a brochure on file, that
+ * project's PDF downloads automatically before the redirect.
  *
  * `bare` drops the outer border/bg/padding so the form can sit inside a card
  * the parent already provides (e.g. the contact page's overlapping hero card).
@@ -89,9 +99,39 @@ export function ContactForm({ bare = false }: { bare?: boolean } = {}) {
 
     setStatus("submitting");
     try {
-      // Simulated send. Replace with a real POST to your endpoint.
-      await new Promise((r) => setTimeout(r, 900));
-      router.push("/thank-you");
+      const message = String(data.get("message") ?? "").trim();
+      const payload = { name, email, phone: `+${dialCode}${phone}`, interest, message };
+
+      // Wrapped in async IIFEs so a bad placeholder value (e.g. an invalid
+      // webhook URL) rejects instead of throwing synchronously and skipping
+      // straight to the outer catch before the other integration runs.
+      await Promise.allSettled([
+        (async () =>
+          emailjs.send(
+            process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+            process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+            payload,
+            process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
+          ))(),
+        (async () =>
+          fetch(process.env.NEXT_PUBLIC_PABBLY_WEBHOOK_URL!, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          }))(),
+      ]);
+
+      const brochure = projects.find((p) => p.name === interest)?.brochure;
+      if (brochure) {
+        const link = document.createElement("a");
+        link.href = brochure;
+        link.download = "";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      }
+
+      router.push(`/thank-you?interest=${encodeURIComponent(interest)}`);
     } catch {
       setStatus("error");
     }

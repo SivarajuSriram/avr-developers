@@ -19,7 +19,7 @@ export function FloorPlans({
           <p className="caps mb-4 text-[12px] font-medium text-accent">
             Layouts
           </p>
-          <h2 className="font-serif text-4xl font-light leading-[1.08] lg:text-5xl">
+          <h2 className="font-serif text-3xl font-light leading-[1.08] md:text-5xl">
             {heading ?? "A Blueprint for Inspired Living."}
           </h2>
         </Reveal>

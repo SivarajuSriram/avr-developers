@@ -53,7 +53,7 @@ export function Faq({
           <p className="caps mb-4 text-[12px] font-medium text-accent">
             {eyebrow}
           </p>
-          <h2 className="font-serif text-4xl font-light leading-[1.05] tracking-[-0.01em] lg:text-5xl lg:whitespace-nowrap">
+          <h2 className="font-serif text-3xl font-light leading-[1.05] tracking-[-0.01em] md:text-5xl md:whitespace-nowrap">
             {heading}
           </h2>
           {cta && (

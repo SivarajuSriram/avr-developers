@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
 import { animate, useInView, useReducedMotion } from "motion/react";
+import { ArrowSquareOut } from "@phosphor-icons/react";
 import { Reveal } from "@/components/ui/reveal";
 import { site, type Project } from "@/lib/site";
 
@@ -28,6 +29,11 @@ export function LocationSection({ project }: { project: Project }) {
     project.coordinates && rows.every((r) => r.lat != null && r.lng != null)
       ? rows.map((r) => ({ place: r.place, time: r.time, lat: r.lat!, lng: r.lng!, category: r.category, image: r.image }))
       : null;
+  const mapsHref = project.coordinates
+    ? `https://www.google.com/maps/search/?api=1&query=${project.coordinates.lat},${project.coordinates.lng}`
+    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+        `${project.name}, ${site.address.locality}, ${site.address.region}`,
+      )}`;
 
   /* group rows by category (fixed display order), each row keeping its
      original index into `rows` so hover state still lines up with mapPoints */
@@ -65,7 +71,7 @@ export function LocationSection({ project }: { project: Project }) {
       <div className="mx-auto max-w-[1400px] px-5 py-24 lg:px-10 lg:py-32">
         <Reveal>
           <p className="caps mb-4 text-[13px] font-medium text-accent">Proximity</p>
-          <h2 className="location-title max-w-[34ch] font-serif text-4xl font-light leading-[1.08] lg:text-5xl">
+          <h2 className="location-title max-w-[34ch] font-serif text-3xl font-light leading-[1.08] md:text-5xl">
             {project.locationHeading ?? "A Location That Keeps You Ahead"}
           </h2>
         </Reveal>
@@ -106,6 +112,7 @@ export function LocationSection({ project }: { project: Project }) {
                   <LocationMapCanvas
                     projectName={project.name}
                     projectImage={project.image}
+                    projectLogo={project.logo}
                     center={project.coordinates!}
                     points={mapPoints}
                     activeIndex={activeIndex}
@@ -122,6 +129,16 @@ export function LocationSection({ project }: { project: Project }) {
                   className="block h-full w-full border-0 grayscale-[0.15]"
                 />
               )}
+
+              <a
+                href={mapsHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute right-4 top-4 z-30 inline-flex items-center gap-2 rounded-full bg-white/95 px-4 py-2.5 text-[12px] font-medium text-ink shadow-[0_10px_30px_-8px_rgba(0,0,0,0.4)] backdrop-blur transition lg:hover:bg-white"
+              >
+                <ArrowSquareOut size={15} weight="bold" />
+                View on Google Maps
+              </a>
             </div>
           </Reveal>
         </div>

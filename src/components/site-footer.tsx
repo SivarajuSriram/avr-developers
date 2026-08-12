@@ -51,7 +51,10 @@ export function SiteFooter() {
         </div>
 
         {/* legal + socials */}
-        <div className="flex flex-col gap-4 border-t border-white/10 pt-5 text-[12px] text-white/50 sm:flex-row sm:items-center sm:justify-between">
+        <div
+          id="footer-socials"
+          className="flex flex-col gap-4 border-t border-white/10 pt-5 text-[12px] text-white/50 sm:flex-row sm:items-center sm:justify-between"
+        >
           <p>
             &copy; {new Date().getFullYear()} {site.legalName}. All rights
             reserved.

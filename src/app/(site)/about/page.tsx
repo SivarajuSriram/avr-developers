@@ -25,7 +25,7 @@ export default function AboutPage() {
         image={{
           src: "/about/About-hero.webp",
           /* drop the mobile-res render at this path once available */
-          mobileSrc: undefined,
+          mobileSrc:"/about/about-page-hero-mobile.webp",
           alt: "Aerial view of an AVR Developers project, set among mature greenery",
           position: "center 40%",
         }}

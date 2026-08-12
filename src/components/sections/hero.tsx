@@ -33,7 +33,7 @@ export function Hero() {
         >
           Reshaping the
           <br />
-          <span className="inline-block pb-1 italic text-rose">
+          <span className="inline-block pb-1 text-rose">
             DNA of Urban Living
           </span>
         </h1>
@@ -50,10 +50,10 @@ export function Hero() {
           style={{ "--i": 2 } as React.CSSProperties}
         >
           <Link
-            href="/evania"
+            href="/contact"
             className="group inline-flex items-center gap-3 rounded-sm bg-accent px-7 py-4 text-[13px] font-medium uppercase tracking-[0.1em] text-white transition-colors lg:hover:bg-accent-dark"
           >
-            Discover Evania
+            Book a Site Visit
             <ArrowRight
               size={16}
               weight="bold"

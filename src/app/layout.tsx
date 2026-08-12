@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
-import { Geist, Spectral } from "next/font/google";
+import { Instrument_Sans, Nixie_One } from "next/font/google";
 import "./globals.css";
 import { ScrollToTop } from "@/components/scroll-to-top";
+import { ScrollToTopButton } from "@/components/scroll-to-top-button";
 import { site } from "@/lib/site";
 
-const geist = Geist({
-  variable: "--font-geist",
+const instrumentSans = Instrument_Sans({
+  variable: "--font-instrument-sans",
   subsets: ["latin"],
+  weight: "variable",
+  style: ["normal"],
   display: "swap",
 });
 
-const spectral = Spectral({
-  variable: "--font-spectral",
+const nixieOne = Nixie_One({
+  variable: "--font-nixie-one",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  style: ["normal", "italic"],
+  weight: "400",
   display: "swap",
 });
 
@@ -80,7 +82,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable} ${spectral.variable}`}>
+    <html lang="en" className={`${instrumentSans.variable} ${nixieOne.variable}`}>
       <body className="bg-canvas text-ink" suppressHydrationWarning>
         <script
           type="application/ld+json"
@@ -88,6 +90,7 @@ export default function RootLayout({
         />
         <ScrollToTop />
         {children}
+        <ScrollToTopButton />
       </body>
     </html>
   );

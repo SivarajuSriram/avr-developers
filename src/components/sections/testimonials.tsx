@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
+import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 import { Reveal } from "@/components/ui/reveal";
 
 type Quote = {
@@ -64,10 +66,50 @@ function Attribution({ name, role }: { name: string; role: string }) {
   );
 }
 
+/* Card markup shared by both the desktop (embla) and mobile (button) carousels —
+   only the outer sizing classes differ between the two call sites. */
+function TestimonialCard({
+  quote,
+  className,
+  imgHeightClassName,
+  imgSizes,
+}: {
+  quote: Quote;
+  className: string;
+  imgHeightClassName: string;
+  imgSizes: string;
+}) {
+  return (
+    <div className={className}>
+      <div className="overflow-hidden px-4 pt-5">
+        <div className={`relative ${imgHeightClassName}`}>
+          <Image
+            src={quote.img}
+            alt={quote.name}
+            fill
+            loading="lazy"
+            sizes={imgSizes}
+            className="object-contain object-bottom"
+          />
+        </div>
+      </div>
+      <div className="flex min-w-0 flex-col justify-center gap-2.5 py-6 pl-1 pr-6">
+        <span className="font-serif text-3xl leading-none text-accent/25">&ldquo;</span>
+        <blockquote className="line-clamp-5 font-serif text-[1.05rem] font-light leading-snug text-ink">
+          &ldquo;{quote.body}&rdquo;
+        </blockquote>
+        <Attribution name={quote.name} role={quote.role} />
+      </div>
+    </div>
+  );
+}
+
 export function Testimonials() {
   const [emblaRef] = useEmblaCarousel({ loop: true, align: "start", dragFree: true }, [
     AutoScroll({ speed: 0.6, startDelay: 0, stopOnMouseEnter: true, stopOnInteraction: false }),
   ]);
+  const [index, setIndex] = useState(0);
+  const go = (dir: 1 | -1) => setIndex((i) => (i + dir + quotes.length) % quotes.length);
 
   return (
     <section className="border-t border-line bg-canvas">
@@ -85,9 +127,52 @@ export function Testimonials() {
           </Reveal>
         </div>
 
+        {/* mobile/tablet: single card + prev/next buttons, no drag/auto-scroll */}
+        <div className="mt-10 px-5 lg:hidden">
+          <div className="mx-auto max-w-[440px] overflow-hidden">
+            <div
+              className="flex transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+              style={{ transform: `translateX(-${index * 100}%)` }}
+            >
+              {quotes.map((q) => (
+                <div key={q.name} className="w-full shrink-0">
+                  <TestimonialCard
+                    quote={q}
+                    imgSizes="170px"
+                    imgHeightClassName="h-[280px]"
+                    className="grid h-[300px] grid-cols-[170px_1fr] items-center overflow-hidden rounded-lg border border-line bg-surface"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="mt-6 flex items-center justify-center gap-5">
+            <button
+              type="button"
+              onClick={() => go(-1)}
+              aria-label="Previous testimonial"
+              className="grid size-10 place-items-center rounded-full border border-line-strong text-ink transition-colors hover:border-accent hover:text-accent"
+            >
+              <ArrowLeft size={16} weight="bold" />
+            </button>
+            <span className="text-[12px] tabular-nums text-ink-40">
+              {index + 1} / {quotes.length}
+            </span>
+            <button
+              type="button"
+              onClick={() => go(1)}
+              aria-label="Next testimonial"
+              className="grid size-10 place-items-center rounded-full border border-line-strong text-ink transition-colors hover:border-accent hover:text-accent"
+            >
+              <ArrowRight size={16} weight="bold" />
+            </button>
+          </div>
+        </div>
+
+        {/* desktop: continuous auto-scrolling drag carousel */}
         <div
           ref={emblaRef}
-          className="mt-14 overflow-hidden"
+          className="mt-14 hidden overflow-hidden lg:block"
           style={{
             maskImage:
               "linear-gradient(to right, transparent, black 2%, black 98%, transparent)",
@@ -95,35 +180,15 @@ export function Testimonials() {
               "linear-gradient(to right, transparent, black 2%, black 98%, transparent)",
           }}
         >
-          <div className="flex -ml-4 pl-1 pr-5 lg:pl-6 lg:pr-10">
+          <div className="flex -ml-4 pl-6 pr-10">
             {quotes.map((q) => (
-              <div
-                key={q.name}
-                className="w-[85%] shrink-0 pl-4 sm:w-[72%] lg:w-[42%]"
-              >
-                <div className="grid grid-cols-[140px_1fr] items-center overflow-hidden rounded-lg border border-line bg-surface sm:grid-cols-[160px_1fr] lg:grid-cols-[190px_1fr]">
-                  <div className="overflow-hidden px-4 pt-5">
-                    <div className="relative h-[190px] sm:h-[220px] lg:h-[260px]">
-                      <Image
-                        src={q.img}
-                        alt={q.name}
-                        fill
-                        loading="lazy"
-                        sizes="190px"
-                        className="object-contain object-bottom"
-                      />
-                    </div>
-                  </div>
-                  <div className="flex min-w-0 flex-col justify-center gap-2.5 py-6 pl-1 pr-6">
-                    <span className="font-serif text-3xl leading-none text-accent/25">
-                      &ldquo;
-                    </span>
-                    <blockquote className="font-serif text-[1.05rem] font-light leading-snug text-ink">
-                      &ldquo;{q.body}&rdquo;
-                    </blockquote>
-                    <Attribution name={q.name} role={q.role} />
-                  </div>
-                </div>
+              <div key={q.name} className="w-[48%] shrink-0 pl-4">
+                <TestimonialCard
+                  quote={q}
+                  imgSizes="190px"
+                  imgHeightClassName="h-[260px]"
+                  className="grid h-[280px] grid-cols-[190px_1fr] items-center overflow-hidden rounded-lg border border-line bg-surface"
+                />
               </div>
             ))}
           </div>

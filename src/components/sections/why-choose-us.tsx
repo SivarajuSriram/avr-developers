@@ -53,7 +53,7 @@ export function WhyChooseUs() {
             <span className="caps text-[11px] font-medium text-accent">
               Why Choose Us
             </span>
-            <h2 className="mt-4 max-w-[26ch] font-serif text-4xl font-light leading-[1.08] tracking-[-0.01em] lg:max-w-[34ch] lg:text-5xl">
+            <h2 className="mt-4 max-w-[26ch] font-serif text-3xl font-light leading-[1.08] tracking-[-0.01em] md:max-w-[34ch] md:text-5xl">
               Our Core Values Guide Our Path.
             </h2>
           </Reveal>

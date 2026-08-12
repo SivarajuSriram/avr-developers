@@ -66,13 +66,13 @@ export function Amenities({
           <p className="caps mb-4 text-[12px] font-medium text-accent">Amenities</p>
         </Reveal>
         <Reveal index={1}>
-          <h2 className="font-serif text-4xl font-light leading-[1.08] lg:whitespace-nowrap lg:text-5xl">
+          <h2 className="font-serif text-3xl font-light leading-[1.08] md:whitespace-nowrap md:text-5xl">
             {heading ?? "A 360° Experience"}
           </h2>
         </Reveal>
       </div>
 
-      <ul className="mt-16 grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3 lg:grid-cols-4">
+      <ul className="mt-16 grid grid-cols-2 gap-x-6 gap-y-12 sm:grid-cols-3">
         {list.map(({ icon, label }) => {
           const Icon = ICONS[icon];
           return (

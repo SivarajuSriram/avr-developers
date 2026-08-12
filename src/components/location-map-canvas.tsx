@@ -22,12 +22,12 @@ const CATEGORY_ICON: Record<string, string> = {
   "Recreation & Lifestyle": "/icons/location/lifestyle.png",
 };
 
-function createPinIcon(isProject: boolean, iconUrl?: string) {
+function createPinIcon(isProject: boolean, iconUrl?: string, projectLogo = "/logo-light.png") {
   if (isProject) {
     return L.divIcon({
       className: "marker-container project-pin",
       html: `<div class="pin-svg project-img-pin">
-               <img src="/logo-light.png" alt="" class="project-pin-logo">
+               <img src="${projectLogo}" alt="" class="project-pin-logo">
                <div class="pin-tail"></div>
              </div>`,
       iconSize: [34, 40],
@@ -55,12 +55,14 @@ function createPinIcon(isProject: boolean, iconUrl?: string) {
 export function LocationMapCanvas({
   projectName,
   projectImage,
+  projectLogo,
   center,
   points,
   activeIndex,
 }: {
   projectName: string;
   projectImage?: string;
+  projectLogo?: string;
   center: { lat: number; lng: number };
   points: MapPoint[];
   activeIndex: number | null;
@@ -99,7 +101,7 @@ export function LocationMapCanvas({
     resizeObserver.observe(containerRef.current);
 
     const projectMarker = L.marker([center.lat, center.lng], {
-      icon: createPinIcon(true),
+      icon: createPinIcon(true, undefined, projectLogo),
       zIndexOffset: 1000,
     }).addTo(map);
     projectMarkerRef.current = projectMarker;

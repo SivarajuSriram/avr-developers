@@ -27,7 +27,7 @@ export function Philosophy() {
         <CoverImage
           src="/about/about-section.webp"
           /* drop the mobile-res render at this path once available */
-          mobileSrc={undefined}
+          mobileSrc="/about/about-section-mobile.webp"
           alt="Club Evania, an AVR Developers residence"
           sizes="100vw"
           className="h-full w-full"
