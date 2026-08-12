@@ -5,25 +5,24 @@ import { useState } from "react";
 import { CoverImage } from "../ui/cover-image";
 import { ArrowUpRight, Check } from "@phosphor-icons/react";
 import { Reveal } from "../ui/reveal";
+import { ProjectsMobileCarousel } from "../projects-mobile-carousel";
 import { projects } from "@/lib/site";
 
 export function ProjectsFeature() {
   const [hovered, setHovered] = useState<string | null>(null);
 
   return (
-    <section className="mx-auto max-w-[1400px] px-5 py-24 lg:px-10 lg:py-36">
-      <div className="grid gap-14 lg:grid-cols-12 lg:gap-10">
+    <section className="mx-auto max-w-[1400px] px-5 py-10 lg:px-10 lg:py-36">
+      <div className="grid lg:grid-cols-12 lg:gap-10">
         {/* statement */}
         <div className="lg:col-span-5">
-          <Reveal>
-            <h2 className="font-serif text-4xl font-light leading-[1.05] tracking-[-0.01em] sm:text-5xl lg:text-[3.75rem]">
-              A World Where
-              <br />
-              Possibilities Are
-              <br />
-              <span className="text-accent">Limitless.</span>
-            </h2>
-          </Reveal>
+          <h2 className="font-serif text-4xl font-light leading-[1.05] tracking-[-0.01em] sm:text-5xl lg:text-[3.75rem]">
+            A World Where
+            <br />
+            Possibilities Are
+            <br />
+            <span className="text-accent">Limitless.</span>
+          </h2>
 
           {/* desktop-only: hovered project's detail fades in below the intro */}
           <div
@@ -65,8 +64,16 @@ export function ProjectsFeature() {
           </div>
         </div>
 
-        {/* offset project cards */}
-        <div className="grid gap-8 sm:grid-cols-2 lg:col-span-7 lg:gap-6">
+        {/* mobile: pixel-reveal carousel — see ProjectsMobileCarousel. lg:hidden so it
+            drops out of grid flow entirely at lg (a display:none item still claims a
+            grid cell if only its child is hidden, which was throwing off the desktop
+            two-column row below it) */}
+          <div className="lg:hidden">
+            <ProjectsMobileCarousel projects={projects} />
+          </div>
+
+        {/* desktop: offset project cards, detail revealed on hover above */}
+        <div className="hidden gap-6 lg:col-span-7 lg:grid lg:grid-cols-2">
           {projects.map((project, i) => (
             <Reveal key={project.slug} index={i}>
               <Link
@@ -80,7 +87,7 @@ export function ProjectsFeature() {
                   <CoverImage
                     src={project.image}
                     alt={`${project.name} by AVR Developers`}
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    sizes="(max-width: 1024px) 50vw, 33vw"
                     className="relative aspect-[4/5] overflow-hidden rounded-sm"
                     imageClassName="transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] lg:group-hover:scale-[1.05]"
                   />

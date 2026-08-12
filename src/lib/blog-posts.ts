@@ -3,141 +3,43 @@ export type BlogPost = {
   title: string;
   excerpt: string;
   category: string;
+  date: string;
   image: string;
-  sections: { heading: string; body: string }[];
+  sections: { heading?: string; body: string }[];
 };
 
-/* Placeholder posts — titles/excerpts/sections to be replaced when real articles are written. */
 export const blogPosts: BlogPost[] = [
   {
-    slug: "why-kokapet-is-hyderabads-next-big-address",
-    title: "Why Kokapet is Hyderabad's next big address",
+    slug: "kokapet-luxury-real-estate-hyderabad-2026",
+    title: "Kokapet in 2026: What Luxury Buyers Are Actually Paying For",
     excerpt:
-      "ORR access, the Financial District next door and a wave of gated development: what's actually driving Kokapet's growth.",
-    category: "Market Watch",
-    image: "/evania/evania-hero.webp",
+      "From farmland to a 50-storey skyline in a decade: what's driving Kokapet's prices, and whether there's still room to enter.",
+    category: "Real Estate Insights",
+    date: "27 July 2026",
+    image: "/blogs/Blog-01.webp",
     sections: [
       {
-        heading: "A location that stopped being a bet",
-        body: "Five years ago, Kokapet was the corridor buyers were told to watch. Today it's where the watching has turned into building: gated towers, wide internal roads and a resident base that works ten minutes away in the Financial District rather than commuting across the city for it.",
+        body: "Ten years back, nobody was talking about Kokapet. It was just farmland and a few plots on the western edge of the city. Today, Kokapet luxury real estate has transformed the skyline with some of the most exclusive high-rise towers in all of Hyderabad. Drive past the Financial District after dark, and you will see tower after tower lit up against the sky. Something shifted here, and it shifted fast.",
       },
       {
-        heading: "What the Outer Ring Road actually changed",
-        body: "ORR access did more than shorten drive times. It connected Kokapet to the airport, to Gachibowli and to the rest of the Financial District without funnelling traffic through the older parts of the city, which is a big part of why the corridor has been able to absorb this much development without gridlock.",
+        heading: "It Started with Location, Really",
+        body: "Kokapet got lucky with geography, then made the most of it. The Outer Ring Road runs right alongside it. ORR Exit 1 drops you into Gachibowli, HITEC City, or the Financial District in about 10 to 20 minutes. If you work in tech, and half the city does, that commute math alone sells the place. \n\nThen came Neopolis. This is the master-planned zone the state government has been auctioning off, and the prices those land parcels have fetched are honestly a little absurd. Record-breaking, national-headline kind of numbers. But here’s what that actually means for a buyer: when the government is charging that much per acre, they plan the area properly. Underground utilities. Wide roads. Real infrastructure. You’re not buying into some half-baked layout that might get sorted out someday. ",
       },
       {
-        heading: "What we're watching next",
-        body: "Social infrastructure, schools, hospitals and retail is catching up to the housing stock, which is usually the last piece to fall into place in a growth corridor. That catch-up phase tends to be where the next leg of value gets made.",
-      },
-    ],
-  },
-  {
-    slug: "financial-district-effect-orr-access",
-    title: "The Financial District effect: how ORR access reshapes value",
-    excerpt:
-      "A look at how proximity to the Outer Ring Road and the Financial District has moved pricing across Kokapet.",
-    category: "Market Watch",
-    image: "/connectivity/office-1.jpg",
-    sections: [
-      {
-        heading: "Distance to work, priced in",
-        body: "In a city where commute times can swing an hour or more depending on the route, proximity to the Financial District has become one of the clearest drivers of value across Kokapet and the surrounding micro-markets.",
+        heading: "Let's talk about the money",
+        body: "Because that’s the part that gets interesting. \n\nRight now, the average Kokapet property rates per sqft hover somewhere around ₹12,000, with most premium projects sitting in that ₹10,500 to ₹12,000 range. Fine. Now look back to 2019. The rate was roughly ₹4,200 a square foot. \n\nRead those two numbers again. That’s not appreciation. That’s a different market entirely. \n\nAnd it’s still climbing. Year on year, the area is doing something like 12 to 15% growth. People who got into pre-launch projects early? Some are already sitting on returns close to 80%. Rental yields run around 4 to 6% a year too, which for a luxury pocket is genuinely strong. So, when someone asks me why [invest in Kokapet Hyderabad](/evania) instead of the other corridors, I usually just point at the numbers and let them do the talking.",
       },
       {
-        heading: "How this plays out on the ground",
-        body: "Projects within a short drive of the Financial District have consistently held their value better through market cycles than comparable stock further out, even when the amenities on offer are similar.",
+        heading: "The Homes themselves",
+        body: "Look, plenty of areas have decent flats. Kokapet is doing something else. \n\nThe 3BHK/4BHK luxury apartments Kokapet has become known for are built for people who want the whole package. We’re talking 50-plus storey towers, clubhouses that feel like resorts, swimming pools, tennis courts, squash, landscaped gardens, security that never sleeps. High-end residential projects in Hyderabad don’t get much more complete than this. \n\nAnd it’s not just about the flat. The Kokapet gated community projects here sell a way of living. Kids playing downstairs without you worrying. Gym, pool, and café all within your own compound. An address that means something when you say it out loud. That matters to buyers now more than it used to. ",
       },
       {
-        heading: "What it means for buyers",
-        body: "It's worth weighing today's commute against where the city's IT and business districts are actually expanding, not just where they are right now.",
-      },
-    ],
-  },
-  {
-    slug: "inside-club-evania-amenities-walkthrough",
-    title: "Inside Club Evania: a walkthrough of the amenities",
-    excerpt:
-      "From the reception lobby to the gym floor, a tour of the 18,000 sq ft clubhouse every Evania resident shares.",
-    category: "Life at AVR",
-    image: "/evania/clubhouse/clubhouse-1.webp",
-    sections: [
-      {
-        heading: "First impressions at the lobby",
-        body: "Club Evania opens with a marble reception designed to feel more like a boutique hotel lobby than a housing society office, right down to the signage and the seating.",
+        heading: "Is it too late? People Ask Me This a Lot",
+        body: "Short version: no. But don’t sit on it forever either. \n\nHere’s the thing about [Kokapet luxury real estate](https://en.wikipedia.org/wiki/Kokapet). The land is running out. There’s only so much of it, and unlike those sprawling suburbs where builders keep dumping fresh inventory, Kokapet is basically hemmed in. Limited supply keeps prices firm and keeps resale demand healthy. Scarcity works in your favour here. \n\nIf waiting three years for possession isn’t your style, good news, there are ready-to-move luxury apartments Kokapet has on offer right alongside the under-construction stuff. So you get to pick. Move in now, or book something at launch pricing and let it appreciate while it’s being built. \n\nSchools like CHIREC and [Oakridge](https://www.oakridge.in/) are close. Hospitals like AIG and Continental, close too. Kokapet One for your weekend errands. This isn’t a place you buy hoping it becomes livable in five years. It’s already there. ",
       },
       {
-        heading: "The gym floor and beyond",
-        body: "Past the lobby, the clubhouse spreads across a full floor of fitness and wellness spaces, from a properly equipped gym to quieter rooms set aside for yoga and recovery.",
-      },
-      {
-        heading: "Built for daily use, not just launch photos",
-        body: "The brief for Club Evania was simple: it had to hold up to daily use by hundreds of families, not just look good in a brochure. That shaped everything from the flooring to the ventilation.",
-      },
-    ],
-  },
-  {
-    slug: "evenings-at-the-rooftop-lounge",
-    title: "Evenings at the rooftop lounge: Club Evania after dark",
-    excerpt:
-      "What the rooftop dining and lounge deck looks like once the sun goes down, and why we built it in the first place.",
-    category: "Life at AVR",
-    image: "/about/about-evania.webp",
-    sections: [
-      {
-        heading: "A deck built for the evening",
-        body: "The rooftop lounge was designed with evenings in mind: warm lighting, a working bar counter and enough covered seating that a passing shower doesn't end the night.",
-      },
-      {
-        heading: "Why a rooftop, specifically",
-        body: "Height gives the deck two things a ground-floor amenity can't: a skyline view and distance from the everyday noise of the towers below, which matters when you're trying to build a space people actually want to linger in.",
-      },
-      {
-        heading: "Who it's for",
-        body: "It's built to work for a quiet dinner for two and for a resident get-together of thirty people, without needing to be booked out or rearranged for either.",
-      },
-    ],
-  },
-  {
-    slug: "designing-for-wellness-yoga-room",
-    title: "Designing for wellness: why every tower gets a yoga room",
-    excerpt:
-      "Wellness spaces aren't an add-on at AVR. Here's how they factor into the plan from the first sketch.",
-    category: "AVR Journal",
-    image: "/evania/clubhouse/clubhouse-3.webp",
-    sections: [
-      {
-        heading: "Wellness as a line item, not an afterthought",
-        body: "A dedicated yoga and wellness room goes into the plan at the same stage as the gym and the pool, not bolted on once the rest of the clubhouse is finalised.",
-      },
-      {
-        heading: "What the room actually needs",
-        body: "Good acoustic separation from the gym floor, natural light and a floor that's kind to bare feet: small details, but they're the difference between a room that gets used daily and one that becomes storage.",
-      },
-      {
-        heading: "The bigger picture",
-        body: "Wellness spaces are part of a broader pattern in how AVR plans clubhouses: fewer flashy one-off features, more rooms that a resident would actually use every week.",
-      },
-    ],
-  },
-  {
-    slug: "what-to-check-before-booking-your-first-apartment",
-    title: "What to check before booking your first apartment",
-    excerpt:
-      "RERA registration, carpet area versus super built-up, and the questions worth asking before you sign anything.",
-    category: "Buying Guide",
-    image: "/evania/clubhouse/clubhouse-5.webp",
-    sections: [
-      {
-        heading: "Start with the RERA number",
-        body: "Every legitimate project in Telangana carries a TG RERA registration number. It's worth looking it up independently on the RERA portal before you go any further, rather than taking a brochure's word for it.",
-      },
-      {
-        heading: "Carpet area versus super built-up",
-        body: "The price per square foot you're quoted usually refers to super built-up area, which includes a share of common spaces. Ask for the carpet area figure directly, since that's the space you'll actually live in.",
-      },
-      {
-        heading: "Questions worth asking before you sign",
-        body: "Handover timeline, what's actually included in the amenities versus what's an optional upgrade, and who maintains the clubhouse after possession: three questions that save the most regret later.",
+        heading: "Where it goes from here",
+        body: "What I find most convincing is that Kokapet isn’t done growing. \n\nThere’s a metro extension on the cards. Neopolis and the SEZ developments are still rolling out. Companies keep expanding nearby. Put it together and the direction seems fairly obvious. Some analysts are talking ₹14,000 to ₹15,000 a square foot by the end of the decade. Maybe they’re right, maybe they’re a bit optimistic. Either way, the trend line points up. \n\nFor a buyer that’s a rare kind of deal. A home you’ll actually enjoy living in, that also happens to be quietly making you money in the background. \n\nKokapet didn’t stumble into becoming [Hyderabad’s luxury address](/about). It got there through location, planning, and reading what families genuinely want today. If you’ve been going back and forth on a premium home in the city’s most happening corridor, 2026 might be the year it all lines up for you. \n\nThe bold buyers already moved. The only thing left to figure out is whether you’re one of them. \n\nPlease reach us at 918000082399 or 918889666678 to schedule a visit to [AVR Developers](/).",
       },
     ],
   },

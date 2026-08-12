@@ -14,7 +14,7 @@ export function FloorPlans({
 }) {
   return (
     <section id="floor-plans" className="scroll-mt-32 border-t border-line">
-      <div className="mx-auto max-w-[1400px] px-5 py-24 lg:px-10 lg:py-32">
+      <div className="mx-auto max-w-[1400px] px-5 py-14 lg:px-10 lg:py-32">
         <Reveal className="max-w-[70ch]">
           <p className="caps mb-4 text-[12px] font-medium text-accent">
             Layouts
@@ -64,7 +64,7 @@ function FloorPlanCard({ plan }: { plan: FloorPlan }) {
       </div>
       <div className="flex items-center justify-between px-8 py-6">
         <h3 className="font-serif text-3xl font-light text-ink">{plan.config}</h3>
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line-strong text-ink transition-colors lg:group-hover:border-accent lg:group-hover:bg-accent lg:group-hover:text-white">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-accent bg-accent text-white transition-colors lg:border-line-strong lg:bg-transparent lg:text-ink lg:group-hover:border-accent lg:group-hover:bg-accent lg:group-hover:text-white">
           <ArrowRight size={18} weight="bold" />
         </span>
       </div>

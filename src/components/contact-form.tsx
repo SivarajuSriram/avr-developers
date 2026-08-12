@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import emailjs from "@emailjs/browser";
 import { ArrowRight, CaretDown } from "@phosphor-icons/react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -20,13 +19,13 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  * Phone uses react-phone-input-2 (searchable, scrollable country list; the
  * country code is locked so it can't be deleted by accident).
  *
- * On submit the enquiry goes out two ways in parallel — EmailJS (direct
- * email) and a Pabbly Connect webhook (for CRM/Sheet/WhatsApp automations) —
- * via `NEXT_PUBLIC_EMAILJS_*` / `NEXT_PUBLIC_PABBLY_WEBHOOK_URL` env vars.
- * Both are currently placeholder values (see .env.local); wire up real
- * EmailJS + Pabbly accounts and drop the keys in when ready. Either
- * integration failing doesn't block the other, the brochure download, or the
- * redirect — a lead should never get stuck because one webhook is down.
+ * On submit the enquiry goes out two ways in parallel — /api/contact (SMTP
+ * email via Nodemailer, server-side) and a Pabbly Connect webhook (for
+ * CRM/Sheet/WhatsApp automations) via `NEXT_PUBLIC_PABBLY_WEBHOOK_URL`. The
+ * SMTP_* vars are currently placeholder values (see .env.local); drop in a
+ * real SMTP account when ready. Either integration failing doesn't block the
+ * other, the brochure download, or the redirect — a lead should never get
+ * stuck because one is down.
  * When "Interested in" names a specific project with a brochure on file, that
  * project's PDF downloads automatically before the redirect.
  *
@@ -106,19 +105,16 @@ export function ContactForm({ bare = false }: { bare?: boolean } = {}) {
       // webhook URL) rejects instead of throwing synchronously and skipping
       // straight to the outer catch before the other integration runs.
       await Promise.allSettled([
-        (async () =>
-          emailjs.send(
-            process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-            process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
-            payload,
-            process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
-          ))(),
-        (async () =>
-          fetch(process.env.NEXT_PUBLIC_PABBLY_WEBHOOK_URL!, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-          }))(),
+        fetch("/api/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }),
+        fetch(process.env.NEXT_PUBLIC_PABBLY_WEBHOOK_URL!, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }),
       ]);
 
       const brochure = projects.find((p) => p.name === interest)?.brochure;

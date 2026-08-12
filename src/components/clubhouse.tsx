@@ -32,7 +32,7 @@ export function Clubhouse({
 
   return (
     <section id="clubhouse" className="scroll-mt-32 border-t border-line">
-      <div className="mx-auto max-w-[1400px] px-5 py-24 lg:px-10 lg:py-32">
+      <div className="mx-auto max-w-[1400px] px-5 py-14 lg:px-10 lg:py-32">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <Reveal className="relative order-2 aspect-[4/5] overflow-hidden rounded-sm lg:order-none lg:aspect-[5/6] lg:col-span-6">
             <AnimatePresence>

@@ -29,9 +29,9 @@ export function ProjectVideo({
   const [playing, setPlaying] = useState(false);
 
   return (
-    <section className="mx-auto max-w-[1400px] px-5 py-24 lg:px-10 lg:py-32">
+    <section className="mx-auto max-w-[1400px] py-14 lg:px-10 lg:py-32">
       <Reveal>
-        <div className="relative aspect-video overflow-hidden rounded-sm bg-ink">
+        <div className="relative aspect-video overflow-hidden lg:rounded-sm bg-ink">
           {playing ? (
             <iframe
               src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1`}

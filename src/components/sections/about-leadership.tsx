@@ -1,34 +1,15 @@
-// import Image from "next/image";
 import { Reveal } from "@/components/ui/reveal";
 
 export function AboutLeadership() {
   return (
     <section className="border-t border-line bg-surface">
       <div className="mx-auto max-w-[1400px] px-5 py-24 lg:px-10 lg:py-32">
-        {/* Two-column layout with photo — restore once the illustration replaces it.
-        <div className="grid gap-12 lg:grid-cols-12 lg:items-center lg:gap-16">
-          <Reveal className="lg:col-span-5">
-            <div className="relative mx-auto aspect-[4/5] w-full max-w-[380px]">
-              <Image
-                src="/about/arya-reddy.jpg"
-                alt="Arya Reddy, AVR Developers"
-                fill
-                sizes="(min-width: 1024px) 380px, 70vw"
-                className="object-contain"
-              />
-            </div>
-          </Reveal>
-          <Reveal index={1} className="lg:col-span-7">
-            ...
-          </Reveal>
-        </div>
-        */}
         <Reveal className="mx-auto max-w-[640px] text-center">
           <p className="caps text-[12px] font-medium text-accent">
             Leadership
           </p>
-          <p className="mt-6 font-serif text-2xl font-light leading-[1.4] text-ink sm:text-[1.7rem]">
-            Building on a family legacy of <br/> 25+ years in Hyderabad real estate.
+          <p className="mt-6 font-serif text-xl font-light leading-[1.4] text-ink sm:text-[1.7rem]">
+            Building on a family legacy of 25+ years in Hyderabad real estate.
           </p>
           <p className="mt-4 text-[13px] font-medium text-ink">
             Arya Reddy{" "}

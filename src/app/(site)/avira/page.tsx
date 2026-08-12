@@ -6,9 +6,9 @@ import { projects } from "@/lib/site";
 const project = projects.find((p) => p.slug === "avira");
 
 export const metadata: Metadata = {
-  title: "Avira — Sky Villas & Penthouses in Narsingi",
+  title: "Avira — Ultra-luxury 3 & 3.5 BHK in Kokapet",
   description:
-    "Avira by AVR Developers: double-height sky villas and penthouses in Narsingi, Hyderabad, with private decks and skyline views.",
+    "Avira by AVR Developers: ultra-luxury 3 & 3.5 BHK residences in Kokapet, Hyderabad. 172 units across 2 towers with a full clubhouse and pool deck. RERA P02400011038.",
   alternates: { canonical: "/avira" },
 };
 

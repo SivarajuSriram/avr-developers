@@ -10,7 +10,7 @@ export function BlogPosts() {
 
   return (
     <>
-      <section className="mx-auto max-w-[1400px] px-5 lg:px-10">
+      <section className="mx-auto max-w-[1400px] px-5 pb-14 lg:px-10 lg:pb-20">
         <Reveal>
           <Link href={`/blog/${featured.slug}`} className="group block">
             <div className="relative">
@@ -25,8 +25,11 @@ export function BlogPosts() {
                 {featured.category}
               </span>
             </div>
-            <div className="mt-8">
-              <h2 className="font-serif text-3xl font-light leading-[1.15] text-ink transition-colors lg:whitespace-nowrap lg:group-hover:text-accent lg:text-4xl">
+            <div className="mt-6">
+              <p className="caps text-[12px] font-medium text-ink-40">
+                Published on {featured.date}
+              </p>
+              <h2 className="mt-3 font-serif text-3xl font-light leading-[1.15] text-ink transition-colors lg:whitespace-nowrap lg:group-hover:text-accent lg:text-4xl">
                 {featured.title}
               </h2>
               <p className="mt-4 max-w-[60ch] text-[15px] leading-relaxed text-ink-70 lg:max-w-none lg:whitespace-nowrap">
@@ -45,15 +48,17 @@ export function BlogPosts() {
         </Reveal>
       </section>
 
-      <section className="mx-auto max-w-[1400px] px-5 py-14 lg:px-10 lg:py-20">
-        <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-          {rest.map((post, i) => (
-            <Reveal key={post.slug} index={i % 3}>
-              <BlogCard post={post} />
-            </Reveal>
-          ))}
-        </div>
-      </section>
+      {rest.length > 0 && (
+        <section className="mx-auto max-w-[1400px] px-5 py-14 lg:px-10 lg:py-20">
+          <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+            {rest.map((post, i) => (
+              <Reveal key={post.slug} index={i % 3}>
+                <BlogCard post={post} />
+              </Reveal>
+            ))}
+          </div>
+        </section>
+      )}
     </>
   );
 }

@@ -73,7 +73,7 @@ export function WhyChooseUs() {
                   key={r.stat}
                   type="button"
                   onClick={() => setActive(i)}
-                  className={`flex items-baseline gap-3 border-b border-line py-4 text-left font-serif text-xs transition-colors duration-300 first:pt-0 lg:text-xl ${
+                  className={`flex items-baseline gap-3 border-b border-line py-4 text-left font-sans text-xs transition-colors duration-300 first:pt-0 lg:text-xl ${
                     i === active ? "text-ink" : "text-ink-25 lg:hover:text-ink-55"
                   }`}
                 >

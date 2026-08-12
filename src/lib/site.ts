@@ -92,6 +92,11 @@ export type Project = {
   gallery?: { view: string; src: string; mobileSrc?: string }[];
   /* project's own pin — enables the interactive map in the location section */
   coordinates?: { lat: number; lng: number };
+  /* exact Google Maps / GMB listing URL for the "View on Google Maps" button.
+     A name+locality text search isn't guaranteed to resolve to the verified
+     listing, so when this is set it's used as-is instead of building a
+     search query. */
+  mapsUrl?: string;
   connectivity?: {
     place: string;
     time: string;
@@ -131,14 +136,14 @@ export type Project = {
  * same drive times, same pin. Defined once so it can't drift between projects.
  */
 const kokapetConnectivity = [
-  { place: "Nehru Outer Ring Road", time: "1 min", lat: 17.4104, lng: 78.3272, category: "Connectivity", image: "/stock/connectivity/highway.jpg" },
-  { place: "Neopolis", time: "2 min", lat: 17.4149, lng: 78.3324, category: "Commercial", image: "/stock/connectivity/office-1.jpg" },
-  { place: "Financial District", time: "5 min", lat: 17.4137, lng: 78.3466, category: "Commercial", image: "/stock/connectivity/office-2.jpg" },
-  { place: "Wipro Circle", time: "5 min", lat: 17.4419, lng: 78.3813, category: "Connectivity", image: "/stock/connectivity/highway-2.jpg" },
-  { place: "Leading hospitals", time: "8 min", lat: 17.4159, lng: 78.3475, category: "Healthcare", image: "/stock/connectivity/hospital.jpg" },
-  { place: "Leading schools", time: "10 min", lat: 17.4204, lng: 78.354, category: "Education", image: "/stock/connectivity/school.jpg" },
-  { place: "HITEC City", time: "15 min", lat: 17.4483, lng: 78.3915, category: "Commercial", image: "/stock/connectivity/office-3.jpg" },
-  { place: "Rajiv Gandhi International Airport", time: "30 min", lat: 17.2403, lng: 78.4294, category: "Connectivity", image: "/stock/connectivity/airport.jpg" },
+  { place: "Nehru Outer Ring Road", time: "1 min", lat: 17.4104, lng: 78.3272, category: "Connectivity", image: "/connectivity/highway.jpg" },
+  { place: "Neopolis", time: "2 min", lat: 17.4149, lng: 78.3324, category: "Commercial", image: "/connectivity/office-1.jpg" },
+  { place: "Financial District", time: "5 min", lat: 17.4137, lng: 78.3466, category: "Commercial", image: "/connectivity/office-2.jpg" },
+  { place: "Wipro Circle", time: "5 min", lat: 17.4419, lng: 78.3813, category: "Connectivity", image: "/connectivity/highway-2.jpg" },
+  { place: "Leading hospitals", time: "8 min", lat: 17.4159, lng: 78.3475, category: "Healthcare", image: "/connectivity/hospital.jpg" },
+  { place: "Leading schools", time: "10 min", lat: 17.4204, lng: 78.354, category: "Education", image: "/connectivity/school.jpg" },
+  { place: "HITEC City", time: "15 min", lat: 17.4483, lng: 78.3915, category: "Commercial", image: "/connectivity/office-3.jpg" },
+  { place: "Rajiv Gandhi International Airport", time: "30 min", lat: 17.2403, lng: 78.4294, category: "Connectivity", image: "/connectivity/airport.jpg" },
 ] as const satisfies NonNullable<Project["connectivity"]>;
 
 export const projects: Project[] = [
@@ -231,6 +236,7 @@ export const projects: Project[] = [
     amenitiesHeading: "Indulgence, Everyday",
     status: "Ongoing",
     configuration: "Ultra-luxury 3 & 3.5 BHK Residences",
+    rera: "TG RERA P02400011038",
     blurb:
       "Situated in one of the city’s emerging growth corridors in Kokapet, AVIRA places you at the intersection of convenience, connectivity, and future potential. Offering thoughtfully designed 3 BHK residences, AVIRA embodies a contemporary identity with enduring appeal.",
     about:
@@ -256,6 +262,7 @@ export const projects: Project[] = [
       { view: "pool deck", src: "/avira/avira-carousel-5.webp", mobileSrc: "/avira/avira-mobile-5.webp" },
     ],
     coordinates: { lat: 17.381093938284977, lng: 78.33571023718808 },
+    mapsUrl: "https://maps.app.goo.gl/fH9Ltxj3ALeeyb787",
     connectivity: kokapetConnectivity,
     /* grounded in Avira's own clubhouseSpaces list below — no invented amenities */
     amenityItems: [
@@ -294,28 +301,6 @@ export const projects: Project[] = [
     ],
     galleryHeading:"A Glimpse of the Good Life at Avira",
     locationHeading:"Connected to What Matters",
-  },
-];
-
-/** Delivered projects (no detail page — shown on /projects for track record). */
-export const completedProjects: Project[] = [
-  {
-    slug: "serene-heights",
-    name: "Serene Heights",
-    status: "Completed",
-    configuration: "2 & 3 BHK Apartments",
-    blurb: "A gated community built around a central green, handed over and lived-in.",
-    highlights: [],
-    image: "/stock/projects/serene-heights.jpg",
-  },
-  {
-    slug: "the-terraces",
-    name: "The Terraces",
-    status: "Completed",
-    configuration: "3 BHK Duplexes",
-    blurb: "Terraced duplexes that have since settled into a quiet neighbourhood.",
-    highlights: [],
-    image: "/stock/projects/the-terraces.jpg",
   },
 ];
 

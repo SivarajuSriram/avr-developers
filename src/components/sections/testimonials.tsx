@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
@@ -73,11 +73,17 @@ function TestimonialCard({
   className,
   imgHeightClassName,
   imgSizes,
+  clampBody = true,
 }: {
   quote: Quote;
   className: string;
   imgHeightClassName: string;
   imgSizes: string;
+  /* desktop cards are a fixed height in a fixed-width scroller, so a 5-line
+     clamp is safe there. The mobile card's text column is narrow enough that
+     several of the longer quotes need 6+ lines — clamping there cut them off
+     mid-sentence, so the mobile call site turns this off. */
+  clampBody?: boolean;
 }) {
   return (
     <div className={className}>
@@ -95,7 +101,9 @@ function TestimonialCard({
       </div>
       <div className="flex min-w-0 flex-col justify-center gap-2.5 py-6 pl-1 pr-6">
         <span className="font-serif text-3xl leading-none text-accent/25">&ldquo;</span>
-        <blockquote className="line-clamp-5 font-serif text-[1.05rem] font-light leading-snug text-ink">
+        <blockquote
+          className={`font-sans text-[1.05rem] font-light leading-snug text-ink ${clampBody ? "line-clamp-5" : ""}`}
+        >
           &ldquo;{quote.body}&rdquo;
         </blockquote>
         <Attribution name={quote.name} role={quote.role} />
@@ -108,8 +116,22 @@ export function Testimonials() {
   const [emblaRef] = useEmblaCarousel({ loop: true, align: "start", dragFree: true }, [
     AutoScroll({ speed: 0.6, startDelay: 0, stopOnMouseEnter: true, stopOnInteraction: false }),
   ]);
+  /* separate embla instance for the mobile prev/next carousel — loop:true clones the
+     end slides so scrollNext()/scrollPrev() wrap seamlessly instead of the old manual
+     translateX(-index*100%) approach, which animated straight from the last slide's
+     offset back to 0% and visibly slid backwards through every card in between. */
+  const [mobileEmblaRef, mobileEmblaApi] = useEmblaCarousel({ loop: true, align: "start" });
   const [index, setIndex] = useState(0);
-  const go = (dir: 1 | -1) => setIndex((i) => (i + dir + quotes.length) % quotes.length);
+
+  useEffect(() => {
+    if (!mobileEmblaApi) return;
+    const onSelect = () => setIndex(mobileEmblaApi.selectedScrollSnap());
+    onSelect();
+    mobileEmblaApi.on("select", onSelect);
+    return () => {
+      mobileEmblaApi.off("select", onSelect);
+    };
+  }, [mobileEmblaApi]);
 
   return (
     <section className="border-t border-line bg-canvas">
@@ -129,18 +151,16 @@ export function Testimonials() {
 
         {/* mobile/tablet: single card + prev/next buttons, no drag/auto-scroll */}
         <div className="mt-10 px-5 lg:hidden">
-          <div className="mx-auto max-w-[440px] overflow-hidden">
-            <div
-              className="flex transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-              style={{ transform: `translateX(-${index * 100}%)` }}
-            >
+          <div className="mx-auto max-w-[440px] overflow-hidden" ref={mobileEmblaRef}>
+            <div className="flex">
               {quotes.map((q) => (
                 <div key={q.name} className="w-full shrink-0">
                   <TestimonialCard
                     quote={q}
                     imgSizes="170px"
                     imgHeightClassName="h-[280px]"
-                    className="grid h-[300px] grid-cols-[170px_1fr] items-center overflow-hidden rounded-lg border border-line bg-surface"
+                    clampBody={false}
+                    className="grid min-h-[300px] grid-cols-[170px_1fr] items-center overflow-hidden rounded-lg border border-line bg-surface"
                   />
                 </div>
               ))}
@@ -149,7 +169,7 @@ export function Testimonials() {
           <div className="mt-6 flex items-center justify-center gap-5">
             <button
               type="button"
-              onClick={() => go(-1)}
+              onClick={() => mobileEmblaApi?.scrollPrev()}
               aria-label="Previous testimonial"
               className="grid size-10 place-items-center rounded-full border border-line-strong text-ink transition-colors hover:border-accent hover:text-accent"
             >
@@ -160,7 +180,7 @@ export function Testimonials() {
             </span>
             <button
               type="button"
-              onClick={() => go(1)}
+              onClick={() => mobileEmblaApi?.scrollNext()}
               aria-label="Next testimonial"
               className="grid size-10 place-items-center rounded-full border border-line-strong text-ink transition-colors hover:border-accent hover:text-accent"
             >

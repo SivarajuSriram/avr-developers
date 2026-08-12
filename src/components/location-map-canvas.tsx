@@ -86,10 +86,17 @@ export function LocationMapCanvas({
     });
     mapRef.current = map;
 
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
-      attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
-      maxZoom: 20,
-    }).addTo(map);
+    /* Esri World Imagery (satellite) + its reference-labels overlay, stacked to
+       match the "hybrid" look (imagery + place/road labels) — same free,
+       no-API-key tier as the CartoDB tiles this replaced. */
+    L.tileLayer(
+      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+      { attribution: "Tiles &copy; Esri", maxZoom: 19 },
+    ).addTo(map);
+    L.tileLayer(
+      "https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
+      { attribution: "Tiles &copy; Esri", maxZoom: 19 },
+    ).addTo(map);
 
     L.control.attribution({ position: "bottomright", prefix: false }).addTo(map);
     L.control.zoom({ position: "bottomright" }).addTo(map);
@@ -259,23 +266,26 @@ export function LocationMapCanvas({
       <div ref={containerRef} className="map-leaflet-container h-full w-full" />
       <div ref={carouselRef} className="mobile-image-carousel">
         <div
-          className="carousel-item-card"
+          className="carousel-item-card carousel-item-card--project"
           data-id="project"
           onClick={(e) => e.currentTarget.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" })}
         >
-          {projectImage && (
-            <div className="carousel-img-wrap">
+          {projectLogo && (
+            /* project photos crop unpredictably at this aspect ratio — the
+               wordmark logo is a cleaner, crop-proof identifier for the card.
+               Forced white (same trick as .project-pin-logo) since both logos
+               are dark-ink SVGs and this card has a dark background. */
+            <div className="carousel-img-wrap carousel-logo-wrap">
               <Image
-                src={projectImage}
+                src={projectLogo}
                 alt={projectName}
                 fill
                 sizes="70vw"
                 loading="lazy"
-                className="object-cover"
+                className="object-contain p-8"
               />
             </div>
           )}
-          <div className="carousel-item-title">{projectName}</div>
         </div>
         {points.map((p, i) => (
           <div

@@ -8,7 +8,9 @@ import { CaretDown, CaretRight, List, Phone, X } from "@phosphor-icons/react";
 import { nav, projects, site } from "@/lib/site";
 import { scrollToTop } from "@/lib/scroll";
 
-/* Routes whose page renders a transparent hero (id="hero") under the header. */
+/* Routes whose page renders a transparent hero (id="hero") under the header.
+   Blog articles (/blog/[slug]) are handled separately below since their
+   pathname isn't known statically. */
 const HERO_ROUTES = new Set(["/", "/about", ...projects.map((p) => `/${p.slug}`)]);
 
 /* Real AVR logo. Two variants crossfade with the header state: the navy
@@ -163,7 +165,7 @@ function TopItem({ item, isHome }: { item: NavItem; isHome: boolean }) {
 export function SiteHeader() {
   const pathname = usePathname();
   const isHome = pathname === "/";
-  const hasHero = HERO_ROUTES.has(pathname);
+  const hasHero = HERO_ROUTES.has(pathname) || pathname.startsWith("/blog/");
   const [solid, setSolid] = useState(!hasHero);
   const [open, setOpen] = useState(false);
 

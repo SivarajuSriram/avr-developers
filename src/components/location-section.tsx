@@ -29,11 +29,14 @@ export function LocationSection({ project }: { project: Project }) {
     project.coordinates && rows.every((r) => r.lat != null && r.lng != null)
       ? rows.map((r) => ({ place: r.place, time: r.time, lat: r.lat!, lng: r.lng!, category: r.category, image: r.image }))
       : null;
-  const mapsHref = project.coordinates
-    ? `https://www.google.com/maps/search/?api=1&query=${project.coordinates.lat},${project.coordinates.lng}`
-    : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-        `${project.name}, ${site.address.locality}, ${site.address.region}`,
-      )}`;
+  /* project.mapsUrl (the project's actual GMB/Google Maps listing link) is
+     authoritative — a name+locality text search is only a best-effort guess
+     and isn't guaranteed to resolve to the verified listing. */
+  const mapsHref =
+    project.mapsUrl ??
+    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+      `${project.name}, ${site.address.locality}, ${site.address.region}`,
+    )}`;
 
   /* group rows by category (fixed display order), each row keeping its
      original index into `rows` so hover state still lines up with mapPoints */
@@ -68,7 +71,7 @@ export function LocationSection({ project }: { project: Project }) {
 
   return (
     <section id="location" className="location-section scroll-mt-32 border-t border-line">
-      <div className="mx-auto max-w-[1400px] px-5 py-24 lg:px-10 lg:py-32">
+      <div className="mx-auto max-w-[1400px] px-5 py-14 lg:px-10 lg:py-32">
         <Reveal>
           <p className="caps mb-4 text-[13px] font-medium text-accent">Proximity</p>
           <h2 className="location-title max-w-[34ch] font-serif text-3xl font-light leading-[1.08] md:text-5xl">
@@ -123,7 +126,7 @@ export function LocationSection({ project }: { project: Project }) {
                   title={`Map — ${project.name}, ${site.address.locality}`}
                   src={`https://www.google.com/maps?q=${encodeURIComponent(
                     `${project.name}, ${site.address.locality}, ${site.address.region}`,
-                  )}&output=embed`}
+                  )}&t=k&output=embed`}
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                   className="block h-full w-full border-0 grayscale-[0.15]"

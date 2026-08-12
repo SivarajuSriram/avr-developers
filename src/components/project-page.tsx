@@ -60,7 +60,7 @@ export function ProjectPage({ project }: { project: Project }) {
               />
             </div>
           )}
-          <h1 className="font-serif text-6xl font-light leading-none tracking-[-0.03em] lg:text-8xl">
+          <h1 className="font-serif text-4xl font-light leading-none tracking-[-0.03em] sm:text-5xl lg:text-8xl">
             {withBreaks(project.headline ?? project.name)}
           </h1>
           <p className="mt-6 max-w-[44ch] text-[15px] text-white/85">
@@ -70,11 +70,11 @@ export function ProjectPage({ project }: { project: Project }) {
       </section>
 
       {/* about */}
-      <section id="about" className="mx-auto max-w-[1400px] scroll-mt-32 px-5 py-24 lg:px-10 lg:py-32">
+      <section id="about" className="mx-auto max-w-[1400px] scroll-mt-32 px-5 py-14 lg:px-10 lg:py-32">
         <div className="grid items-start gap-12 lg:grid-cols-12">
           <Reveal className="lg:col-span-7">
-            <h2 className="font-serif text-3xl font-light leading-[1.08] md:text-5xl">
-              {withBreaks(project.aboutHeading ?? "Homes For The New-age|Living Stories")}
+            <h2 className="font-serif text-2xl font-light leading-[1.08] sm:text-3xl md:text-5xl">
+              {withBreaks(project.aboutHeading ?? "Homes For The|New-age Living Stories")}
             </h2>
             <div
               className={
@@ -108,9 +108,11 @@ export function ProjectPage({ project }: { project: Project }) {
         </div>
       </section>
 
-      {/* site plan */}
+      {/* site plan — mobile crop (sitePlanImageMobile) is a portrait 9:16 render, the
+          desktop crop is landscape; forcing both into one aspect ratio badly cropped
+          whichever one didn't match, so the ratio now switches at lg */}
       <section id="site-plan" className="scroll-mt-32 px-5 lg:px-10">
-        <div className="relative mx-auto aspect-[250/217] max-w-[1330px]">
+        <div className="relative mx-auto aspect-[9/16] max-w-[1330px] lg:aspect-[250/217]">
           <ResponsiveImage
             src={project.sitePlanImage ?? project.image}
             mobileSrc={project.sitePlanImageMobile}
@@ -143,7 +145,7 @@ export function ProjectPage({ project }: { project: Project }) {
           body={project.clubBody}
         />
       ) : (
-        <section id="club" className="mx-auto max-w-[1400px] scroll-mt-32 px-5 py-24 lg:px-10 lg:py-32">
+        <section id="club" className="mx-auto max-w-[1400px] scroll-mt-32 px-5 py-14 lg:px-10 lg:py-32">
           <Reveal>
             <h2 className="max-w-[16ch] font-serif text-3xl font-light leading-[1.08] md:text-5xl">
               {project.noClubhouseHeading ?? "Life beyond the front door."}
@@ -163,7 +165,7 @@ export function ProjectPage({ project }: { project: Project }) {
 
       {/* gallery (full-bleed carousel) */}
       <div id="gallery" className="scroll-mt-32 border-t border-line">
-        <div className="mx-auto max-w-[1400px] px-5 pt-20 lg:px-10 lg:pt-28">
+        <div className="mx-auto max-w-[1400px] px-5 pt-14 lg:px-10 lg:pt-28">
           <Reveal>
             <p className="caps mb-4 text-[12px] font-medium text-accent">
               Gallery

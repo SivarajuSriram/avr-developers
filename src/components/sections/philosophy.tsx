@@ -39,7 +39,7 @@ export function Philosophy() {
       {/* overlay content */}
       <div className="relative mx-auto w-full max-w-[1400px] px-5 py-10 lg:px-10 lg:py-14">
         <Reveal>
-          <p className="max-w-[34ch] font-serif text-2xl font-light leading-[1.15] tracking-[-0.01em] sm:max-w-[42ch] sm:text-3xl lg:max-w-[46ch] lg:text-4xl">
+          <p className="max-w-[34ch] font-serif text-lg font-light leading-[1.15] tracking-[-0.01em] sm:max-w-[42ch] sm:text-3xl lg:max-w-[46ch] lg:text-4xl">
             AVR Group creates new-age living spaces that respond to evolving lifestyles through fresh design, premium amenities, and a powerful blend of innovation, experience, and trust.
           </p>
         </Reveal>
@@ -47,7 +47,7 @@ export function Philosophy() {
         <ul className="mt-10 grid gap-8 border-t border-white/20 pt-8 sm:grid-cols-3 sm:gap-10 lg:mt-12">
           {values.map((value, i) => (
             <Reveal as="li" key={value.title} index={i + 1}>
-              <h3 className="font-serif text-xl font-normal">
+              <h3 className="font-serif text-base font-normal sm:text-xl">
                 {value.title}
               </h3>
               <p className="mt-3 text-[14.5px] leading-relaxed text-white/70">

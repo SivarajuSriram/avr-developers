@@ -504,6 +504,11 @@ body {
   }
   .mobile-image-carousel {
     display: flex;
+    /* cards are different heights (the project card is taller than the
+       landmark strips) — without this, flex's default stretch would force
+       every card to the row's tallest height, leaving the shorter cards'
+       titles floating below their image instead of overlaid on it. */
+    align-items: flex-start;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     gap: 15px;
@@ -539,6 +544,12 @@ body {
   }
   .carousel-item-card img {
     pointer-events: none;
+  }
+  /* project card shows the wordmark logo instead of a photo (crop-proof,
+     no aspect-ratio fight) — both logos are dark-ink SVGs, forced white
+     (same trick as .project-pin-logo) to read against the card's dark bg. */
+  .carousel-logo-wrap img {
+    filter: brightness(0) invert(1);
   }
   .carousel-item-title {
     position: absolute;

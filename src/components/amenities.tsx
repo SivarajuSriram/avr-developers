@@ -59,7 +59,7 @@ export function Amenities({
   return (
     <section
       id="amenities"
-      className="mx-auto max-w-[1400px] scroll-mt-32 px-5 py-24 lg:px-10 lg:py-32"
+      className="mx-auto max-w-[1400px] scroll-mt-32 px-5 py-14 lg:px-10 lg:py-32"
     >
       <div>
         <Reveal>

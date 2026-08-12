@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { projects, site } from "@/lib/site";
+import { blogPosts } from "@/lib/blog-posts";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -17,6 +18,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "weekly" as const,
       priority: 0.9,
+    })),
+    ...blogPosts.map((post) => ({
+      url: `${site.url}/blog/${post.slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
     })),
   ];
 }

@@ -18,7 +18,10 @@ export function BlogCard({ post }: { post: BlogPost }) {
           {post.category}
         </span>
       </div>
-      <h3 className="mt-5 font-serif text-xl font-light leading-snug text-ink transition-colors lg:group-hover:text-accent">
+      <p className="caps mt-5 text-[11px] font-medium text-ink-40">
+        Published on {post.date}
+      </p>
+      <h3 className="mt-2 font-serif text-xl font-light leading-snug text-ink transition-colors lg:group-hover:text-accent">
         {post.title}
       </h3>
       <p className="mt-2 text-[14px] leading-relaxed text-ink-55">
