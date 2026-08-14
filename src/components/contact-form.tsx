@@ -5,11 +5,12 @@ import { useRouter } from "next/navigation";
 import { ArrowRight, CaretDown } from "@phosphor-icons/react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import { INTEREST_OPTIONS, type Interest } from "@/lib/contact-interest";
+import { INTEREST_OPTIONS } from "@/lib/contact-interest";
+import { formatIstTimestamp } from "@/lib/format-ist-timestamp";
 import { projects } from "@/lib/site";
 
 type Status = "idle" | "submitting" | "error";
-type Errors = Partial<Record<"name" | "email" | "phone", string>>;
+type Errors = Partial<Record<"name" | "email" | "phone" | "interest", string>>;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -31,15 +32,36 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  *
  * `bare` drops the outer border/bg/padding so the form can sit inside a card
  * the parent already provides (e.g. the contact page's overlapping hero card).
+ *
+ * `interestOptions`/`interestLabel` let a caller repurpose the dropdown for a
+ * non-project context (e.g. the careers page picking a job listing instead
+ * of a project) without duplicating the rest of the form. `webhookUrl`
+ * likewise lets a caller point at a different Pabbly workflow (e.g. careers
+ * applications routing separately from project leads); falls back to the
+ * site-wide default. `interestPlaceholder`, when set, starts the dropdown
+ * unselected (showing that text) instead of defaulting to the first option,
+ * and requires an explicit pick before submit.
  */
-export function ContactForm({ bare = false }: { bare?: boolean } = {}) {
+export function ContactForm({
+  bare = false,
+  interestOptions = INTEREST_OPTIONS,
+  interestLabel = "Interested in",
+  interestPlaceholder,
+  webhookUrl = process.env.NEXT_PUBLIC_PABBLY_WEBHOOK_URL,
+}: {
+  bare?: boolean;
+  interestOptions?: readonly string[];
+  interestLabel?: string;
+  interestPlaceholder?: string;
+  webhookUrl?: string;
+} = {}) {
   const router = useRouter();
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Errors>({});
   const [phone, setPhone] = useState("");
   const [dialCode, setDialCode] = useState("91");
   const [countryCode, setCountryCode] = useState("in");
-  const [interest, setInterest] = useState<Interest>(INTEREST_OPTIONS[0]);
+  const [interest, setInterest] = useState<string>(interestPlaceholder ? "" : interestOptions[0]);
   const [interestOpen, setInterestOpen] = useState(false);
   const interestRef = useRef<HTMLDivElement>(null);
   const phoneFieldRef = useRef<HTMLDivElement>(null);
@@ -92,6 +114,8 @@ export function ContactForm({ bare = false }: { bare?: boolean } = {}) {
     else if (!EMAIL_RE.test(email)) next.email = "That email doesn't look right.";
     if (!phone || phone.replace(/\D/g, "").length < 5)
       next.phone = "A phone number is required.";
+    if (interestPlaceholder && !interest)
+      next.interest = `Please select ${interestLabel.toLowerCase()}.`;
 
     setErrors(next);
     if (Object.keys(next).length > 0) return;
@@ -99,7 +123,14 @@ export function ContactForm({ bare = false }: { bare?: boolean } = {}) {
     setStatus("submitting");
     try {
       const message = String(data.get("message") ?? "").trim();
-      const payload = { name, email, phone: `+${dialCode}${phone}`, interest, message };
+      const payload = {
+        name,
+        email,
+        phone: `+${dialCode}${phone}`,
+        interest,
+        message,
+        timestamp: formatIstTimestamp(),
+      };
 
       // Wrapped in async IIFEs so a bad placeholder value (e.g. an invalid
       // webhook URL) rejects instead of throwing synchronously and skipping
@@ -110,7 +141,7 @@ export function ContactForm({ bare = false }: { bare?: boolean } = {}) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         }),
-        fetch(process.env.NEXT_PUBLIC_PABBLY_WEBHOOK_URL!, {
+        fetch(webhookUrl!, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -148,7 +179,7 @@ export function ContactForm({ bare = false }: { bare?: boolean } = {}) {
         </Field>
         <Field label="Phone" htmlFor="phone" error={errors.phone}>
           <div
-            className={`field-draw-border flex w-full items-center rounded-sm border bg-canvas text-ink transition-colors overflow-visible ${errors.phone ? "border-accent" : "border-line-strong"}`}
+            className={`field-draw-border flex w-full min-w-0 items-center rounded-sm border bg-canvas text-ink transition-colors overflow-visible ${errors.phone ? "border-accent" : "border-line-strong"}`}
           >
             <div
               ref={phoneFieldRef}
@@ -187,11 +218,11 @@ export function ContactForm({ bare = false }: { bare?: boolean } = {}) {
               value={phone}
               onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
               placeholder="Phone number"
-              className="flex-1 bg-transparent px-4 py-3 outline-none text-[15px]"
+              className="min-w-0 flex-1 bg-transparent px-4 py-3 outline-none text-[15px]"
             />
           </div>
         </Field>
-        <Field label="Interested in" htmlFor="interest-trigger">
+        <Field label={interestLabel} htmlFor="interest-trigger" error={errors.interest}>
           <div ref={interestRef} className="relative">
             <input type="hidden" name="interest" value={interest} />
             <button
@@ -200,9 +231,11 @@ export function ContactForm({ bare = false }: { bare?: boolean } = {}) {
               aria-haspopup="listbox"
               aria-expanded={interestOpen}
               onClick={() => setInterestOpen((o) => !o)}
-              className={`${selectCls} flex items-center justify-between text-left`}
+              className={`${selectCls} flex items-center justify-between text-left ${
+                !interest ? "text-ink-40" : ""
+              }`}
             >
-              <span>{interest}</span>
+              <span>{interest || interestPlaceholder}</span>
               <CaretDown
                 size={14}
                 className={`text-ink-55 shrink-0 transition-transform ${interestOpen ? "rotate-180" : ""}`}
@@ -213,7 +246,7 @@ export function ContactForm({ bare = false }: { bare?: boolean } = {}) {
                 role="listbox"
                 className="absolute z-20 mt-1.5 w-full overflow-hidden rounded-sm border border-line-strong bg-canvas shadow-lg"
               >
-                {INTEREST_OPTIONS.map((opt) => (
+                {interestOptions.map((opt) => (
                   <li key={opt} role="option" aria-selected={opt === interest}>
                     <button
                       type="button"

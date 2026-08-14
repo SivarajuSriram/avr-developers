@@ -97,14 +97,15 @@ export function ProjectsFeature() {
                   </span>
                 </div>
 
-                <div className="mt-5 flex items-start justify-between gap-4">
+                <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
                   <div>
                     <h3 className="font-serif text-2xl font-normal tracking-[0.02em] transition-colors lg:group-hover:text-accent lg:text-[1.75rem]">
                       {project.name}
                     </h3>
                   </div>
-                  <span className="mt-1 grid size-11 shrink-0 place-items-center rounded-full border border-accent bg-accent text-white transition-colors duration-300 lg:border-line-strong lg:bg-transparent lg:text-ink lg:group-hover:border-accent lg:group-hover:bg-accent lg:group-hover:text-white">
-                    <ArrowUpRight size={17} weight="bold" />
+                  <span className="caps flex shrink-0 items-center gap-2 rounded-full border border-accent bg-accent px-4 py-2.5 text-[11px] font-medium text-white transition-colors duration-300 lg:border-line-strong lg:bg-transparent lg:text-ink lg:group-hover:border-accent lg:group-hover:bg-accent lg:group-hover:text-white">
+                    Learn More
+                    <ArrowUpRight size={14} weight="bold" />
                   </span>
                 </div>
               </Link>

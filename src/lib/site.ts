@@ -276,6 +276,9 @@ export const projects: Project[] = [
       "Situated in one of the city’s emerging growth corridors in Kokapet, AVIRA places you at the intersection of convenience, connectivity, and future potential. Offering thoughtfully designed 3 BHK residences, AVIRA embodies a contemporary identity with enduring appeal.",
     about:
       "Located in one of Hyderabad’s most promising growth corridors, AVIRA brings together connectivity, convenience and contemporary luxury in Kokapet. With easy access to key business districts, social infrastructure and everyday essentials, it offers a well-connected address for those who want to stay close to everything that matters while enjoying the calm of a thoughtfully planned residential community. \n\nDesigned for those who appreciate refined living, AVIRA presents 3 & 3.5 BHK flats in Kokapet, Hyderabad, created around the way modern families live today. From expansive living spaces to thoughtfully planned interiors, every element is designed to offer a seamless balance of functionality, aesthetics and comfort. It is a home that gives you room to live, unwind, entertain and grow.\n\nFor discerning homebuyers seeking 3 BHK luxury apartments in Hyderabad, AVIRA offers contemporary architecture, curated amenities and lifestyle-led spaces coming together to create meaningful everyday experiences. Whether it is an invigorating morning, an evening spent unwinding or quality time with family, every aspect of the community is designed to make everyday living feel more rewarding.\n\nFor those looking at 3.5 BHK apartments for sale in Kokapet, AVIRA represents an address with both immediate lifestyle appeal and long-term potential. Set within a rapidly developing part of Hyderabad, it brings together the advantages of a strategic location with the comfort and character of a thoughtfully designed home. AVIRA is, ultimately, a contemporary address for those who choose to live intentionally, and invest in a lifestyle that evolves with them.",
+    videoId: "AxGOc4gNQIA",
+    videoTitle: "Welcome to Avira – A Lifestyle Movement",
+    videoPlayButton: "youtube",
     aboutImage: "/about/about-avira.webp",
     highlights: [
       { value:"172", label: "Units" },
@@ -283,7 +286,7 @@ export const projects: Project[] = [
       { value:"11", label: "FLOORS" },
     ],
     logo: "/avira/Avira_logo_new.svg",
-    /* no brochure yet, the contact form skips the auto-download until this is set */
+    brochure: "/avira/AviraBrochure_web.pdf",
     image: "/projects/avira-project-card.webp",
     heroImage: "/avira/avira-hero.webp",
     heroImageMobile:"/avira/avira-hero-mobile.webp",

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
-import { ResponsiveImage } from "@/components/ui/responsive-image";
+import { HeroBackground } from "@/components/sections/hero-background";
 
 /** Fullscreen banner hero with an image background and a centered text overlay. */
 export function Hero() {
@@ -11,29 +11,21 @@ export function Hero() {
     >
       {/* background */}
       <div className="absolute inset-0">
-        <ResponsiveImage
-          src="/Home-page-hero.webp"
-          /* drop the mobile-res render at this path once available */
-          mobileSrc="/home-page-hero-mobile.webp"
-          alt="Evania by AVR Developers, luxury residences in Kokapet, Hyderabad"
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
+        <HeroBackground />
         {/* legibility scrims */}
-        <div className="absolute inset-0 bg-ink/45" />
+        <div className="absolute inset-0 bg-ink/35" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/15 to-ink/35" />
       </div>
 
       {/* overlay content */}
       <div className="relative z-10 mx-auto max-w-[1000px] px-5 text-center pt-24">
         <h1
-          className="rise mx-auto max-w-[18ch] font-serif text-4xl font-light leading-[1.1] tracking-[-0.01em] sm:text-6xl lg:text-[5.5rem] lg:leading-[1.02]"
+          className="rise mx-auto font-serif text-4xl font-light leading-[1.1] tracking-[-0.01em] sm:text-6xl lg:max-w-[18ch] lg:text-[5.5rem] lg:leading-[1.02]"
           style={{ "--i": 0 } as React.CSSProperties}
         >
           Reshaping the
           <br />
-          <span className="inline-block pb-1 text-rose">
+          <span className="inline-block pb-1 text-white">
             DNA of Urban Living
           </span>
         </h1>

@@ -129,6 +129,14 @@ body {
     stroke-dashoffset: 0;
   }
 }
+@keyframes phone-shake {
+  0%, 100% { transform: rotate(0); }
+  15% { transform: rotate(-18deg); }
+  30% { transform: rotate(15deg); }
+  45% { transform: rotate(-12deg); }
+  60% { transform: rotate(9deg); }
+  75% { transform: rotate(-5deg); }
+}
 @media (prefers-reduced-motion: reduce) {
   .icon-draw :is(path, line, polyline, circle, rect, ellipse, polygon) {
     stroke-dashoffset: 0;

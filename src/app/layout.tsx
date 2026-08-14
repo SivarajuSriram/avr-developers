@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Instrument_Sans, Nixie_One } from "next/font/google";
 import "./globals.css";
 import { ScrollToTop } from "@/components/scroll-to-top";
-import { ScrollToTopButton } from "@/components/scroll-to-top-button";
+import { CallButton } from "@/components/call-button";
 import { RepaintOnVisible } from "@/components/repaint-on-visible";
 import { site } from "@/lib/site";
 
@@ -84,7 +84,7 @@ export default function RootLayout({
         <ScrollToTop />
         <RepaintOnVisible />
         {children}
-        <ScrollToTopButton />
+        <CallButton />
       </body>
     </html>
   );

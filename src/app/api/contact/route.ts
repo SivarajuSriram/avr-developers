@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import { site } from "@/lib/site";
+import { formatIstTimestamp } from "@/lib/format-ist-timestamp";
 
 export const runtime = "nodejs";
 
@@ -10,6 +11,7 @@ type ContactPayload = {
   phone: string;
   interest: string;
   message: string;
+  timestamp: string;
 };
 
 /**
@@ -29,6 +31,7 @@ export async function POST(request: Request) {
   }
   const interest = body?.interest?.trim() || "General enquiry";
   const message = body?.message?.trim();
+  const timestamp = body?.timestamp?.trim() || formatIstTimestamp();
 
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
@@ -48,6 +51,7 @@ export async function POST(request: Request) {
       `Phone: ${phone}`,
       `Interested in: ${interest}`,
       `Message: ${message || "(none)"}`,
+      `Submitted: ${timestamp}`,
     ].join("\n"),
   });
 

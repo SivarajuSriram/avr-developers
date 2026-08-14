@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/page-header";
+import { CareersContact } from "@/components/sections/careers-contact";
 
 export const metadata: Metadata = {
   title: "Careers at AVR Developers in Real Estate | AVR Developers",
@@ -18,6 +19,7 @@ export default function CareersPage() {
         divider={false}
         centered
       />
+      <CareersContact />
     </>
   );
 }
