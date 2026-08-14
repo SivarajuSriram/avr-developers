@@ -128,8 +128,10 @@ export function ContactForm({
         email,
         phone: `+${dialCode}${phone}`,
         interest,
+        position: interest, // For careers Pabbly connect
         message,
         timestamp: formatIstTimestamp(),
+        source: webhookUrl === process.env.NEXT_PUBLIC_PABBLY_WEBHOOK_URL_CAREERS ? "careers" : "contact"
       };
 
       // Wrapped in async IIFEs so a bad placeholder value (e.g. an invalid
