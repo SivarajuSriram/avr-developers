@@ -46,7 +46,7 @@ export function Clubhouse({
               >
                 <CoverImage
                   src={spaces[active].image}
-                  alt={`${spaces[active].label} — ${projectName} Club`}
+                  alt={`${spaces[active].label}, ${projectName} Club`}
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="h-full w-full"
                 />

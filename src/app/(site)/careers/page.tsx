@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/page-header";
 
 export const metadata: Metadata = {
-  title: "Careers",
+  title: "Careers at AVR Developers in Real Estate | AVR Developers",
   description:
-    "Join AVR Developers. Discover a professional environment where every day brings new opportunities and collaboration thrives.",
+    "Build your career with AVR Developers with a dynamic team, exciting opportunities and a culture built on learning and progress.",
   alternates: { canonical: "/careers" },
 };
 

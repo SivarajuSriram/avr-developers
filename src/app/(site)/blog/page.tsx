@@ -5,9 +5,9 @@ import { PageHeader } from "@/components/page-header";
 import { BlogPosts } from "@/components/sections/blog-posts";
 
 export const metadata: Metadata = {
-  title: "Blog",
+  title: "Real Estate Insights & Property Updates | AVR Blog",
   description:
-    "Notes on Hyderabad real estate, Kokapet's growth corridor and life at AVR Developers.",
+    "Learn the latest real estate updates, property buying guides, and market trends in Kokapet, Hyderabad on the official AVR Developers blog. Explore now!",
   alternates: { canonical: "/blog" },
 };
 

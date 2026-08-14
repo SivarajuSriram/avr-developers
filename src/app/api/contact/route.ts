@@ -13,7 +13,7 @@ type ContactPayload = {
 };
 
 /**
- * Emails the enquiry via SMTP (Nodemailer) — server-side only, so the SMTP_*
+ * Emails the enquiry via SMTP (Nodemailer). Server-side only, so the SMTP_*
  * credentials never reach the client bundle. Values in .env.local are
  * placeholders; swap in a real SMTP account (Gmail app password, SES,
  * Postmark, etc.) and drop the keys in when ready.
@@ -41,13 +41,13 @@ export async function POST(request: Request) {
     from: process.env.SMTP_FROM || `"AVR Developers Website" <${process.env.SMTP_USER}>`,
     to: process.env.CONTACT_TO_EMAIL || site.email,
     replyTo: email,
-    subject: `New enquiry from ${name} — ${interest}`,
+    subject: `New enquiry from ${name}: ${interest}`,
     text: [
       `Name: ${name}`,
       `Email: ${email}`,
       `Phone: ${phone}`,
       `Interested in: ${interest}`,
-      `Message: ${message || "—"}`,
+      `Message: ${message || "(none)"}`,
     ].join("\n"),
   });
 

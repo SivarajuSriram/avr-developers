@@ -9,7 +9,7 @@ import { ResponsiveImage } from "@/components/ui/responsive-image";
  * h1. Sits on the canvas (the site header is solid on these pages), with top
  * padding that clears the fixed header.
  *
- * `image` and `aside` are optional, mutually exclusive right-column fills —
+ * `image` and `aside` are optional, mutually exclusive right-column fills;
  * pages that pass neither keep the original plain text-only layout.
  * `image` gives the moody full-bleed photo + ink scrim treatment used by the
  * homepage hero/philosophy sections. `aside` drops arbitrary light-background
@@ -32,7 +32,7 @@ export function PageHeader({
   eyebrow?: string;
   title: ReactNode;
   titleClassName?: string;
-  /** Keeps the h1 for a11y/SEO but hides the eyebrow, title and intro visually — for heroes that only need the aside/cta on display. */
+  /** Keeps the h1 for a11y/SEO but hides the eyebrow, title and intro visually. For heroes that only need the aside/cta on display. */
   hideTitle?: boolean;
   intro?: string;
   image?: { src: string; mobileSrc?: string; alt: string; position?: string };

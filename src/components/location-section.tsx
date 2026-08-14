@@ -21,16 +21,17 @@ const DEFAULT_CONNECTIVITY: NonNullable<Project["connectivity"]> = [
 ];
 
 /* same category order as the original component: COMMERCIAL, HEALTHCARE, CONNECTIVITY, EDUCATION, RECREATION & LIFESTYLE */
-const CATEGORY_ORDER = ["Commercial", "Healthcare", "Connectivity", "Education", "Recreation & Lifestyle"] as const;
+const DEFAULT_CATEGORY_ORDER = ["Commercial", "Healthcare", "Connectivity", "Education", "Recreation & Lifestyle"];
 
 export function LocationSection({ project }: { project: Project }) {
   const rows = project.connectivity ?? DEFAULT_CONNECTIVITY;
+  const categoryOrder = project.connectivityCategoryOrder ?? DEFAULT_CATEGORY_ORDER;
   const mapPoints =
     project.coordinates && rows.every((r) => r.lat != null && r.lng != null)
       ? rows.map((r) => ({ place: r.place, time: r.time, lat: r.lat!, lng: r.lng!, category: r.category, image: r.image }))
       : null;
   /* project.mapsUrl (the project's actual GMB/Google Maps listing link) is
-     authoritative — a name+locality text search is only a best-effort guess
+     authoritative. A name+locality text search is only a best-effort guess
      and isn't guaranteed to resolve to the verified listing. */
   const mapsHref =
     project.mapsUrl ??
@@ -41,7 +42,7 @@ export function LocationSection({ project }: { project: Project }) {
   /* group rows by category (fixed display order), each row keeping its
      original index into `rows` so hover state still lines up with mapPoints */
   const grouped = rows.every((r) => r.category)
-    ? CATEGORY_ORDER.map((category) => ({
+    ? categoryOrder.map((category) => ({
         category,
         rows: rows.map((row, i) => ({ ...row, i })).filter((row) => row.category === category),
       })).filter((g) => g.rows.length)
@@ -80,7 +81,7 @@ export function LocationSection({ project }: { project: Project }) {
         </Reveal>
 
         <div className="mt-14 grid gap-10 lg:grid-cols-12 lg:gap-10">
-          {/* left: category-grouped landmark list — hidden on mobile in favor of the map carousel */}
+          {/* left: category-grouped landmark list, hidden on mobile in favor of the map carousel */}
           <Reveal index={1} className="landmarks-list-container lg:col-span-4">
             <div className="distance-grid-new">
               {grouped.map((group) => (
@@ -106,7 +107,7 @@ export function LocationSection({ project }: { project: Project }) {
           {/* right: interactive map (+ mobile image carousel, rendered inside the map component).
               min-w-0 is required: this grid column has no explicit track size on mobile (grid-cols-12
               is lg:-only), so without it the browser auto-sizes the column to the carousel's
-              max-content width (a non-wrapping row of 70vw cards) instead of the viewport — blowing
+              max-content width (a non-wrapping row of 70vw cards) instead of the viewport, blowing
               the whole page out into horizontal overflow. */}
           <Reveal index={2} className="min-w-0 lg:col-span-8">
             <div ref={mapWrapRef} id="map" className="relative h-[600px] w-full overflow-hidden rounded-md bg-canvas">
@@ -114,7 +115,6 @@ export function LocationSection({ project }: { project: Project }) {
                 mountMap && (
                   <LocationMapCanvas
                     projectName={project.name}
-                    projectImage={project.image}
                     projectLogo={project.logo}
                     center={project.coordinates!}
                     points={mapPoints}
@@ -123,7 +123,7 @@ export function LocationSection({ project }: { project: Project }) {
                 )
               ) : (
                 <iframe
-                  title={`Map — ${project.name}, ${site.address.locality}`}
+                  title={`Map of ${project.name}, ${site.address.locality}`}
                   src={`https://www.google.com/maps?q=${encodeURIComponent(
                     `${project.name}, ${site.address.locality}, ${site.address.region}`,
                   )}&t=k&output=embed`}

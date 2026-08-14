@@ -35,7 +35,7 @@ const ICONS: Record<AmenityIconName, LucideIcon> = {
   sparkles: Sparkles,
 };
 
-/* generic placeholder set — only used when a project hasn't set its own amenityItems yet */
+/* generic placeholder set, only used when a project hasn't set its own amenityItems yet */
 const DEFAULT_AMENITIES: AmenityItem[] = [
   { icon: "armchair", label: "Resident-only Clubhouse" },
   { icon: "waves", label: "Infinity-edge Pool" },

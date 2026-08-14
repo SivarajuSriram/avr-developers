@@ -9,7 +9,7 @@ export function SiteFooter() {
   return (
     <footer className="bg-ink-90 text-white/80">
       <div className="mx-auto max-w-[1400px] px-5 pb-4 lg:px-10 lg:pb-5">
-        {/* contact (hidden on /contact — form already lives there) */}
+        {/* contact (hidden on /contact, form already lives there) */}
         <FooterContact />
 
         {/* homepage FAQ, right after the contact form */}

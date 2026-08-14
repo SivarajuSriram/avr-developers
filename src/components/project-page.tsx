@@ -54,6 +54,7 @@ export function ProjectPage({ project }: { project: Project }) {
               <Image
                 src={project.logo}
                 alt={`${project.name} logo`}
+                title={`${project.name} logo`}
                 fill
                 sizes="220px"
                 className="object-contain object-left brightness-0 invert"
@@ -86,6 +87,7 @@ export function ProjectPage({ project }: { project: Project }) {
               <Image
                 src={project.aboutImage ?? project.image}
                 alt={`${project.name} by AVR Developers`}
+                title={`${project.name} by AVR Developers`}
                 fill
                 sizes="(max-width: 1024px) 100vw, 58vw"
                 className={project.aboutImageContain ? "object-contain object-bottom" : "object-cover"}
@@ -108,17 +110,20 @@ export function ProjectPage({ project }: { project: Project }) {
         </div>
       </section>
 
-      {/* site plan — mobile crop (sitePlanImageMobile) is a portrait 9:16 render, the
-          desktop crop is landscape; forcing both into one aspect ratio badly cropped
-          whichever one didn't match, so the ratio now switches at lg */}
+      {/* site plan: Evania's desktop render is near-square (1500x1302) while
+          Avira's is a true 16:9 (1920x1080), and both mobile renders are a tall
+          9:16 portrait. No single crop box fits all three without cutting into
+          one of them, so this uses object-contain (full plan always visible,
+          letterboxed on whichever axis doesn't match) inside a capped-height box
+          instead of object-cover. */}
       <section id="site-plan" className="scroll-mt-32 px-5 lg:px-10">
-        <div className="relative mx-auto aspect-[9/16] max-w-[1330px] lg:aspect-[250/217]">
+        <div className="relative mx-auto h-[70vh] max-h-[600px] max-w-[1330px]">
           <ResponsiveImage
             src={project.sitePlanImage ?? project.image}
             mobileSrc={project.sitePlanImageMobile}
             alt={`${project.name} master site plan`}
             sizes="100vw"
-            className="object-cover"
+            className="object-contain"
           />
         </div>
       </section>

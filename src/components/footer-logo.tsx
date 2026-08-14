@@ -12,12 +12,13 @@ export function FooterLogo() {
     <Link
       href="/"
       onClick={isHome ? scrollToTop : undefined}
-      aria-label="AVR Developers — home"
+      aria-label="AVR Developers, home"
       className="relative block h-9 w-[126px] transition-opacity duration-300 lg:hover:opacity-80"
     >
       <Image
         src="/logo-light.png"
         alt="AVR Developers"
+        title="AVR Developers"
         fill
         sizes="126px"
         className="object-contain object-left"

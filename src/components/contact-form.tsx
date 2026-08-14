@@ -19,12 +19,12 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  * Phone uses react-phone-input-2 (searchable, scrollable country list; the
  * country code is locked so it can't be deleted by accident).
  *
- * On submit the enquiry goes out two ways in parallel — /api/contact (SMTP
+ * On submit the enquiry goes out two ways in parallel: /api/contact (SMTP
  * email via Nodemailer, server-side) and a Pabbly Connect webhook (for
  * CRM/Sheet/WhatsApp automations) via `NEXT_PUBLIC_PABBLY_WEBHOOK_URL`. The
  * SMTP_* vars are currently placeholder values (see .env.local); drop in a
  * real SMTP account when ready. Either integration failing doesn't block the
- * other, the brochure download, or the redirect — a lead should never get
+ * other, the brochure download, or the redirect. A lead should never get
  * stuck because one is down.
  * When "Interested in" names a specific project with a brochure on file, that
  * project's PDF downloads automatically before the redirect.
@@ -50,7 +50,7 @@ export function ContactForm({ bare = false }: { bare?: boolean } = {}) {
     // react-phone-input-2 auto-scrolls the country list to the selected
     // country on open. Whatever row ends up straddling the top edge at that
     // scroll offset gets clipped incorrectly by Chrome, leaving a sliver of
-    // its flag visible above the list — resetting the scroll to the top
+    // its flag visible above the list. Resetting the scroll to the top
     // avoids landing on that broken offset (confirmed scrollTop 0 never
     // glitches; any other offset can).
     const observer = new MutationObserver(() => {
@@ -148,7 +148,7 @@ export function ContactForm({ bare = false }: { bare?: boolean } = {}) {
         </Field>
         <Field label="Phone" htmlFor="phone" error={errors.phone}>
           <div
-            className={`flex w-full items-center rounded-sm border bg-canvas text-ink transition-colors focus-within:border-accent focus-within:ring-2 focus-within:ring-accent/20 overflow-visible ${errors.phone ? "border-accent" : "border-line-strong"}`}
+            className={`field-draw-border flex w-full items-center rounded-sm border bg-canvas text-ink transition-colors overflow-visible ${errors.phone ? "border-accent" : "border-line-strong"}`}
           >
             <div
               ref={phoneFieldRef}
@@ -273,10 +273,10 @@ export function ContactForm({ bare = false }: { bare?: boolean } = {}) {
 }
 
 const inputCls =
-  "w-full rounded-sm border border-line-strong bg-canvas px-4 py-3 text-[15px] text-ink outline-none transition-colors placeholder:text-ink-40 focus:border-accent focus:ring-2 focus:ring-accent/20";
+  "field-draw-border w-full rounded-sm border border-line-strong bg-canvas px-4 py-3 text-[15px] text-ink outline-none transition-colors placeholder:text-ink-40";
 
 const selectCls =
-  "w-full rounded-sm border border-line-strong bg-canvas px-3 py-2 text-[13px] text-ink outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/20 sm:px-4 sm:py-3 sm:text-[15px]";
+  "field-draw-border w-full rounded-sm border border-line-strong bg-canvas px-3 py-2 text-[13px] text-ink outline-none transition-colors sm:px-4 sm:py-3 sm:text-[15px]";
 
 function Field({
   label,

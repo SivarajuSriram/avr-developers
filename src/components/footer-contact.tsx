@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { site } from "@/lib/site";
 import { withBreaks } from "@/lib/with-breaks";
 
-/* code-split out of every route's bundle — react-phone-input-2 is only
+/* code-split out of every route's bundle, react-phone-input-2 is only
    needed once this footer block actually renders */
 const ContactForm = dynamic(() =>
   import("@/components/contact-form").then((m) => m.ContactForm),

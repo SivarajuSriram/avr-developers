@@ -6,9 +6,10 @@ import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import { Reveal } from "@/components/ui/reveal";
 import { RecentBlogs } from "@/components/sections/recent-blogs";
 import { blogPosts } from "@/lib/blog-posts";
+import { site } from "@/lib/site";
 
 /**
- * Body text supports inline markdown-style links — [label](url) — so authors
+ * Body text supports inline markdown-style links, [label](url), so authors
  * can link out (or to another page on the site) without the data model
  * needing a richer body type. https:// urls open in a new tab; anything else
  * (e.g. /evania) is treated as an internal link and navigates in place.
@@ -61,12 +62,33 @@ export default async function BlogPostPage({
   const post = blogPosts.find((p) => p.slug === slug);
   if (!post) notFound();
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.excerpt,
+    image: `${site.url}${post.image}`,
+    datePublished: post.date,
+    author: { "@type": "Organization", name: post.author, url: site.url },
+    publisher: {
+      "@type": "Organization",
+      name: site.name,
+      logo: { "@type": "ImageObject", url: `${site.url}/logo-cropped.png` },
+    },
+    mainEntityOfPage: `${site.url}/blog/${post.slug}`,
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       <section id="hero" className="relative min-h-[100dvh] overflow-hidden">
         <Image
           src={post.image}
           alt={post.title}
+          title={post.title}
           fill
           priority
           sizes="100vw"
@@ -80,7 +102,8 @@ export default async function BlogPostPage({
             {post.title}
           </h1>
           <p className="mt-6 text-[13px] font-medium text-ink-55">
-            Published on <span className="text-ink-70">{post.date}</span>
+            By <span className="text-ink-70">{post.author}</span> &middot; Published on{" "}
+            <span className="text-ink-70">{post.date}</span>
           </p>
         </Reveal>
 

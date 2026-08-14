@@ -4,6 +4,7 @@ export function CoverImage({
   src,
   mobileSrc,
   alt,
+  title,
   sizes = "(max-width: 1024px) 100vw, 60vw",
   className = "",
   imageClassName = "",
@@ -12,6 +13,7 @@ export function CoverImage({
   src: string;
   mobileSrc?: string;
   alt: string;
+  title?: string;
   sizes?: string;
   className?: string;
   imageClassName?: string;
@@ -23,6 +25,7 @@ export function CoverImage({
         src={src}
         mobileSrc={mobileSrc}
         alt={alt}
+        title={title}
         sizes={sizes}
         priority={priority}
         className={`object-cover ${imageClassName}`}

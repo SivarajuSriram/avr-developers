@@ -1,0 +1,19 @@
+# AVR Developers
+
+> AVR Developers crafts future-ready homes in Hyderabad. The company builds luxury residential projects in the Kokapet growth corridor, with a focus on thoughtful design, lasting value, and modern lifestyles. Tagline: "The Address for the Young Spirited."
+
+AVR Developers is a real estate developer based in Kokapet, Hyderabad, India. Registered office: Evania by AVR, SY NO 3, Pipe Line Road, Kokapet, Hyderabad, Telangana 500075. Contact: info@avrdevelopers.com, +91 8889 666678, +91 80000 82399.
+
+## Projects
+
+- [Evania](https://avrdevelopers.com/evania): Ongoing project offering 3.5 & 4 BHK residences in Kokapet, Hyderabad (RERA TG RERA P02400009394). AVR Evania brings premium apartments designed around mindful living, with intelligent architecture, open spaces, and effortless comfort, for modern lifestyles that value flexibility, wellness, and meaningful experiences. Set within a thoughtfully planned gated community with a 2-level clubhouse.
+- [Avira](https://avrdevelopers.com/avira): Ongoing project offering ultra-luxury 3 & 3.5 BHK residences in Kokapet, Hyderabad (RERA TG RERA P02400011038), 172 units across 2 towers, 11 floors. Situated in one of the city's emerging growth corridors, placing residents at the intersection of convenience, connectivity, and future potential.
+
+## Pages
+
+- [Home](https://avrdevelopers.com/): Overview of AVR Developers and its projects.
+- [About Us](https://avrdevelopers.com/about): AVR Developers builds future-ready homes in Hyderabad, founded on a family legacy of managing prime real estate.
+- [Projects](https://avrdevelopers.com/projects): Listing of AVR's ongoing and delivered projects.
+- [Blog](https://avrdevelopers.com/blog): Notes on Hyderabad real estate, the Kokapet corridor, and life inside AVR homes.
+- [Careers](https://avrdevelopers.com/careers): Open roles and hiring process at AVR Developers.
+- [Contact](https://avrdevelopers.com/contact): Enquiry form and contact details for site visits and general questions.

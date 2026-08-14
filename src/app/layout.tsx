@@ -3,6 +3,7 @@ import { Instrument_Sans, Nixie_One } from "next/font/google";
 import "./globals.css";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { ScrollToTopButton } from "@/components/scroll-to-top-button";
+import { RepaintOnVisible } from "@/components/repaint-on-visible";
 import { site } from "@/lib/site";
 
 const instrumentSans = Instrument_Sans({
@@ -22,33 +23,25 @@ const nixieOne = Nixie_One({
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: {
-    default: `${site.name} — ${site.tagline}`,
-    template: `%s — ${site.name}`,
-  },
-  description: site.description,
   applicationName: site.name,
-  keywords: [
-    "AVR Developers",
-    "Evania Kokapet",
-    "luxury apartments Hyderabad",
-    "3.5 BHK Kokapet",
-    "4 BHK Kokapet",
-    "gated community Hyderabad",
-  ],
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  publisher: site.name,
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     siteName: site.name,
-    title: `${site.name} — ${site.tagline}`,
+    title: `${site.name} | ${site.tagline}`,
     description: site.description,
     url: site.url,
     locale: "en_IN",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: site.name }],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — ${site.tagline}`,
+    title: `${site.name} | ${site.tagline}`,
     description: site.description,
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
@@ -89,6 +82,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
         <ScrollToTop />
+        <RepaintOnVisible />
         {children}
         <ScrollToTopButton />
       </body>

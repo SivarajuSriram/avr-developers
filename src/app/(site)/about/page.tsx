@@ -8,10 +8,13 @@ import { AboutLeadership } from "@/components/sections/about-leadership";
 import { withBreaks } from "@/lib/with-breaks";
 
 export const metadata: Metadata = {
-  title: "About Us",
+  title: {
+    absolute: "AVR Pojects | Top Real Estate Builders in Kokapet",
+  },
   description:
-    "AVR Developers builds future-ready homes in Hyderabad, founded on a family legacy of managing prime real estate.",
+    "Learn about AVR Developers, a trusted luxury real estate brand creating premium homes with quality construction, thoughtful design and modern living. visit us today!",
   alternates: { canonical: "/about" },
+  keywords:["AVR Developers Hyderabad","real estate developer Kokapet","premium property developers Hyderabad"],
 };
 
 export default function AboutPage() {

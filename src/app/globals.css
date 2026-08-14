@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------ *
- *  AVR Developers — design tokens
+ *  AVR Developers design tokens
  *  Palette: navy ink #17233B · accent red #D92429 · soft rose #E28C84
  *  Single locked LIGHT theme (brand palette, no OS-dark inversion).
  * ------------------------------------------------------------------ */
@@ -22,7 +22,7 @@
   --font-sans: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-nixie-one), ui-serif, Georgia, serif;
 
-  /* radius scale — soft-square system, one scale everywhere */
+  /* radius scale: soft-square system, one scale everywhere */
   --radius-xs: 2px;
   --radius-sm: 4px;
   --radius-md: 8px;
@@ -218,7 +218,7 @@ body {
   flex-shrink: 0;
   /* Chrome paints this sprite-background flag outside the scrollable list's
      clip box for whichever row straddles the scroll boundary (a compositor
-     rasterization glitch, not a layout/overflow bug — confirmed via
+     rasterization glitch, not a layout/overflow bug, confirmed via
      elementFromPoint showing no hit-testable box at the escaped pixels).
      Promoting each flag to its own GPU layer stops the bleed. */
   transform: translateZ(0);
@@ -236,7 +236,7 @@ body {
   background: var(--color-canvas);
 }
 
-/* ---- location section — ported 1:1 from the original landmarks/map component
+/* ---- location section, ported 1:1 from the original landmarks/map component
    (D:\Office_work\NEWLPIRIS\index.html), recoloured to the AVR ink/accent palette ---- */
 .location-title {
   margin-bottom: 0;
@@ -302,7 +302,7 @@ body {
 /* Leaflet's internal panes/tooltips/controls use z-index up to 700 (see
    below) so pins and tooltips can pop out past the map's own edges. Without
    `isolation`, those z-indices are compared in the page's root stacking
-   context instead of being scoped to the map — so they paint over the fixed
+   context instead of being scoped to the map, so they paint over the fixed
    header and mobile nav overlay (both z-50) whenever the map section is
    visible at the same time. Isolating the container keeps everything inside
    it contained to its own stack. */
@@ -381,7 +381,7 @@ body {
   width: 24px !important;
   height: auto !important;
   object-fit: contain;
-  /* project logos (Evania/Avira) are dark-ink SVGs — force white so they
+  /* project logos (Evania/Avira) are dark-ink SVGs, force white so they
      read against the accent-red pin. logo-light.png is already white, so
      this is a no-op there. */
   filter: brightness(0) invert(1);
@@ -471,12 +471,60 @@ body {
   object-fit: cover;
   display: block;
 }
+/* project pin's own tooltip: wordmark logo on dark ink, not a photo — same
+   treatment as the mobile carousel's project card (.carousel-logo-wrap). */
+.tooltip-inner-custom--logo {
+  background: var(--color-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+}
+.tooltip-logo-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+  display: block;
+  filter: brightness(0) invert(1);
+}
 .leaflet-control-attribution {
   font-size: 10px !important;
   background: rgba(251, 250, 246, 0.8) !important;
 }
 
-/* mobile image carousel — replaces the list on small screens, sits below
+/* Contact form fields: on hover, an accent stroke grows out from each corner
+   along the edges (four background-image "bars" scaling from 0 to full
+   length) instead of a flat border-color swap — reads as the border being
+   drawn on rather than just recoloring. Sits on top of the field's own
+   static border-line-strong border, covering it as each stroke draws in.
+   Focus keeps the same drawn stroke (it's the field's only focus indicator
+   now — no separate ring), so selecting a field leaves it visibly "drawn"
+   instead of reverting the moment the pointer leaves. Hover itself is
+   desktop-only (same gating as the site's other lg:hover: utilities) so it
+   can't get stuck "on" after a tap on touch devices; the base declaration
+   stays outside that query so :focus still draws the border on touch. */
+.field-draw-border {
+  background-image:
+    linear-gradient(to right, var(--color-accent), var(--color-accent)),
+    linear-gradient(to bottom, var(--color-accent), var(--color-accent)),
+    linear-gradient(to left, var(--color-accent), var(--color-accent)),
+    linear-gradient(to top, var(--color-accent), var(--color-accent));
+  background-repeat: no-repeat;
+  background-size: 0% 1px, 1px 0%, 0% 1px, 1px 0%;
+  background-position: top left, top right, bottom right, bottom left;
+  transition: background-size 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.field-draw-border:focus,
+.field-draw-border:focus-within {
+  background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
+}
+@media (hover: hover) and (min-width: 1024px) {
+  .field-draw-border:hover {
+    background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
+  }
+}
+
+/* mobile image carousel: replaces the list on small screens, sits below
    the map (not overlaid on top of it, which used to hide pins/zoom
    controls) */
 .mobile-image-carousel {
@@ -490,7 +538,7 @@ body {
     height: 420px !important;
   }
   /* only the leaflet map (which renders the mobile carousel) grows to fit
-     the map + carousel stacked vertically — the plain iframe fallback (no
+     the map + carousel stacked vertically. The plain iframe fallback (no
      coordinates on the project) keeps the fixed height above */
   #map:has(.mobile-image-carousel) {
     height: auto !important;
@@ -505,7 +553,7 @@ body {
   .mobile-image-carousel {
     display: flex;
     /* cards are different heights (the project card is taller than the
-       landmark strips) — without this, flex's default stretch would force
+       landmark strips), without this, flex's default stretch would force
        every card to the row's tallest height, leaving the shorter cards'
        titles floating below their image instead of overlaid on it. */
     align-items: flex-start;
@@ -546,7 +594,7 @@ body {
     pointer-events: none;
   }
   /* project card shows the wordmark logo instead of a photo (crop-proof,
-     no aspect-ratio fight) — both logos are dark-ink SVGs, forced white
+     no aspect-ratio fight). Both logos are dark-ink SVGs, forced white
      (same trick as .project-pin-logo) to read against the card's dark bg. */
   .carousel-logo-wrap img {
     filter: brightness(0) invert(1);

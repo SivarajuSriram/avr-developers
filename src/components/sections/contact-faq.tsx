@@ -3,11 +3,11 @@ import { Faq, type FaqItem } from "@/components/sections/faq";
 const faqs: FaqItem[] = [
   {
     q: "Where are your site offices?",
-    a: "Our primary experience centre is at Evania, Kokapet. We'll share exact directions and a parking note when we confirm your visit.",
+    a: "Our site offices are conveniently located to offer you easy access to project information, guided walkthroughs, and personalised assistance. Please get in touch with our team to know the nearest site office and schedule a visit.",
   },
   {
     q: "Which configurations are available?",
-    a: "Evania offers 3.5 and 4 BHK residences; Avira offers sky villas and penthouses. We'll walk you through live availability on your visit.",
+    a: "Our projects offer a range of thoughtfully designed residences in 3 BHK, 3.5 BHK, and 4 BHK configurations, catering to diverse lifestyle needs while ensuring spacious layouts, contemporary design, and superior comfort.",
   },
   {
     q: "Are the projects RERA-registered?",
@@ -18,8 +18,8 @@ const faqs: FaqItem[] = [
     a: "Absolutely. Weekends are our busiest, so booking ahead means we can keep the walk-through private and unhurried.",
   },
   {
-    q: "Do you help with home loans?",
-    a: "We work with leading banks and can connect you with the right people to make financing straightforward.",
+    q: "What projects does AVR currently offer?",
+    a: "AVR currently offers two premium residential projects: AVR EVANIA and AVR AVIRA. Each project caters to different lifestyle aspirations while maintaining AVR's commitment to quality and customer satisfaction.",
   },
 ];
 

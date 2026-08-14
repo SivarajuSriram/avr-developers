@@ -12,7 +12,7 @@ export default function NotFound() {
       <ResponsiveImage
         src="/Home-page-hero.webp"
         mobileSrc="/home-page-hero-mobile.webp"
-        alt=""
+        alt="AVR Developers, luxury residences in Kokapet, Hyderabad"
         priority
         sizes="100vw"
         className="object-cover"

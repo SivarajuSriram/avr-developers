@@ -12,7 +12,7 @@ const SHOW_AFTER = 480;
  * layout so it's present on every route.
  *
  * Also fades out while the footer's social row (#footer-socials) is on
- * screen — both sit in the same bottom-right corner, so without this the
+ * screen. Both sit in the same bottom-right corner, so without this the
  * button covers the YouTube/Instagram/X icons at the very bottom of the
  * page. Pages without a footer (thank-you, 404) just never find the
  * element, so the button behaves as if this check weren't there. */

@@ -5,6 +5,8 @@ export type BlogPost = {
   category: string;
   date: string;
   image: string;
+  /* byline shown under the title and used as the JSON-LD Article author */
+  author: string;
   sections: { heading?: string; body: string }[];
 };
 
@@ -17,6 +19,7 @@ export const blogPosts: BlogPost[] = [
     category: "Real Estate Insights",
     date: "27 July 2026",
     image: "/blogs/Blog-01.webp",
+    author: "AVR Developers",
     sections: [
       {
         body: "Ten years back, nobody was talking about Kokapet. It was just farmland and a few plots on the western edge of the city. Today, Kokapet luxury real estate has transformed the skyline with some of the most exclusive high-rise towers in all of Hyderabad. Drive past the Financial District after dark, and you will see tower after tower lit up against the sky. Something shifted here, and it shifted fast.",

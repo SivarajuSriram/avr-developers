@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Reveal } from "@/components/ui/reveal";
 
-/* Illustrative differentiators — replace with confirmed copy before launch. */
+/* Illustrative differentiators. Replace with confirmed copy before launch. */
 const reasons = [
   {
     stat: "WORK ETHICS",

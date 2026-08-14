@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Play } from "lucide-react";
 import { Reveal } from "@/components/ui/reveal";
 
-/** YouTube's own play badge — rounded red rect, white triangle. */
+/** YouTube's own play badge: rounded red rect, white triangle. */
 function YouTubePlayBadge() {
   return (
     <svg viewBox="0 0 68 48" className="h-16 w-[5.7rem] drop-shadow-[0_6px_16px_rgba(0,0,0,0.35)] transition-transform duration-300 lg:group-hover:scale-110">
@@ -50,7 +50,8 @@ export function ProjectVideo({
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
-                alt=""
+                alt={`${title} video thumbnail`}
+                title={`${title} video thumbnail`}
                 loading="lazy"
                 className="absolute inset-0 h-full w-full object-cover"
               />

@@ -28,19 +28,21 @@ function Wordmark({
     <Link
       href="/"
       onClick={isHome ? scrollToTop : undefined}
-      aria-label="AVR Developers — home"
+      aria-label="AVR Developers, home"
       className={`relative block h-9 w-[126px] transition-opacity duration-300 lg:hover:opacity-80 ${className}`}
     >
       <Image
         src="/logo-cropped.png"
         alt="AVR Developers"
+        title="AVR Developers"
         fill
         sizes="126px"
         className={`object-contain transition-opacity duration-200 ${solid ? "opacity-100" : "opacity-0"}`}
       />
       <Image
         src="/logo-light.png"
-        alt=""
+        alt="AVR Developers"
+        title="AVR Developers"
         aria-hidden
         fill
         sizes="126px"
@@ -59,7 +61,7 @@ type NavItem = {
 /* Desktop top-level item: renders a controlled hover/focus flyout when it has
    children. Driven by state (not pure CSS :hover). The parent keys this
    component on the route, so a client-side navigation remounts it with
-   `open` freshly reset — otherwise a clicked link stays focused and the
+   `open` freshly reset, otherwise a clicked link stays focused and the
    cursor stays over the panel, and the flyout never dismisses. */
 function TopItem({ item, isHome }: { item: NavItem; isHome: boolean }) {
   const [open, setOpen] = useState(false);
@@ -166,34 +168,59 @@ export function SiteHeader() {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const hasHero = HERO_ROUTES.has(pathname) || pathname.startsWith("/blog/");
-  const [solid, setSolid] = useState(!hasHero);
   const [open, setOpen] = useState(false);
 
-  // Route changed since the last render: adjust `solid` immediately (during
-  // render, not in an effect) so non-hero pages never flash transparent.
-  const [trackedPathname, setTrackedPathname] = useState(pathname);
-  if (pathname !== trackedPathname) {
-    setTrackedPathname(pathname);
-    setSolid(!hasHero);
-  }
+  // Whether the hero (if any) has scrolled past the header. Only meaningful
+  // on hero pages — `solid` below ignores it entirely on non-hero pages,
+  // computing straight from `hasHero` instead. That derivation is what makes
+  // this safe: `solid` was previously its own state variable that got
+  // "corrected" via a setState-during-render call on pathname change, but
+  // the Next.js router runs navigations inside a transition, and React can
+  // render a component through that transition more than once before
+  // committing. The correction re-ran on one of those intermediate renders
+  // and got discarded when React replayed the render, leaving `solid` stuck
+  // on its pre-navigation value — the header staying transparent/white after
+  // landing on a non-hero page like /blog, /contact, or /careers. Deriving
+  // `solid` fresh every render instead of correcting a stored value removes
+  // the intermediate state a replay could discard.
+  const [scrolledPastHero, setScrolledPastHero] = useState(false);
+  const solid = hasHero ? scrolledPastHero : true;
 
-  // Hero pages: transparent over the hero, solid once it scrolls away. No
-  // scroll listener — an IntersectionObserver subscription drives `solid`.
+  // Hero pages: transparent over the hero, solid once it scrolls away.
+  // rAF-throttled scroll listener rather than an IntersectionObserver:
+  // IO callback delivery isn't tied to the scroll/paint cadence and can lag
+  // noticeably behind fast scrolling, which read as the header visibly
+  // freezing mid-transition or holding the wrong colors for a beat. A
+  // listener reads the hero's live position every frame, so `solid` can
+  // never fall behind where the page actually is.
   useEffect(() => {
     if (!hasHero) return;
     const hero = document.getElementById("hero");
     if (!hero) return;
-    const io = new IntersectionObserver(
-      ([entry]) => setSolid(!entry.isIntersecting),
-      { rootMargin: "-72px 0px 0px 0px", threshold: 0 },
-    );
-    io.observe(hero);
-    return () => io.disconnect();
+
+    let rafId = 0;
+    const update = () => {
+      setScrolledPastHero(hero.getBoundingClientRect().bottom <= 72);
+      rafId = 0;
+    };
+    const onScroll = () => {
+      if (rafId) return;
+      rafId = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, [pathname, hasHero]);
 
   // Lock body scroll while the mobile menu is open. Compensate with
   // padding-right for the width of the now-hidden scrollbar, otherwise the
-  // page content reflows wider the instant the scrollbar disappears — a
+  // page content reflows wider the instant the scrollbar disappears, a
   // visible jump/glitch on every scrollable page.
   useEffect(() => {
     if (open) {
@@ -214,12 +241,24 @@ export function SiteHeader() {
     <>
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-colors duration-200 ${
-        solid
-          ? "border-b border-line bg-canvas text-ink"
-          : "border-b border-transparent bg-transparent text-white"
+        solid ? "text-ink" : "text-white"
       }`}
     >
-      <div className="mx-auto grid h-[72px] max-w-[1400px] grid-cols-[1fr_auto_1fr] items-center gap-6 px-5 lg:px-10">
+      {/* Solid backdrop crossfades in via opacity instead of animating
+          background-color/border-color directly. Color/background transitions
+          are main-thread paint work, and Chrome deprioritizes main-thread
+          paint while a scroll gesture is active — so the old bg-canvas/
+          border-line swap would visibly hold the previous frame's colors (or
+          lag behind the logo's already-compositor-only opacity crossfade)
+          for a beat right as the header crossed the hero boundary. Opacity
+          is compositor-only, so this can't get starved the same way. */}
+      <div
+        aria-hidden
+        className={`absolute inset-0 border-b border-line bg-canvas transition-opacity duration-200 ${
+          solid ? "opacity-100" : "opacity-0"
+        }`}
+      />
+      <div className="relative mx-auto grid h-[72px] max-w-[1400px] grid-cols-[1fr_auto_1fr] items-center gap-6 px-5 lg:px-10">
         {/* left cluster */}
         <nav className="hidden items-center gap-8 justify-self-start lg:flex">
           {nav.left.map((item) => (
@@ -257,7 +296,7 @@ export function SiteHeader() {
       </div>
     </header>
 
-    {/* mobile overlay menu — rendered outside <header> so its position:fixed
+    {/* mobile overlay menu, rendered outside <header> so its position:fixed
         isn't trapped inside the header's containing block when backdrop-blur
         is active (backdrop-filter creates a new containing block for fixed
         descendants, which clipped this to the header's own height). */}
@@ -289,12 +328,13 @@ function MobileMenu({
             if (isHome) scrollToTop();
             onClose();
           }}
-          aria-label="AVR Developers — home"
+          aria-label="AVR Developers, home"
           className="relative block h-9 w-[126px]"
         >
           <Image
             src="/logo-cropped.png"
             alt="AVR Developers"
+            title="AVR Developers"
             fill
             sizes="126px"
             className="object-contain"

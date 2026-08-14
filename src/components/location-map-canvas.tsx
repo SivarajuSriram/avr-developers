@@ -14,20 +14,61 @@ type MapPoint = {
   image?: string;
 };
 
+/**
+ * lifestyle.png (a person ringed by a book/music-note/play-button, drawn for
+ * the old "Recreation & Lifestyle" category) was being reused as-is for
+ * Supermarkets, Entertainment, and Hospitality, none of which it actually
+ * depicts, so those pins all showed the same not-quite-anything icon on
+ * hover. These three are small hand-drawn SVGs (same stroke style/weight as
+ * the PNG set) instead, encoded as data URIs so they can still be plain
+ * <img src> like the rest and pick up the existing .cat-img-pin img sizing.
+ */
+const svgIcon = (paths: string) =>
+  `data:image/svg+xml,${encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#17233b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${paths}</svg>`,
+  )}`;
+
+const ICON_BRIEFCASE = svgIcon(
+  '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 12h18"/>',
+);
+const ICON_CART = svgIcon(
+  '<circle cx="9" cy="20" r="1.3"/><circle cx="18" cy="20" r="1.3"/><path d="M2 3h2l2.6 12.4a2 2 0 0 0 2 1.6h8.8a2 2 0 0 0 2-1.6L21 7H6"/>',
+);
+const ICON_CLAPPERBOARD = svgIcon(
+  '<path d="M3 8.5 4.5 5h15L21 8.5"/><path d="M3 8.5h18V19a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8.5z"/><path d="m7 5 2 3.5M12 5l2 3.5M17 5l2 3.5"/>',
+);
+const ICON_BED = svgIcon(
+  '<path d="M2 18v-6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v6"/><path d="M2 18v2M22 18v2"/><path d="M2 12V8a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
+);
+
 const CATEGORY_ICON: Record<string, string> = {
-  Commercial: "/icons/location/commercial-1.png",
+  Commercial: ICON_BRIEFCASE,
   Healthcare: "/icons/location/healthcare.png",
   Connectivity: "/icons/location/connectivity.png",
   Education: "/icons/location/education.png",
   "Recreation & Lifestyle": "/icons/location/lifestyle.png",
+  "Commercial & IT Hubs": ICON_BRIEFCASE,
+  "Educational Institutes": "/icons/location/education.png",
+  Hospitals: "/icons/location/healthcare.png",
+  "Schools / Colleges": "/icons/location/education.png",
+  "IT / ITES": ICON_BRIEFCASE,
+  Supermarkets: ICON_CART,
+  "IT SEZ": ICON_BRIEFCASE,
+  Entertainment: ICON_CLAPPERBOARD,
+  Hospitality: ICON_BED,
 };
 
-function createPinIcon(isProject: boolean, iconUrl?: string, projectLogo = "/logo-light.png") {
+function createPinIcon(
+  isProject: boolean,
+  iconUrl?: string,
+  projectLogo = "/logo-light.png",
+  label = "",
+) {
   if (isProject) {
     return L.divIcon({
       className: "marker-container project-pin",
       html: `<div class="pin-svg project-img-pin">
-               <img src="${projectLogo}" alt="" class="project-pin-logo">
+               <img src="${projectLogo}" alt="${label}" title="${label}" class="project-pin-logo">
                <div class="pin-tail"></div>
              </div>`,
       iconSize: [34, 40],
@@ -37,7 +78,7 @@ function createPinIcon(isProject: boolean, iconUrl?: string, projectLogo = "/log
   return L.divIcon({
     className: "marker-container",
     html: `<div class="pin-svg cat-img-pin">
-             <img src="${iconUrl}" alt="">
+             <img src="${iconUrl}" alt="${label}" title="${label}">
              <div class="pin-tail"></div>
            </div>`,
     iconSize: [34, 40],
@@ -48,20 +89,18 @@ function createPinIcon(isProject: boolean, iconUrl?: string, projectLogo = "/log
 /**
  * Leaflet + free CartoDB Voyager raster tiles (no API key/billing). Raster
  * tiles are plain images, so there's no vector-style/glyph readiness pipeline
- * to stall on — kept as its own module so it can be next/dynamic-imported
+ * to stall on. Kept as its own module so it can be next/dynamic-imported
  * with ssr:false and only mounted once the location section nears the
  * viewport, the map JS/CSS never ships in the main bundle.
  */
 export function LocationMapCanvas({
   projectName,
-  projectImage,
   projectLogo,
   center,
   points,
   activeIndex,
 }: {
   projectName: string;
-  projectImage?: string;
   projectLogo?: string;
   center: { lat: number; lng: number };
   points: MapPoint[];
@@ -87,7 +126,7 @@ export function LocationMapCanvas({
     mapRef.current = map;
 
     /* Esri World Imagery (satellite) + its reference-labels overlay, stacked to
-       match the "hybrid" look (imagery + place/road labels) — same free,
+       match the "hybrid" look (imagery + place/road labels), same free,
        no-API-key tier as the CartoDB tiles this replaced. */
     L.tileLayer(
       "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
@@ -102,20 +141,22 @@ export function LocationMapCanvas({
     L.control.zoom({ position: "bottomright" }).addTo(map);
 
     /* the container's real size isn't committed yet on first paint (it mounts via
-       next/dynamic inside a lazily-revealed section) — invalidateSize once the
+       next/dynamic inside a lazily-revealed section). invalidateSize once the
        container settles so Leaflet doesn't cache a 0x0 measurement. */
     const resizeObserver = new ResizeObserver(() => map.invalidateSize());
     resizeObserver.observe(containerRef.current);
 
     const projectMarker = L.marker([center.lat, center.lng], {
-      icon: createPinIcon(true, undefined, projectLogo),
+      icon: createPinIcon(true, undefined, projectLogo, projectName),
       zIndexOffset: 1000,
     }).addTo(map);
     projectMarkerRef.current = projectMarker;
 
-    if (projectImage) {
+    if (projectLogo) {
+      /* project's own pin shows its wordmark logo, not a photo — same
+         crop-proof reasoning as the mobile carousel's project card. */
       projectMarker.bindTooltip(
-        `<div class="tooltip-inner-custom"><img src="${projectImage}" class="tooltip-img" alt="${projectName}"></div>`,
+        `<div class="tooltip-inner-custom tooltip-inner-custom--logo"><img src="${projectLogo}" class="tooltip-logo-img" alt="${projectName}" title="${projectName}"></div>`,
         { className: "custom-tooltip", direction: "auto", offset: [0, -50] },
       );
     }
@@ -129,10 +170,12 @@ export function LocationMapCanvas({
 
     markersRef.current = points.map((p, i) => {
       const tooltipHtml = p.image
-        ? `<div class="tooltip-inner-custom"><img src="${p.image}" class="tooltip-img" alt="${p.place}"></div>`
+        ? `<div class="tooltip-inner-custom"><img src="${p.image}" class="tooltip-img" alt="${p.place}" title="${p.place}"></div>`
         : `<div class="tooltip-inner-custom tooltip-inner-custom--text">${p.place}</div>`;
 
-      const marker = L.marker([p.lat, p.lng], { icon: createPinIcon(false, CATEGORY_ICON[p.category ?? ""]) })
+      const marker = L.marker([p.lat, p.lng], {
+        icon: createPinIcon(false, CATEGORY_ICON[p.category ?? ""], undefined, p.category ?? p.place),
+      })
         .addTo(map)
         .bindTooltip(tooltipHtml, { className: "custom-tooltip", direction: "auto", offset: [0, -50] });
 
@@ -207,7 +250,7 @@ export function LocationMapCanvas({
     return () => observer.disconnect();
   }, [points, center]);
 
-  /* mouse drag-to-scroll for the mobile carousel — touch already scrolls
+  /* mouse drag-to-scroll for the mobile carousel, touch already scrolls
      natively via overflow-x + scroll-snap, this just adds the same feel
      for a trackpad/mouse click-drag. A moved-flag suppresses the click
      that would otherwise fire scrollIntoView after a drag. */
@@ -271,7 +314,7 @@ export function LocationMapCanvas({
           onClick={(e) => e.currentTarget.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" })}
         >
           {projectLogo && (
-            /* project photos crop unpredictably at this aspect ratio — the
+            /* project photos crop unpredictably at this aspect ratio. The
                wordmark logo is a cleaner, crop-proof identifier for the card.
                Forced white (same trick as .project-pin-logo) since both logos
                are dark-ink SVGs and this card has a dark background. */
@@ -279,6 +322,7 @@ export function LocationMapCanvas({
               <Image
                 src={projectLogo}
                 alt={projectName}
+                title={projectName}
                 fill
                 sizes="70vw"
                 loading="lazy"
@@ -299,6 +343,7 @@ export function LocationMapCanvas({
                 <Image
                   src={p.image}
                   alt={p.place}
+                  title={p.place}
                   fill
                   sizes="70vw"
                   loading="lazy"

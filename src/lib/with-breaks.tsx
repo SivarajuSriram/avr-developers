@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 
-/** Splits text on "|" and renders a <br /> at each split — use "|" in copy to force an exact line break. */
+/** Splits text on "|" and renders a <br /> at each split. Use "|" in copy to force an exact line break. */
 export function withBreaks(text: string) {
   return text.split("|").map((line, i, arr) => (
     <Fragment key={i}>

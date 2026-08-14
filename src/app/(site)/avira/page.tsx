@@ -6,10 +6,11 @@ import { projects } from "@/lib/site";
 const project = projects.find((p) => p.slug === "avira");
 
 export const metadata: Metadata = {
-  title: "Avira — Ultra-luxury 3 & 3.5 BHK in Kokapet",
+  title: "3 & 3.5 BHK Luxury Flats for Sale in Kokapet | Avira",
   description:
-    "Avira by AVR Developers: ultra-luxury 3 & 3.5 BHK residences in Kokapet, Hyderabad. 172 units across 2 towers with a full clubhouse and pool deck. RERA P02400011038.",
+    "Discover premium living at Avira in Kokapet. Spacious 3 & 3.5 BHK luxury apartments near Financial District, Hyderabad. Schedule your site visit today!",
   alternates: { canonical: "/avira" },
+  keywords:["3.5bhk flats for sale","3bhk apartments","apartments in kokapet"],
 };
 
 export default function Page() {

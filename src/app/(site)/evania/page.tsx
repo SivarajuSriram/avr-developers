@@ -6,10 +6,11 @@ import { projects } from "@/lib/site";
 const project = projects.find((p) => p.slug === "evania");
 
 export const metadata: Metadata = {
-  title: "Evania — Luxury 3.5 & 4 BHK in Kokapet",
+  title: "Evania Kokapet Apartments | 3.5 & 4 BHK Flats for Sale",
   description:
-    "Evania by AVR Developers: luxury 3.5 & 4 BHK residences in Kokapet, Hyderabad. Gated community with Club Evania, courtyards and a pool deck. RERA P02400009394.",
+    "Explore Evania by AVR ,featuring premium 3.5 & 4 BHK luxury apartments in Kokapet with spacious homes, modern amenities and luxury living.Book site visit!",
   alternates: { canonical: "/evania" },
+  keywords:["EVANIA by AVR","EVANIA Kokapet","luxury apartments in Kokapet","3.5 BHK flats in Kokapet","4 BHK flats in Kokapet","flats for sale in Kokapet"],
 };
 
 export default function Page() {

@@ -25,7 +25,7 @@ export function ThankYouContent() {
         <CoverImage
           src="/contact/contact-us-hero.webp"
           mobileSrc="/contact/contact-us-hero-mobile.webp"
-          alt=""
+          alt="AVR Developers, luxury residences in Kokapet, Hyderabad"
           className="absolute inset-0 h-full w-full"
           priority
         />
@@ -38,6 +38,7 @@ export function ThankYouContent() {
             <Image
               src="/logo-light.png"
               alt="AVR Developers"
+              title="AVR Developers"
               fill
               sizes="168px"
               className="object-contain"

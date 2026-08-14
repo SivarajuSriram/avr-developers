@@ -51,7 +51,8 @@ function FloorPlanCard({ plan }: { plan: FloorPlan }) {
       <div className="relative aspect-[4/3] w-full overflow-hidden">
         <Image
           src={plan.image}
-          alt=""
+          alt={`${plan.config} floor plan`}
+          title={`${plan.config} floor plan`}
           fill
           quality={20}
           sizes="(max-width: 640px) 100vw, 50vw"

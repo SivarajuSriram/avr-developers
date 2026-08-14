@@ -4,7 +4,7 @@ import Image from "next/image";
 /**
  * Art-directed `next/image` in `fill` mode: swaps in a separate mobile-res
  * render below `lg`, instead of just serving a scaled-down desktop crop.
- * Renders a single image when no `mobileSrc` is given — same as a plain
+ * Renders a single image when no `mobileSrc` is given, same as a plain
  * `<Image fill>`.
  *
  * Both variants are always in the DOM, but `display:none` on the hidden one
@@ -14,7 +14,7 @@ import Image from "next/image";
  * fighting the real LCP image for bandwidth. To avoid that, `priority` mode
  * renders its own `media`-scoped preload links (only the matching breakpoint
  * fetches) and serves those two images `unoptimized`, so the preloaded URL
- * is byte-for-byte the one the `<img>` tag requests — running them through
+ * is byte-for-byte the one the `<img>` tag requests. Running them through
  * the `/_next/image` optimizer would preload a different URL than what
  * actually renders, defeating the preload. Source files should already be
  * pre-sized/compressed for their breakpoint.
@@ -23,6 +23,7 @@ export function ResponsiveImage({
   src,
   mobileSrc,
   alt,
+  title,
   sizes = "100vw",
   mobileSizes = "100vw",
   priority,
@@ -34,6 +35,10 @@ export function ResponsiveImage({
   src: string;
   mobileSrc?: string;
   alt: string;
+  /* falls back to `alt` when unset, so every image gets a title attribute
+     (an on-page SEO checker was flagging every image site-wide for a
+     missing title) without every call site having to pass one explicitly. */
+  title?: string;
   sizes?: string;
   mobileSizes?: string;
   priority?: boolean;
@@ -42,11 +47,14 @@ export function ResponsiveImage({
   className?: string;
   style?: CSSProperties;
 }) {
+  const imgTitle = title ?? alt;
+
   if (!mobileSrc) {
     return (
       <Image
         src={src}
         alt={alt}
+        title={imgTitle}
         fill
         priority={priority}
         loading={loading}
@@ -81,6 +89,7 @@ export function ResponsiveImage({
       <Image
         src={mobileSrc}
         alt={alt}
+        title={imgTitle}
         fill
         unoptimized={priority}
         loading={priority ? "eager" : loading}
@@ -92,6 +101,7 @@ export function ResponsiveImage({
       <Image
         src={src}
         alt={alt}
+        title={imgTitle}
         fill
         unoptimized={priority}
         loading={priority ? "eager" : loading}

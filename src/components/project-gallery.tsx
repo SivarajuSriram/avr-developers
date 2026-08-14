@@ -14,7 +14,7 @@ const AUTO_ADVANCE_DELAY = 3000;
  * Full-bleed (120dvh) project gallery. Prev/next reveals the next frame over the
  * current with a slow, soft right-to-left curtain wipe (double-translate: the
  * outer frame slides in while the inner image counter-slides, so the picture
- * holds still). Transforms only — GPU-composited, no repaint. Reduced-motion
+ * holds still). Transforms only, GPU-composited, no repaint. Reduced-motion
  * → instant swap.
  *
  * Auto-advances every AUTO_ADVANCE_DELAY once idle: the timer only starts
@@ -22,7 +22,7 @@ const AUTO_ADVANCE_DELAY = 3000;
  * transition's onComplete), so the curtain never re-triggers mid-animation.
  * Manual prev/next clicks clear and re-chain the same timer.
  *
- * Perf note: the active index lives in a ref, not state — go() always reads
+ * Perf note: the active index lives in a ref, not state. go() always reads
  * indexRef.current at call time, so a stale closure (e.g. from a chained
  * scheduleNext callback captured on an earlier render) can never compute the
  * wrong "next" frame. Only the first frame is eager; the rest lazy-load.
@@ -84,7 +84,7 @@ export function ProjectGallery({
       },
     });
 
-    // soft curtain — gentle symmetric ease, no snap
+    // soft curtain: gentle symmetric ease, no snap
     tl.to(frame, { xPercent: 0, duration: 1.3, ease: "sine.inOut" }, 0).to(
       inner,
       { xPercent: 0, duration: 1.3, ease: "sine.inOut" },
@@ -137,7 +137,7 @@ export function ProjectGallery({
               <ResponsiveImage
                 src={gallery[i].src}
                 mobileSrc={gallery[i].mobileSrc}
-                alt={`${name} — ${view}`}
+                alt={`${name}, ${view}`}
                 priority={i === 0}
                 loading={i === 0 ? undefined : "lazy"}
                 sizes="100vw"
@@ -149,7 +149,7 @@ export function ProjectGallery({
         ))}
       </div>
 
-      {/* side controls — one on each edge */}
+      {/* side controls: one on each edge */}
       <button
         onClick={() => go(-1)}
         aria-label="Previous image"

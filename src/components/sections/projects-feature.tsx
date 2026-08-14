@@ -64,11 +64,11 @@ export function ProjectsFeature() {
           </div>
         </div>
 
-        {/* mobile: pixel-reveal carousel — see ProjectsMobileCarousel. lg:hidden so it
+        {/* mobile: pixel-reveal carousel, see ProjectsMobileCarousel. lg:hidden so it
             drops out of grid flow entirely at lg (a display:none item still claims a
             grid cell if only its child is hidden, which was throwing off the desktop
             two-column row below it) */}
-          <div className="lg:hidden">
+          <div className="mt-8 lg:hidden">
             <ProjectsMobileCarousel projects={projects} />
           </div>
 
