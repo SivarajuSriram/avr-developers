@@ -20,6 +20,16 @@ export const site = {
     postalCode: "500075",
     country: "IN",
   },
+  /* registered office, distinct from `address` above (the Evania/Kokapet
+     project site used for the project JSON-LD and location-section maps) */
+  legalAddress: {
+    line1: "C95J+4VH, opp. Samooparna Super Market, Shivapuri Colony, Muppas Panchavati Colony",
+    locality: "Manikonda",
+    city: "Hyderabad",
+    region: "Telangana",
+    postalCode: "500089",
+    country: "IN",
+  },
   socials: {
     facebook: "https://facebook.com/avrdevelopers",
     instagram: "https://instagram.com/avrdevelopers",

@@ -4,14 +4,14 @@ import { blogPosts } from "@/lib/blog-posts";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const routes = ["", "/about", "/blog", "/careers", "/contact"];
+  const routes = ["", "/about", "/blog", "/careers", "/contact", "/privacy-policy"];
 
   return [
     ...routes.map((path) => ({
       url: `${site.url}${path}`,
       lastModified: now,
       changeFrequency: "monthly" as const,
-      priority: path === "" ? 1 : 0.7,
+      priority: path === "" ? 1 : path === "/privacy-policy" ? 0.3 : 0.7,
     })),
     ...projects.map((p) => ({
       url: `${site.url}/${p.slug}`,

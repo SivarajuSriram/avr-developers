@@ -55,9 +55,14 @@ export function SiteFooter() {
           id="footer-socials"
           className="flex flex-col gap-4 border-t border-white/10 pt-5 text-[12px] text-white/50 sm:flex-row sm:items-center sm:justify-between"
         >
-          <p>
-            &copy; {new Date().getFullYear()} {site.legalName}. All rights
-            reserved.
+          <p className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <span>
+              &copy; {new Date().getFullYear()} {site.legalName}. All rights
+              reserved.
+            </span>
+            <Link href="/privacy-policy" className="link-underline transition-colors hover:text-white">
+              Privacy Policy
+            </Link>
           </p>
           <SocialIcons />
         </div>
