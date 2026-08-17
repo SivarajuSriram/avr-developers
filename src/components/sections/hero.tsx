@@ -20,13 +20,13 @@ export function Hero() {
       {/* overlay content */}
       <div className="relative z-10 mx-auto max-w-[1000px] px-5 text-center pt-24">
         <h1
-          className="rise mx-auto font-serif text-4xl font-light leading-[1.1] tracking-[-0.01em] sm:text-6xl lg:max-w-[18ch] lg:text-[5.5rem] lg:leading-[1.02]"
+          className="rise mx-auto font-serif text-4xl font-light leading-[1.1] tracking-[-0.01em] sm:text-6xl lg:max-w-[40ch] lg:text-[3.5rem] lg:leading-[1.02]"
           style={{ "--i": 0 } as React.CSSProperties}
         >
-          Reshaping the
+          Premium 3BHK, 3.5BHK & 4BHK
           <br />
           <span className="inline-block pb-1 text-white">
-            DNA of Urban Living
+            Flats For Sale in Kokapet
           </span>
         </h1>
 

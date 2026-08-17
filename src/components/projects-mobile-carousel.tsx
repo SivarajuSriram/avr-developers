@@ -126,7 +126,7 @@ export function ProjectsMobileCarousel({ projects }: { projects: Project[] }) {
         </div>
 
         <div ref={infoRef}>
-          <h3 className="mt-6 font-serif text-2xl font-normal tracking-[0.02em]">{project.name}</h3>
+          <p className="mt-6 font-serif text-2xl font-normal tracking-[0.02em]">{project.name}</p>
           <p className="mt-5 text-[15px] leading-relaxed text-ink-70">{project.blurb}</p>
           <ul className="mt-6 flex flex-col gap-3 border-t border-line pt-6">
             {project.highlights.slice(0, 4).map((item) => (

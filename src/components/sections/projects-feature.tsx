@@ -16,12 +16,8 @@ export function ProjectsFeature() {
       <div className="grid lg:grid-cols-12 lg:gap-10">
         {/* statement */}
         <div className="lg:col-span-5">
-          <h2 className="font-serif text-4xl font-light leading-[1.05] tracking-[-0.01em] sm:text-5xl lg:text-[3.75rem]">
-            A World Where
-            <br />
-            Possibilities Are
-            <br />
-            <span className="text-accent">Limitless.</span>
+          <h2 className="font-serif text-3xl font-light leading-[1.05] tracking-[-0.01em] sm:text-3xl lg:text-[3rem]">
+            Luxury Apartments in Kokapet,<span className="text-accent"> Hyderabad.</span>
           </h2>
 
           {/* desktop-only: hovered project's detail fades in below the intro */}
