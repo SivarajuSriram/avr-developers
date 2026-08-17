@@ -92,7 +92,7 @@ function TestimonialCard({
       </div>
       <div className="flex min-w-0 flex-col justify-center gap-2.5 py-6 pl-1 pr-6">
         <span className="font-serif text-3xl leading-none text-accent/25">&ldquo;</span>
-        <blockquote className={`font-sans text-[1.05rem] font-light leading-snug text-ink ${lineClampClassName}`}>
+        <blockquote className={`font-sans text-[1.05rem] font-light leading-snug text-[#0a0e18] ${lineClampClassName}`}>
           &ldquo;{quote.body}&rdquo;
         </blockquote>
         <Attribution name={quote.name} />
@@ -125,16 +125,16 @@ export function Testimonials() {
   return (
     <section className="border-t border-line bg-canvas">
       <div className="mx-auto max-w-[1400px] py-24 lg:py-32">
-        <div className="px-5 lg:px-10">
+        <div className="px-5 text-center lg:px-10">
           <Reveal>
-            <p className="caps text-[12.5px] font-medium tracking-[0.14em] text-ink-40">
+            <h2 className="caps text-[12.5px] font-bold tracking-[0.14em] text-[#0a0e18]">
               Testimonials
-            </p>
+            </h2>
           </Reveal>
           <Reveal index={1}>
-            <h2 className="mt-4 font-serif text-2xl font-light leading-[1.1] tracking-[-0.01em] sm:text-3xl lg:whitespace-nowrap lg:text-4xl">
+            <p className="mt-4 font-serif text-2xl font-light leading-[1.1] tracking-[-0.01em] sm:text-3xl lg:text-4xl">
               Words from the people who live here.
-            </h2>
+            </p>
           </Reveal>
         </div>
 
