@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 import { ProjectGallery } from "@/components/project-gallery";
 import { Amenities } from "@/components/amenities";
 import { ProjectVideo } from "@/components/project-video";
@@ -32,6 +33,7 @@ export function ProjectPage({ project }: { project: Project }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(residenceJsonLd) }}
       />
+      <BreadcrumbJsonLd items={[{ name: project.name, path: `/${project.slug}` }]} />
 
       {/* hero */}
       <section

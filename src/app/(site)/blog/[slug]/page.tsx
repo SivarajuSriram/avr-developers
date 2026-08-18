@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 import { Reveal } from "@/components/ui/reveal";
 import { RecentBlogs } from "@/components/sections/recent-blogs";
 import { blogPosts } from "@/lib/blog-posts";
@@ -83,6 +84,12 @@ export default async function BlogPostPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Blog", path: "/blog" },
+          { name: post.title, path: `/blog/${post.slug}` },
+        ]}
       />
       <section id="hero" className="relative min-h-[100dvh] overflow-hidden">
         <Image

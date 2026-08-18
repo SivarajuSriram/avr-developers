@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 import { PageHeader } from "@/components/page-header";
 import { BlogPosts } from "@/components/sections/blog-posts";
 
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
 export default function BlogPage() {
   return (
     <>
+      <BreadcrumbJsonLd items={[{ name: "Blog", path: "/blog" }]} />
       <PageHeader
         eyebrow="Blog"
         title="Explore the AVR Journal"

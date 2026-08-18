@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 import { PageHeader } from "@/components/page-header";
 import { Philosophy } from "@/components/sections/philosophy";
 import { WhyChooseUs } from "@/components/sections/why-choose-us";
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
+      <BreadcrumbJsonLd items={[{ name: "About us", path: "/about" }]} />
       <PageHeader
         eyebrow="About"
         title={withBreaks("Excellence in Every|Square Foot")}

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 import { PageHeader } from "@/components/page-header";
 import { CareersContact } from "@/components/sections/careers-contact";
 
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
 export default function CareersPage() {
   return (
     <>
+      <BreadcrumbJsonLd items={[{ name: "Careers", path: "/careers" }]} />
       <PageHeader
         eyebrow="Careers"
         title="Join our team."

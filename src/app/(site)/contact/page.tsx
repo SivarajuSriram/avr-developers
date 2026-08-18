@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 import { ContactTour } from "@/components/sections/contact-tour";
-import { ContactFaq } from "@/components/sections/contact-faq";
 
 export const metadata: Metadata = {
   title: "Contact AVR Developers | Luxury Apartments in Kokapet",
@@ -13,8 +13,8 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
+      <BreadcrumbJsonLd items={[{ name: "Contact", path: "/contact" }]} />
       <ContactTour />
-      <ContactFaq />
     </>
   );
 }

@@ -36,6 +36,8 @@ function Wordmark({
         alt="AVR Developers"
         title="AVR Developers"
         fill
+        priority
+        fetchPriority="high"
         sizes="126px"
         className={`object-contain transition-opacity duration-200 ${solid ? "opacity-100" : "opacity-0"}`}
       />
@@ -45,6 +47,8 @@ function Wordmark({
         title="AVR Developers"
         aria-hidden
         fill
+        priority
+        fetchPriority="high"
         sizes="126px"
         className={`object-contain transition-opacity duration-200 ${solid ? "opacity-0" : "opacity-100"}`}
       />

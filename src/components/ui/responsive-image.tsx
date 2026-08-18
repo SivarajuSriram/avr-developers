@@ -57,6 +57,7 @@ export function ResponsiveImage({
         title={imgTitle}
         fill
         priority={priority}
+        fetchPriority={priority ? "high" : undefined}
         loading={loading}
         sizes={sizes}
         quality={quality}
@@ -86,13 +87,24 @@ export function ResponsiveImage({
           />
         </>
       )}
+      {/* `loading` is intentionally left at its default (lazy) here, even
+          when `priority` is set: both crops are always in the DOM and only
+          one is ever visible (the other is `display:none` via the lg:
+          breakpoint classes below), so forcing `loading="eager"` on both
+          would make the browser fetch both regardless of which is actually
+          shown. Lazy-loading still fetches the visible one immediately since
+          it's already on screen at load, while the hidden one is correctly
+          skipped — the pairing Next's own docs recommend for art-directed
+          images. `fetchPriority` is what actually gets the visible one
+          bumped to the front of the queue. */}
       <Image
         src={mobileSrc}
         alt={alt}
         title={imgTitle}
         fill
         unoptimized={priority}
-        loading={priority ? "eager" : loading}
+        loading={loading}
+        fetchPriority={priority ? "high" : undefined}
         sizes={mobileSizes}
         quality={quality}
         className={`lg:hidden ${className}`}
@@ -104,7 +116,8 @@ export function ResponsiveImage({
         title={imgTitle}
         fill
         unoptimized={priority}
-        loading={priority ? "eager" : loading}
+        loading={loading}
+        fetchPriority={priority ? "high" : undefined}
         sizes={sizes}
         quality={quality}
         className={`hidden lg:block ${className}`}
