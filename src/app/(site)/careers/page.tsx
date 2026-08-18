@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld";
 import { PageHeader } from "@/components/page-header";
 import { CareersContact } from "@/components/sections/careers-contact";
+import { OpenPositions } from "@/components/sections/open-positions";
 
 export const metadata: Metadata = {
   title: "Careers at AVR Developers in Real Estate | AVR Developers",
@@ -21,6 +22,7 @@ export default function CareersPage() {
         divider={false}
         centered
       />
+      <OpenPositions />
       <CareersContact />
     </>
   );
