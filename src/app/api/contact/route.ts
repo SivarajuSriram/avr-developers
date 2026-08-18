@@ -40,7 +40,37 @@ export async function POST(request: Request) {
     auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
   });
 
-  await transporter.sendMail({
+  const propfloApiUrl = process.env.PROPFLO_API_URL;
+  let propfloUuid = process.env.PROPFLO_UUID || "";
+  
+  if (interest === "Evania" && process.env.PROPFLO_UUID_EVANIA) {
+    propfloUuid = process.env.PROPFLO_UUID_EVANIA;
+  } else if (interest === "Avira" && process.env.PROPFLO_UUID_AVIRA) {
+    propfloUuid = process.env.PROPFLO_UUID_AVIRA;
+  }
+
+  const propfloPromise = propfloApiUrl
+    ? fetch(propfloApiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          secretkey: process.env.PROPFLO_SECRET_KEY || "",
+          uuid: propfloUuid,
+        },
+        body: JSON.stringify({
+          phoneNumber: phone,
+          sourceTypeId: process.env.PROPFLO_SOURCE_TYPE_ID || "",
+          sourceId: process.env.PROPFLO_SOURCE_ID || "",
+          firstName: name,
+          email: email,
+          countryCode: "+91",
+          campaignName: interest,
+          description: message || "",
+        }),
+      }).catch((err) => console.error("PropFlo CRM error:", err))
+    : Promise.resolve();
+
+  const emailPromise = transporter.sendMail({
     from: process.env.SMTP_FROM || `"AVR Developers Website" <${process.env.SMTP_USER}>`,
     to: process.env.CONTACT_TO_EMAIL || site.email,
     replyTo: email,
@@ -53,7 +83,9 @@ export async function POST(request: Request) {
       `Message: ${message || "(none)"}`,
       `Submitted: ${timestamp}`,
     ].join("\n"),
-  });
+  }).catch((err) => console.error("Nodemailer error:", err));
+
+  await Promise.allSettled([propfloPromise, emailPromise]);
 
   return NextResponse.json({ ok: true });
 }
