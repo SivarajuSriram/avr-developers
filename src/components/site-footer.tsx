@@ -74,7 +74,7 @@ export function SiteFooter() {
 function FooterCol({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h3 className="caps mb-5 text-[11px] font-medium text-white/40">{title}</h3>
+      <h3 className="caps mb-5 text-[11px] font-medium text-white/55">{title}</h3>
       <ul className="flex flex-col gap-3">{children}</ul>
     </div>
   );

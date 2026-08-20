@@ -35,7 +35,7 @@ export function FooterContact() {
         </p>
         <dl className="mt-10 flex flex-col gap-4 text-[14px]">
           <div className="flex gap-4">
-            <dt className="w-14 shrink-0 text-white/40">Email</dt>
+            <dt className="w-14 shrink-0 text-white/55">Email</dt>
             <dd>
               <a
                 href={`mailto:${site.email}`}
@@ -47,7 +47,7 @@ export function FooterContact() {
           </div>
           {site.phones.map((phone) => (
             <div key={phone} className="flex gap-4">
-              <dt className="w-14 shrink-0 text-white/40">Phone</dt>
+              <dt className="w-14 shrink-0 text-white/55">Phone</dt>
               <dd>
                 <a
                   href={`tel:${phone.replace(/\s/g, "")}`}

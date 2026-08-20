@@ -75,7 +75,6 @@ export function ProjectsFeature() {
               <Link
                 href={`/${project.slug}`}
                 className="group relative block"
-                aria-label={`${project.name}, ${project.configuration}`}
                 onMouseEnter={() => setHovered(project.slug)}
                 onMouseLeave={() => setHovered(null)}
               >

@@ -17,7 +17,7 @@ export function CareersContact() {
     <section id="contact" className="scroll-mt-24 bg-ink-90 text-white">
       <div className="mx-auto grid max-w-[1400px] gap-10 border-b border-white/10 px-5 pt-12 pb-10 lg:grid-cols-2 lg:items-center lg:gap-20 lg:px-10 lg:pt-16 lg:pb-12">
         <Reveal>
-          <p className="caps mb-4 text-[12px] font-medium text-accent">Careers</p>
+          <p className="caps mb-4 text-[12px] font-medium text-rose">Careers</p>
           <h2 className="font-serif text-2xl font-light leading-[1.05] text-white lg:text-4xl">
             Build the Future
             <br />
@@ -29,7 +29,7 @@ export function CareersContact() {
           </p>
           <dl className="mt-10 flex flex-col gap-4 text-[14px]">
             <div className="flex gap-4">
-              <dt className="w-14 shrink-0 text-white/40">Email</dt>
+              <dt className="w-14 shrink-0 text-white/55">Email</dt>
               <dd>
                 <a
                   href={`mailto:${site.email}`}
@@ -41,7 +41,7 @@ export function CareersContact() {
             </div>
             {site.phones.map((phone) => (
               <div key={phone} className="flex gap-4">
-                <dt className="w-14 shrink-0 text-white/40">Phone</dt>
+                <dt className="w-14 shrink-0 text-white/55">Phone</dt>
                 <dd>
                   <a
                     href={`tel:${phone.replace(/\s/g, "")}`}

@@ -110,7 +110,6 @@ export function ProjectsMobileCarousel({ projects }: { projects: Project[] }) {
       <Link
         href={`/${project.slug}`}
         className="group relative block"
-        aria-label={`${project.name}, ${project.configuration}`}
       >
         <div className="relative">
           <CoverImage

@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight, CaretDown } from "@phosphor-icons/react";
 import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
 import { INTEREST_OPTIONS } from "@/lib/contact-interest";
 import { formatIstTimestamp } from "@/lib/format-ist-timestamp";
 import { projects } from "@/lib/site";
@@ -65,6 +64,13 @@ export function ContactForm({
   const [interestOpen, setInterestOpen] = useState(false);
   const interestRef = useRef<HTMLDivElement>(null);
   const phoneFieldRef = useRef<HTMLDivElement>(null);
+
+  // Loaded lazily so this stylesheet doesn't get hoisted into the
+  // render-blocking <head> of every page the form appears on (most of them,
+  // via the footer) — see the same fix on leaflet.css in location-map-canvas.tsx.
+  useEffect(() => {
+    import("react-phone-input-2/lib/style.css");
+  }, []);
 
   useEffect(() => {
     const dropdown = phoneFieldRef.current?.querySelector(".flag-dropdown");

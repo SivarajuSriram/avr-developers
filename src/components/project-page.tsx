@@ -52,7 +52,7 @@ export function ProjectPage({ project }: { project: Project }) {
         <div className="absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/20 to-ink/40" />
         <div className="relative mx-auto w-full max-w-[1400px] px-5 pb-16 pt-28 lg:px-10 lg:pb-24">
           {project.logo && (
-            <div className="relative mb-6 h-14 w-[190px] lg:h-16 lg:w-[220px]">
+            <div className="relative mb-4 h-14 w-[190px] lg:h-16 lg:w-[220px]">
               <Image
                 src={project.logo}
                 alt={`${project.name} logo`}
@@ -62,6 +62,11 @@ export function ProjectPage({ project }: { project: Project }) {
                 className="object-contain object-left brightness-0 invert"
               />
             </div>
+          )}
+          {project.rera && (
+            <p className="caps mb-6 inline-block w-fit rounded-xs border border-white/25 bg-white/5 px-3 py-1.5 text-[10px] font-medium text-white backdrop-blur-sm">
+              RERA: {project.rera}
+            </p>
           )}
           <h1 className="font-serif text-4xl font-light leading-none tracking-[-0.03em] sm:text-5xl lg:text-8xl">
             {withBreaks(project.headline ?? project.name)}
@@ -105,9 +110,6 @@ export function ProjectPage({ project }: { project: Project }) {
                 {para}
               </p>
             ))}
-            {project.rera && (
-              <p className="mt-6 text-[12px] text-ink-40">RERA: {project.rera}</p>
-            )}
           </Reveal>
         </div>
       </section>

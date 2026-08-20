@@ -101,7 +101,7 @@ export function WhyChooseUs() {
                     className="absolute inset-0 flex items-end gap-1.5 p-6 font-serif text-[2.5rem] leading-none text-white/90 lg:p-7 lg:text-[2.75rem]"
                   >
                     {String(active + 1).padStart(2, "0")}
-                    <span className="mb-[3px] font-sans text-[13px] font-normal text-accent">
+                    <span className="mb-[3px] font-sans text-[13px] font-normal text-rose">
                       /{String(reasons.length).padStart(2, "0")}
                     </span>
                   </motion.div>

@@ -35,7 +35,7 @@
 @theme {
   --color-ink-70: color-mix(in oklab, var(--color-ink) 70%, transparent);
   --color-ink-55: color-mix(in oklab, var(--color-ink) 55%, transparent);
-  --color-ink-40: color-mix(in oklab, var(--color-ink) 40%, transparent);
+  --color-ink-40: color-mix(in oklab, var(--color-ink) 64%, transparent);
   --color-line: color-mix(in oklab, var(--color-ink) 12%, transparent);
   --color-line-strong: color-mix(in oklab, var(--color-ink) 22%, transparent);
 }

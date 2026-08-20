@@ -26,7 +26,7 @@ export function Faq({
     <section className="border-t border-white/10 bg-ink-90 text-white/80">
       <div className="w-full px-5 pb-2 pt-8 lg:px-10 lg:pb-6 lg:pt-10">
         <Reveal>
-          <p className="caps mb-4 text-[12px] font-medium text-accent">
+          <p className="caps mb-4 text-[12px] font-medium text-rose">
             {eyebrow}
           </p>
           <h2 className="font-serif text-3xl font-light leading-[1.05] tracking-[-0.01em] md:text-5xl md:whitespace-nowrap">
@@ -51,41 +51,39 @@ export function Faq({
           {faqs.map((item, i) => {
             const isOpen = openIndex === i;
             return (
-              <Reveal key={item.q} index={i}>
-                <div className="border-b border-white/10">
-                  <dt>
-                    <button
-                      type="button"
-                      onClick={() => setOpenIndex(isOpen ? null : i)}
-                      aria-expanded={isOpen}
-                      className="group flex w-full items-center justify-between gap-8 py-6 text-left"
-                    >
-                      <span className="font-serif text-xl text-white">
-                        {item.q}
-                      </span>
-                      <span
-                        className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/20 text-white transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                          isOpen ? "" : "lg:group-hover:rotate-[360deg]"
-                        }`}
-                      >
-                        {isOpen ? (
-                          <Minus size={16} strokeWidth={1.75} />
-                        ) : (
-                          <Plus size={16} strokeWidth={1.75} />
-                        )}
-                      </span>
-                    </button>
-                  </dt>
-                  <dd
-                    className={`grid overflow-hidden transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                      isOpen ? "grid-rows-[1fr] pb-8" : "grid-rows-[0fr]"
-                    }`}
+              <Reveal key={item.q} index={i} className="border-b border-white/10">
+                <dt>
+                  <button
+                    type="button"
+                    onClick={() => setOpenIndex(isOpen ? null : i)}
+                    aria-expanded={isOpen}
+                    className="group flex w-full items-center justify-between gap-8 py-6 text-left"
                   >
-                    <p className="max-w-[70ch] overflow-hidden text-[15px] leading-relaxed text-white/60">
-                      {item.a}
-                    </p>
-                  </dd>
-                </div>
+                    <span className="font-serif text-xl text-white">
+                      {item.q}
+                    </span>
+                    <span
+                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/20 text-white transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                        isOpen ? "" : "lg:group-hover:rotate-[360deg]"
+                      }`}
+                    >
+                      {isOpen ? (
+                        <Minus size={16} strokeWidth={1.75} />
+                      ) : (
+                        <Plus size={16} strokeWidth={1.75} />
+                      )}
+                    </span>
+                  </button>
+                </dt>
+                <dd
+                  className={`grid overflow-hidden transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                    isOpen ? "grid-rows-[1fr] pb-8" : "grid-rows-[0fr]"
+                  }`}
+                >
+                  <p className="max-w-[70ch] overflow-hidden text-[15px] leading-relaxed text-white/60">
+                    {item.a}
+                  </p>
+                </dd>
               </Reveal>
             );
           })}

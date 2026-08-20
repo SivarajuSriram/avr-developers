@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import L from "leaflet";
-import "leaflet/dist/leaflet.css";
 
 type MapPoint = {
   place: string;
@@ -111,6 +110,15 @@ export function LocationMapCanvas({
   const mapRef = useRef<L.Map | null>(null);
   const markersRef = useRef<L.Marker[]>([]);
   const projectMarkerRef = useRef<L.Marker | null>(null);
+
+  // Loaded lazily (not as a top-level `import "leaflet/dist/leaflet.css"`) so
+  // Turbopack doesn't hoist this 68KB stylesheet into the render-blocking
+  // <head> of every page — this component is the only thing that needs it,
+  // and it's already loaded via next/dynamic for JS code-splitting; CSS
+  // deferral doesn't follow that automatically, so it has to be done here.
+  useEffect(() => {
+    import("leaflet/dist/leaflet.css");
+  }, []);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
