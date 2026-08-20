@@ -53,7 +53,7 @@ export function SiteFooter() {
         {/* legal + socials */}
         <div
           id="footer-socials"
-          className="flex flex-col gap-4 border-t border-white/10 pt-5 text-[12px] text-white/50 sm:flex-row sm:items-center sm:justify-between"
+          className="flex flex-col gap-4 border-t border-white/10 pt-5 text-[12px] text-white/55 sm:flex-row sm:items-center sm:justify-between"
         >
           <p className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <span>
